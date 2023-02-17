@@ -16,11 +16,9 @@
 package com.sk.web;
 
 import java.util.List;
+import java.util.Map;
 
-import egovframework.example.sample.service.EgovSampleService;
-import egovframework.example.sample.service.SampleDefaultVO;
-import egovframework.example.sample.service.SampleVO;
-
+import com.sk.service.mapService;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
@@ -64,12 +62,18 @@ public class WebController {
 	/** Validator */
 	@Resource(name = "beanValidator")
 	protected DefaultBeanValidator beanValidator;
+	
+	@Resource(name = "mapService")
+    private mapService mapService;
+
 
 	//초기화면
 	@RequestMapping(value = "/index.do")
 	public String selectSampleList(ModelMap model) throws Exception {
-
+	
+		int cnt = mapService.testCnt();
+		System.out.println("ddddddddd : "+cnt);
 		
-		return "map/map";
+		return "sk/map/map";
 	}
 }

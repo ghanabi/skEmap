@@ -18,17 +18,6 @@
     <!-- datasource 설정(propertyConfigurer 활용) -->
     <alias name="dataSource-${Globals.DbType}" alias="dataSource" />
     <alias name="dataSource-${Globals.DbType}" alias="egov.dataSource" />
-    
-	<!-- hsql -->
-    <jdbc:embedded-database id="dataSource-hsql" type="HSQL">
-		<jdbc:script location= "classpath:/db/shtdb.sql"/>
-	</jdbc:embedded-database>
-	
- 	<!-- <bean id="dataSource-hsql" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="net.sf.log4jdbc.DriverSpy"/>
-		<property name="url" value="jdbc:log4jdbc:hsqldb:hsql://localhost/sampledb"/>
-		<property name="username" value="sa"/>
-	</bean> -->
 	 
 	<!-- mssql -->
     <bean id="dataSource-mssql" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
@@ -36,38 +25,5 @@
         <property name="url" value="${Globals.Url}" />
         <property name="username" value="${Globals.UserName}"/>
         <property name="password" value="${Globals.Password}"/>
-    </bean>
-    
-    <!-- Oracle -->
-    <bean id="dataSource-oracle" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="${Globals.DriverClassName}"/>
-        <property name="url" value="${Globals.Url}" />
-        <property name="username" value="${Globals.UserName}"/>
-        <property name="password" value="${Globals.Password}"/>
-    </bean>
-    
-    <!-- Altibase -->
-    <bean id="dataSource-altibase" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="${Globals.DriverClassName}"/>
-        <property name="url" value="${Globals.Url}" />
-        <property name="username" value="${Globals.UserName}"/>
-        <property name="password" value="${Globals.Password}"/>
-    </bean>
-
-    <!-- Tibero -->
-    <bean id="dataSource-tibero" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="${Globals.DriverClassName}"/>
-        <property name="url" value="${Globals.Url}" />
-        <property name="username" value="${Globals.UserName}"/>
-        <property name="password" value="${Globals.Password}"/>
-    </bean>
-	
-	<!-- cubrid -->
-    <bean id="dataSource-cubrid" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="${Globals.DriverClassName}"/>
-        <property name="url" value="${Globals.Url}" />
-        <property name="username" value="${Globals.UserName}"/>
-        <property name="password" value="${Globals.Password}"/>
-    </bean>
-    
+    </bean>   
 </beans>

@@ -11,6 +11,8 @@
 <!-- css -->
 <link rel="stylesheet" href="<c:url value="/js/libs/openlayers/ol-v5.30/ol.css"/>">
 <link rel="stylesheet" href="<c:url value="/js/libs/openlayers/ol-ext/ol-ext.min.css"/>"/>
+<link rel="stylesheet" href="<c:url value="/css/common.css"/>"/>
+
 
 <!-- 지도 스크립트 -->
 <!-- JS -->
@@ -56,6 +58,8 @@
 <script type="text/javascript" src="<c:url value="/js/map/measure.js?version=${nowDate}"/>"></script>
 <script type="text/javascript" src="<c:url value="/js/map/mapEvent.js?version=${nowDate}"/>"></script>
 
+<script type="text/javascript" src="<c:url value="/js/script.js"/>"></script>
+
 <script>    
 let map;      
 window.onload = function(){
@@ -66,26 +70,41 @@ window.onload = function(){
 <body>
 <div id="wrapper">
 		<div id="container">
-			<div class="con_left" id="m1">
-				<button type="button" onclick="wmslayer();"
-					style="width: 130px; height: 30px; font-size: 15px;">wms layer</button>
-				<button type="button" onclick="setSld();"
-					style="width: 80px; height: 30px; font-size: 15px;">wms	sld</button>
-				<button type="button" onclick="clear_wmslayer();"
-					style="width: 80px; height: 30px; font-size: 15px;">clear </button>
-				<button type="button" onclick="startWfs();"
-					style="width: 130px; height: 30px; font-size: 15px;">wfs feature</button>
-				<button type="button" onclick="clear_wfslayer();"
-					style="width: 80px; height: 30px; font-size: 15px;">clear wfs</button>
-				<button type="button" onclick="googletile();"
-					style="width: 130px; height: 30px; font-size: 15px;">google tile</button>
-				<button type="button" onclick="vworldtile();"
-					style="width: 130px; height: 30px; font-size: 15px;">vworld tile</button>
-				<br />
+			<div class="con_left">
+				<div class="logo"></div>
+				<div class="nav">
+					<div class="map_tool">
+						<ul>
+							<li class="tool1"><img alt="" src="images/sk/maptool/btn1.jpg"></li>
+							<li class="tool2"><img alt="" src="images/sk/maptool/btn2.jpg"></li>
+							<li class="tool3"><img alt="" src="images/sk/maptool/btn3.jpg"></li>
+							<li class="tool4"><img alt="" src="images/sk/maptool/btn4.jpg"></li>
+							<li class="tool5"><img alt="" src="images/sk/maptool/btn5.jpg"></li>
+							<li class="tool6"><img alt="" src="images/sk/maptool/btn6.jpg"></li>
+							<li class="tool7"><img alt="" src="images/sk/maptool/btn7.jpg"></li>
+						</ul>
+					</div>
+					<div class="option">
+						<ul>
+							<li class="opt_tool1"><img alt="" src="images/sk/maptool/opt1.jpg"></li>
+							<li class="opt_tool2"><img alt="" src="images/sk/maptool/opt2.jpg"></li>
+							<li class="opt_tool3"><img alt="" src="images/sk/maptool/opt3.jpg"></li>
+							<li class="opt_tool4"><img alt="" src="images/sk/maptool/opt4.jpg"></li>
+							<li class="opt_tool5"><img alt="" src="images/sk/maptool/opt5.jpg"></li>
+						</ul>
+					</div>
+				</div>
+				<div class="slide1"><img alt="" src="images/sk/slide.jpg"></div>
 			</div>
-			<div class="con_right">
+			<div class="con_center">
 				<div class="map" id="dvMap" style="width:100%; height:100%;"></div>
 			</div>
+			<div class="con_right">
+				<div class="right_tab">
+					<img alt="" src="images/sk/shipinfo_btn.jpg">
+				</div>
+			</div>
+			<div class="scale"><input type="text">E 129 21.25    N 35' 44.14'   SCALE=>1:10.000[LEVEL:27]</</div>
 		</div>
 	</div>
 

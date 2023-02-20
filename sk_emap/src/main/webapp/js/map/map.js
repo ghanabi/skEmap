@@ -9,8 +9,8 @@ var wfs_layer;
 //126.978446,37.523184  서울
 function mapInit(){
 	var view = new ol.View({
-		center: ol.proj.fromLonLat([129.3005359,35.5468629]),
-		zoom: 11.3,
+		center: ol.proj.fromLonLat([129.3604722,35.35916667]),
+		zoom: 7,
 	});
 	
 	vworldTile = new ol.layer.Tile({
@@ -42,11 +42,6 @@ function mapInit(){
 	});
     
 	map = new ol.Map({
-//		layers: [
-//			new ol.layer.Tile({
-//				source: new ol.source.OSM(),
-//			}),
-//		],
 		layers: [
 			vworldTile
 		],
@@ -54,32 +49,102 @@ function mapInit(){
 		view: view
 	});
 	map.addLayer(wfs_layer);
+	
+	//wms 바다(기본맵처럼사용)
+	var DEPAREA = new ol.layer.Tile({
+		id : 'DEPAREA',
+    	title: 'DEPAREA',
+    	opacity: 1,
+        source: new ol.source.TileWMS({
+            url: 'http://141.164.62.150:8089/geoserver/wms',
+            serverType: 'geoserver',
+            crossOrigin: 'anonymous',            
+            params: { 
+            	'VERSION': '1.1.0' , 
+                'LAYERS': 'skemap:DEPAREA',               
+                'CRS' : 'EPSG:3857',
+            },            
+        })
+    });
+    map.addLayer(DEPAREA);
+    
+    //wms 대지(기본맵처럼사용)
+    var LNDAREA_A = new ol.layer.Tile({
+		id : 'LNDAREA_A',
+    	title: 'LNDAREA_A',
+    	opacity: 1,
+        source: new ol.source.TileWMS({
+            url: 'http://141.164.62.150:8089/geoserver/wms',
+            serverType: 'geoserver',
+            crossOrigin: 'anonymous',            
+            params: { 
+            	'VERSION': '1.1.0' , 
+                'LAYERS': 'skemap:LNDAREA_A',               
+                'CRS' : 'EPSG:3857',
+            },            
+        })
+    });
+    map.addLayer(LNDAREA_A);
+    map.removeLayer(vworldTile); //배경맵 삭제
+    wmslayer(); //등대,등표,부표 호출
 }
 
-function wmslayer(){
-	cbndWms = new ol.layer.Tile({
-        opacity: 0.7,
+//등대,등표,부표 보여주기
+function wmslayer(){     
+	//등대
+   cbndWms = new ol.layer.Tile({
+		id : 'lighthouse',
+    	title: 'lighthouse',
+    	opacity: 1,
         source: new ol.source.TileWMS({
-            url: './proxyGetMap.jsp?url='+encodeURIComponent('http://api.vworld.kr/req/wms?key=' + '90D6D336-FE7B-3EAD-860C-19793AC8FE9E'),
-            crossOrigin: 'anonymous',
-            params: {
-            	//'layers': encodeURIComponent('lp_pa_cbnd_bonbun,lp_pa_cbnd_bubun') , 
-            	//'styles': encodeURIComponent('lp_pa_cbnd_bonbun_line,lp_pa_cbnd_bubun_line') , 
-            	'layers': encodeURIComponent('lt_c_uq111') , 
-            	'styles': encodeURIComponent('lt_c_uq111') , 
-                'service' : encodeURIComponent('WMS'), 
-                'version' : encodeURIComponent('1.3.0'), 
-                'request' : encodeURIComponent('GetMap'), 
-                'format' : encodeURIComponent('image/png'), 
-                'transparent' : encodeURIComponent('true'), 
-                'crs' : encodeURIComponent('EPSG:3857'), 
-                //'SLD_BODY' : encodeURIComponent(sld()),
-                'domain' : encodeURIComponent('localhost:8080')                
-            }
+            url: 'http://141.164.62.150:8089/geoserver/wms',
+            serverType: 'geoserver',
+            crossOrigin: 'anonymous',            
+            params: { 
+            	'VERSION': '1.1.0' , 
+                'LAYERS': 'skemap:lighthouse',
+                //'SLD_BODY': text_SLD,
+                //'format' : 'image/png', 
+                //'transparent' : 'true',
+                'CRS' : 'EPSG:3857',
+            },            
         })
-      });
-    
-    map.addLayer(cbndWms);
+    });   
+    map.addLayer(cbndWms);    
+    //등표
+    var lightmark = new ol.layer.Tile({
+		id : 'lightmark',
+    	title: 'lightmark',
+    	opacity: 1,
+        source: new ol.source.TileWMS({
+            url: 'http://141.164.62.150:8089/geoserver/wms',
+            serverType: 'geoserver',
+            crossOrigin: 'anonymous',            
+            params: { 
+            	'VERSION': '1.1.0' , 
+                'LAYERS': 'skemap:lightmark',               
+                'CRS' : 'EPSG:3857',
+            },            
+        })
+    });   
+    map.addLayer(lightmark);    
+    //부표
+     var buoy = new ol.layer.Tile({
+		id : 'buoy',
+    	title: 'buoy',
+    	opacity: 1,
+        source: new ol.source.TileWMS({
+            url: 'http://141.164.62.150:8089/geoserver/wms',
+            serverType: 'geoserver',
+            crossOrigin: 'anonymous',            
+            params: { 
+            	'VERSION': '1.1.0' , 
+                'LAYERS': 'skemap:buoy',               
+                'CRS' : 'EPSG:3857',
+            },            
+        })
+    });   
+    map.addLayer(buoy);       
 }  
 
 function clear_wmslayer(){

@@ -58,6 +58,9 @@
 <script type="text/javascript" src="<c:url value="/js/map/measure.js?version=${nowDate}"/>"></script>
 <script type="text/javascript" src="<c:url value="/js/map/mapEvent.js?version=${nowDate}"/>"></script>
 
+<!-- RGB색상표 -->
+<script type="text/javascript" src="<c:url value="/js/libs/jquery/jscolor.js"/>"></script>
+
 <script type="text/javascript" src="<c:url value="/js/script.js"/>"></script>
 
 <script>    
@@ -94,17 +97,101 @@ window.onload = function(){
 						</ul>
 					</div>
 				</div>
-				<div class="slide1"><img alt="" src="images/sk/slide.jpg"></div>
+				<div class="slide1" id="slide1"><!-- <img alt="" src="images/sk/slide.jpg"> --></div>
+			</div>
+			<div id="div_left">
+				<div id="opiont1">
+					<table>
+						<colgroup><col width="40%"><col width="60%"></colgroup>
+						<tr>
+							<th class="t_center">보기설정</th>
+							<th class="t_center">상세 표기</th>
+						</tr>
+						<tr>
+							<td class="t_center">기본 <input type="checkbox" ></td>
+							<td class="t_left">등광크기</td>
+						</tr>
+						<tr>
+							<td class="t_center">표준 <input type="checkbox" ></td>
+							<td class="t_left">크게 <input type="checkbox" >&nbsp;작게 <input type="checkbox" ></td>
+						</tr>
+						<tr>
+							<td class="t_center">상세 <input type="checkbox" ></td>
+							<td class="t_left">지도 주야간</td>
+						</tr>
+						<tr>
+							<td class="t_center">수심 <input type="checkbox" ></td>
+							<td class="t_left">주간 <input type="checkbox" >&nbsp;야간 <input type="checkbox" ></td>
+						</tr>
+						<tr>
+							<td class="t_center">등광 <input type="checkbox" ></td>
+							<td class="t_left">경위도</td>
+						</tr>
+						<tr>
+							<td class="t_center"></td>
+							<td class="t_left">도 <input type="checkbox" >&nbsp;도분 <input type="checkbox" >&nbsp;도분초 <input type="checkbox" ></td>
+						</tr>
+					</table>
+				</div>
+				<div id="opiont2">
+					<table>
+						<colgroup><col width="100%"></colgroup>
+						<tr>
+							<th class="t_center">선박/표지 표기</th>
+						</tr>
+						<tr>
+							<td class="t_left">선박   OFF <input type="checkbox" ></td>
+						</tr>
+						<tr>
+							<td class="t_left">전체 <input type="checkbox" >&nbsp;이동 <input type="checkbox" >&nbsp;정박 <input type="checkbox" ></td>
+						</tr>
+						<tr>
+							<td class="t_left">이름 <input type="checkbox" >&nbsp;ID <input type="checkbox" >&nbsp;표기안함 <input type="checkbox" ></td>
+						</tr>
+						<tr>
+							<td class="t_left">표지   OFF <input type="checkbox" ></td>
+						</tr>
+					</table>
+				</div>
+				<div id="opiont3">
+					<table>
+						<colgroup><col width="50%"><col width="50%"></colgroup>
+						<tr>
+							<th class="t_left" colspan="2">선박</th>
+						</tr>
+						<tr>
+							<td class="t_center"><img alt="" src="images/sk/opt3_1.jpg">
+							<div></div></td>
+							<td class="t_center"><img alt="" src="images/sk/btn_chg.jpg"></td>
+						</tr>
+						<tr>
+							<td class="t_center" style="background-image: url(images/sk/opt3_2.jpg);"><button data-jscolor="{width:250, paletteCols:15, value:'#3399FF'}"></button></td>
+							<td class="t_center"><img alt="" src="images/sk/btn_chg.jpg"></td>
+						</tr>
+						<tr>
+							<td class="t_center" style="background-image: url(images/sk/timebox.jpg);"></td>
+							<td class="t_center">선박 표시시간</td>
+						</tr>
+						<tr>
+							<td class="t_center" style="background-image: url(images/sk/timebox.jpg);"></td>
+							<td class="t_center">항적 저장시간</td>
+						</tr>
+					</table>
+				</div>
+				
 			</div>
 			<div class="con_center">
 				<div class="map" id="dvMap" style="width:100%; height:100%;"></div>
 			</div>
+			<div id="div_right">
+					
+			</div>
 			<div class="con_right">
-				<div class="right_tab">
-					<img alt="" src="images/sk/shipinfo_btn.jpg">
+				<div class="slide2" id="slide2">
+					<!-- <img alt="" src="images/sk/shipinfo_btn.jpg"> -->
 				</div>
 			</div>
-			<div class="scale"><input type="text">E 129 21.25    N 35' 44.14'   SCALE=>1:10.000[LEVEL:27]</</div>
+			<div class="scale">E 129 21.25    N 35' 44.14'   SCALE=>1:10.000[LEVEL:27]</</div>
 		</div>
 	</div>
 

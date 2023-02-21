@@ -75,13 +75,13 @@ window.onload = function(){
 				<div class="nav">
 					<div class="map_tool">
 						<ul>
-							<li class="tool1"><img alt="" src="images/sk/maptool/btn1.jpg"></li>
-							<li class="tool2"><img alt="" src="images/sk/maptool/btn2.jpg"></li>
-							<li class="tool3"><img alt="" src="images/sk/maptool/btn3.jpg"></li>
-							<li class="tool4"><img alt="" src="images/sk/maptool/btn4.jpg"></li>
-							<li class="tool5"><img alt="" src="images/sk/maptool/btn5.jpg"></li>
-							<li class="tool6"><img alt="" src="images/sk/maptool/btn6.jpg"></li>
-							<li class="tool7"><img alt="" src="images/sk/maptool/btn7.jpg"></li>
+							<li class="tool1" id="mapDefalt"><img alt="" src="images/sk/maptool/btn1.jpg"></li>
+							<li class="tool2" id="mapZoomIn"><img alt="" src="images/sk/maptool/btn2.jpg"></li>
+							<li class="tool3" id="mapZoomOut"><img alt="" src="images/sk/maptool/btn3.jpg"></li>
+							<li class="tool4" id="mapMove"><img alt="" src="images/sk/maptool/btn4.jpg"></li>
+							<li class="tool5" id="mapSearch1"><img alt="" src="images/sk/maptool/btn5.jpg"></li>
+							<!-- <li class="tool6" id="mapSearch2"><img alt="" src="images/sk/maptool/btn6.jpg"></li>  -->
+							<li class="tool7" id="mapSearch3"><img alt="" src="images/sk/maptool/btn7.jpg"></li>
 						</ul>
 					</div>
 					<div class="option">

@@ -4,6 +4,8 @@ var vworldTile;
 var googlemap;
 var wfsSource = new ol.source.Vector();
 var wfs_layer;
+var drawInteration;
+var geoserverWmsUrl = "http://141.164.62.150:8089/geoserver/wms";
 
 //35.5468629,129.3005359 울산
 //126.978446,37.523184  서울
@@ -25,21 +27,7 @@ function mapInit(){
 	
 	googlemap = new ol.layer.Tile({
 		source: new ol.source.OSM(),
-	});
-	
-	wfs_layer = new ol.layer.Vector({
-		source: wfsSource,
-		style: new ol.style.Style({
-            fill: new ol.style.Fill({
-                color: 'rgba(255, 228, 0, 0.5)'
-            }),
-            stroke: new ol.style.Stroke({
-                color: '#ff0000',
-                width: 3
-            }),
-        }),
-        zIndex : 9999
-	});
+	});	
     
 	map = new ol.Map({
 		layers: [
@@ -47,8 +35,7 @@ function mapInit(){
 		],
 		target: 'dvMap',
 		view: view
-	});
-	map.addLayer(wfs_layer);
+	});	
 	
 	//wms 바다(기본맵처럼사용)
 	var DEPAREA = new ol.layer.Tile({
@@ -56,7 +43,7 @@ function mapInit(){
     	title: 'DEPAREA',
     	opacity: 1,
         source: new ol.source.TileWMS({
-            url: 'http://141.164.62.150:8089/geoserver/wms',
+            url: geoserverWmsUrl,
             serverType: 'geoserver',
             crossOrigin: 'anonymous',            
             params: { 
@@ -74,7 +61,7 @@ function mapInit(){
     	title: 'LNDAREA_A',
     	opacity: 1,
         source: new ol.source.TileWMS({
-            url: 'http://141.164.62.150:8089/geoserver/wms',
+            url: geoserverWmsUrl,
             serverType: 'geoserver',
             crossOrigin: 'anonymous',            
             params: { 
@@ -92,7 +79,7 @@ function mapInit(){
     	title: 'rivers',
     	opacity: 1,
         source: new ol.source.TileWMS({
-            url: 'http://141.164.62.150:8089/geoserver/wms',
+            url: geoserverWmsUrl,
             serverType: 'geoserver',
             crossOrigin: 'anonymous',            
             params: { 
@@ -110,7 +97,7 @@ function mapInit(){
     	title: 'souding',
     	opacity: 1,
         source: new ol.source.TileWMS({
-            url: 'http://141.164.62.150:8089/geoserver/wms',
+            url: geoserverWmsUrl,
             serverType: 'geoserver',
             crossOrigin: 'anonymous',            
             params: { 
@@ -124,6 +111,130 @@ function mapInit(){
     
     map.removeLayer(vworldTile); //배경맵 삭제
     wmslayer(); //등대,등표,부표 호출
+    
+    wfs_layer = new ol.layer.Vector({
+		source: wfsSource,
+		style: new ol.style.Style({
+            fill: new ol.style.Fill({
+                color: 'rgba(255, 228, 0, 0.5)'
+            }),
+            stroke: new ol.style.Stroke({
+                color: '#ff0000',
+                width: 3
+            }),
+        }),
+        zIndex : 9999
+	});
+    map.addLayer(wfs_layer);
+    
+    //항로검색용
+    const mapSearch1 = new ol.layer.Vector({
+        id: "mapSearch1",
+        source: new ol.source.Vector(),
+        style: new ol.style.Style({
+            fill: new ol.style.Fill({                
+                color: '#FF000033'
+            }),
+            stroke: new ol.style.Stroke({                
+                color: '#ff0000ff',
+                width: 2
+            })
+      	})
+    });
+    map.addLayer(mapSearch1);
+    
+    mapEvent();
+}
+
+//맵 이벤트
+function mapEvent(){
+	 //기본
+	 $("#mapDefalt").on('click',function(e){
+	 	deactiveInteractions();
+	 });
+	 
+	 //확대
+	 $("#mapZoomIn").on('click',function(e){
+	 	let thisZoom = map.getView().getZoom();
+	 	thisZoom++;
+        map.getView().animate({zoom: thisZoom, duration: 300});
+	 });
+	 
+	 //축소
+	 $("#mapZoomOut").on('click',function(e){
+	 	let thisZoom = map.getView().getZoom();
+	 	thisZoom--;
+        map.getView().animate({zoom: thisZoom, duration: 300});
+	 });
+	 
+	 //move
+	 $("#mapMove").on('click',function(e){
+	 	deactiveInteractions();
+	 });
+	 
+	 //mapSearch1
+	 $("#mapSearch1").on('click',function(e){
+	 	//setActiveDrawTool('box',null);
+	 });
+	 
+	 //mapSearch1
+	 $("#mapSearch2").on('click',function(e){
+	 	//setActiveDrawTool('box',null);
+	 });
+	 
+	 //mapSearch1
+	 $("#mapSearch3").on('click',function(e){
+	 	setActiveDrawTool('box',null);
+	 });
+}
+
+//interaction 비활성화
+function deactiveInteractions() {
+    map.removeInteraction(drawInteration);
+    dragInteraction.setActive(false);
+    //modStyleSelectInteraction.setActive(false);
+    //modStyleSelectedFeature = null;
+
+    //selectToolOn = false;
+}
+
+//그리기도구 활성화
+function setActiveDrawTool(type, isOn) {
+	let lyr=null;
+	var layers = map.getLayers().getArray();
+	for(let i in layers) {
+        const l = layers[i];
+        const thisLayerId = layers[i].get('id');
+
+        if("mapSearch1" === thisLayerId) {
+            lyr = l;
+            break;
+        }
+    }
+    
+    if(lyr != null){
+    	const source = lyr.getSource();
+    	
+    	const tool = {
+	        type: 'Circle',
+	        geometryFunction: ol.interaction.Draw.createBox(),
+	    };
+	    
+	    let drawOption = $.extend({}, tool);
+    	drawOption['source'] = source;
+    	drawInteration = new ol.interaction.Draw(drawOption);
+    	const drawendCallback = function (e) {
+        	e.feature.set('type', "box");  
+        	console.log(e.feature);   
+        	let feat = e.feature;
+        	let featClone = feat.clone();
+        	console.log(featClone.getGeometry());        	
+        	let c_geometry = featClone.getGeometry().transform( 'EPSG:3857',  'EPSG:4326').getCoordinates();
+        	console.log(c_geometry);        	
+    	}
+    	drawInteration.on('drawend', drawendCallback);
+    	map.addInteraction(drawInteration);
+    }    
 }
 
 //등대,등표,부표 보여주기
@@ -134,7 +245,7 @@ function wmslayer(){
     	title: 'lighthouse',
     	opacity: 1,
         source: new ol.source.TileWMS({
-            url: 'http://141.164.62.150:8089/geoserver/wms',
+            url: geoserverWmsUrl,
             serverType: 'geoserver',
             crossOrigin: 'anonymous',            
             params: { 
@@ -154,7 +265,7 @@ function wmslayer(){
     	title: 'lightmark',
     	opacity: 1,
         source: new ol.source.TileWMS({
-            url: 'http://141.164.62.150:8089/geoserver/wms',
+            url: geoserverWmsUrl,
             serverType: 'geoserver',
             crossOrigin: 'anonymous',            
             params: { 
@@ -171,7 +282,7 @@ function wmslayer(){
     	title: 'buoy',
     	opacity: 1,
         source: new ol.source.TileWMS({
-            url: 'http://141.164.62.150:8089/geoserver/wms',
+            url: geoserverWmsUrl,
             serverType: 'geoserver',
             crossOrigin: 'anonymous',            
             params: { 
@@ -183,6 +294,28 @@ function wmslayer(){
     });   
     map.addLayer(buoy);       
 }  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function clear_wmslayer(){
 	map.removeLayer(cbndWms);

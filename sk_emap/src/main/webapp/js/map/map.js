@@ -5,10 +5,10 @@ var googlemap;
 var wfsSource = new ol.source.Vector();
 var wfs_layer;
 var drawInteration;
+var drawInteration_search;
 var geoserverWmsUrl = "http://141.164.62.150:8089/geoserver/wms";
 
 //35.5468629,129.3005359 울산
-//126.978446,37.523184  서울
 function mapInit(){
 	var view = new ol.View({
 		center: ol.proj.fromLonLat([129.3604722,35.35916667]),
@@ -112,20 +112,39 @@ function mapInit(){
     map.removeLayer(vworldTile); //배경맵 삭제
     wmslayer(); //등대,등표,부표 호출
     
-    wfs_layer = new ol.layer.Vector({
-		source: wfsSource,
-		style: new ol.style.Style({
+    //항로범위
+    const measure = new ol.layer.Vector({
+        id: "measure",
+        source: new ol.source.Vector(),
+        style: new ol.style.Style({
             fill: new ol.style.Fill({
-                color: 'rgba(255, 228, 0, 0.5)'
+                color: 'rgba(255, 0, 0, 0)'
             }),
             stroke: new ol.style.Stroke({
-                color: '#ff0000',
-                width: 3
+                color: 'rgba(255,0, 0, 0.8)',
+                width: 2,
+                lineDash: [.1, 5]
+            })
+      	})
+    });
+    map.addLayer(measure);
+    
+    //항로범위
+    const mapSearch2 = new ol.layer.Vector({
+        id: "mapSearch2",
+        source: new ol.source.Vector(),
+        style: new ol.style.Style({
+            fill: new ol.style.Fill({
+                color: 'rgba(255, 0, 0, 0)'
             }),
-        }),
-        zIndex : 9999
-	});
-    map.addLayer(wfs_layer);
+            stroke: new ol.style.Stroke({
+                color: 'rgba(255,0, 0, 0.8)',
+                width: 2,
+                lineDash: [.1, 5]
+            })
+      	})
+    });
+    map.addLayer(mapSearch2);
     
     //항로검색용
     const mapSearch1 = new ol.layer.Vector({
@@ -144,6 +163,23 @@ function mapInit(){
     map.addLayer(mapSearch1);
     
     mapEvent();
+    
+    
+    //test
+    wfs_layer = new ol.layer.Vector({
+		source: wfsSource,
+		style: new ol.style.Style({
+            fill: new ol.style.Fill({
+                color: 'rgba(255, 228, 0, 0.5)'
+            }),
+            stroke: new ol.style.Stroke({
+                color: '#ff0000',
+                width: 3
+            }),
+        }),
+        zIndex : 9999
+	});
+    map.addLayer(wfs_layer);
 }
 
 //맵 이벤트
@@ -172,17 +208,13 @@ function mapEvent(){
 	 	deactiveInteractions();
 	 });
 	 
-	 //mapSearch1
+	 //항로범위
 	 $("#mapSearch1").on('click',function(e){
-	 	//setActiveDrawTool('box',null);
+	 	//$measure.init('distance');
+	 	setActiveDrawToolSearch('circle');
 	 });
 	 
-	 //mapSearch1
-	 $("#mapSearch2").on('click',function(e){
-	 	//setActiveDrawTool('box',null);
-	 });
-	 
-	 //mapSearch1
+	 //항로추적
 	 $("#mapSearch3").on('click',function(e){
 	 	setActiveDrawTool('box',null);
 	 });
@@ -191,14 +223,16 @@ function mapEvent(){
 //interaction 비활성화
 function deactiveInteractions() {
     map.removeInteraction(drawInteration);
-    dragInteraction.setActive(false);
+    map.removeInteraction(drawInteration_search);    
+    $measure.off();
+    //dragInteraction.setActive(false);
     //modStyleSelectInteraction.setActive(false);
     //modStyleSelectedFeature = null;
 
     //selectToolOn = false;
 }
 
-//그리기도구 활성화
+//항로검색 활성화
 function setActiveDrawTool(type, isOn) {
 	let lyr=null;
 	var layers = map.getLayers().getArray();
@@ -234,6 +268,53 @@ function setActiveDrawTool(type, isOn) {
     	}
     	drawInteration.on('drawend', drawendCallback);
     	map.addInteraction(drawInteration);
+    }    
+}
+
+var featTest;
+//항로범위 활성화
+function setActiveDrawToolSearch(type) {
+	let lyr=null;
+	var layers = map.getLayers().getArray();
+	for(let i in layers) {
+        const l = layers[i];
+        const thisLayerId = layers[i].get('id');
+
+        if("mapSearch2" === thisLayerId) {
+            lyr = l;
+            break;
+        }
+    }
+    
+    if(lyr != null){
+    	const source = lyr.getSource();
+    	
+    	const tool = {
+	        type: 'Circle',	        
+	    };
+	    
+	    let drawOption = $.extend({}, tool);
+    	drawOption['source'] = source;
+    	drawInteration_search = new ol.interaction.Draw(drawOption);
+    	const drawendCallback = function (e) {
+    		lyr.getSource().clear();
+        	e.feature.set('type', "circle");  
+        	console.log(e.feature);   
+        	let feat = e.feature;
+        	let featClone = feat.clone();
+        	featTest = featClone;
+        	let c_geometry = featClone.getGeometry().transform( 'EPSG:3857',  'EPSG:4326').getCoordinates();
+        	
+        	let fpoint = featClone.getGeometry().getCenter();        	
+        	console.log("fpoint");
+        	console.log(fpoint);
+        	let lpoint = featClone.getGeometry().getLastCoordinate();   	
+        	console.log("lpoint");
+        	console.log(lpoint);
+        	
+    	}
+    	drawInteration_search.on('drawend', drawendCallback);
+    	map.addInteraction(drawInteration_search);
     }    
 }
 

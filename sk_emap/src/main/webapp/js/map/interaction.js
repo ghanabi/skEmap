@@ -6,8 +6,7 @@ const $interaction = (function() {
     };
 
     //등록된 interaction 목록 조회
-    const getInteractions = function() {
-        const map = $map.getMap();
+    const getInteractions = function() {       
         return map.getInteractions().getArray();
     }
     
@@ -36,7 +35,7 @@ const $interaction = (function() {
 
     //initialize
     const init = function() {
-        const map = $map.getMap();
+        //const map = $map.getMap();
 
 
     }

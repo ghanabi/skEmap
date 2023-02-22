@@ -146,11 +146,32 @@ const $measure = (function() {
     const initToolInteraction = function(map, type) {
         const thisOption = measureToolOption[type];
         const geoType = thisOption['type'];
+        
+        let lyr=null;
+		var layers = map.getLayers().getArray();
+		for(let i in layers) {
+	        const l = layers[i];
+	        const thisLayerId = layers[i].get('id');
+	
+	        if("measure" === thisLayerId) {
+	            lyr = l;
+	            break;
+	        }
+	    }
+    
         measureTool = new ol.interaction.Draw({
-            source: $layer.getLayerById($layer.vectorIds.measure).getSource(),
+            source: lyr.getSource(),
             type: geoType,
-            style: $mapStyle.layerStyle.measure,
-        });
+            style: new ol.style.Style({
+            fill: new ol.style.Fill({
+	                color: 'rgba(255, 0, 0, 0.3)'
+	            }),
+	            stroke: new ol.style.Stroke({
+	                color: 'rgba(255,0, 0, 0.8)',
+	                width: 2
+	            })
+	      	})
+       	 });
 
         measureTool.setProperties({
             id: thisOption['id'],
@@ -214,8 +235,6 @@ const $measure = (function() {
      * 툴 비활성화
      */
     const off = function() {
-        const map = $map.getMap();
-
         //기존 삭제
         _.forEach(measureToolOption, function(o, k) {
             const inter = $interaction.getInteractionById(o['id']);
@@ -234,7 +253,7 @@ const $measure = (function() {
     //initialize
     const init = function(measureType) {
         off();
-        initToolInteraction($map.getMap(), measureType);
+        initToolInteraction(map, measureType);
     }
 
     return {

@@ -1,6 +1,35 @@
 (function ($){
 	$(window).on('load', function () {
 		setSize();
+		
+		$('#colorSelector2').ColorPicker({
+			color: '#0000ff',
+			onShow: function (colpkr) {
+				$(colpkr).fadeIn(500);
+				return false;
+			},
+			onHide: function (colpkr) {
+				$(colpkr).fadeOut(500);
+				return false;
+			},
+			onChange: function (hsb, hex, rgb) {
+				$('#colorSelector2 div').css('backgroundColor', '#' + hex);
+			}
+		});
+		$('#colorSelector1').ColorPicker({
+			color: '#0000ff',
+			onShow: function (colpkr) {
+				$(colpkr).fadeIn(500);
+				return false;
+			},
+			onHide: function (colpkr) {
+				$(colpkr).fadeOut(500);
+				return false;
+			},
+			onChange: function (hsb, hex, rgb) {
+				$('#colorSelector1 div').css('backgroundColor', '#' + hex);
+			}
+		});
 	});
 	$(window).resize(function () {
 		setSize();
@@ -23,11 +52,11 @@
 		}else r_div += 1;
 		
 		$(".con_left").height(window_h+"px");
-		$(".nav").height(window_h-60+"px");
+		$(".nav").height(window_h-70+"px");
 		
 		$("#container").width(window_w+"px");
 		$("#container").height(window_h+"px");
-		$(".con_center").width(window_w-left_w-right_w-l_div-r_div-2+"px");
+		$(".con_center").width(window_w-left_w-right_w-l_div-r_div-4+"px");
 		$(".con_center").height(window_h+"px");
 		
 		$(".con_right").height(window_h+"px");

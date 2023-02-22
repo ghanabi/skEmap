@@ -59,7 +59,13 @@
 <script type="text/javascript" src="<c:url value="/js/map/mapEvent.js?version=${nowDate}"/>"></script>
 
 <!-- RGB색상표 -->
-<script type="text/javascript" src="<c:url value="/js/libs/jquery/jscolor.js"/>"></script>
+<%-- <script type="text/javascript" src="<c:url value="/js/libs/jquery/jscolor.js"/>"></script> --%>
+<link rel="stylesheet" type="text/css" href="<c:url value="/js/libs/colorpicker/css/colorpicker.css"/>"/>
+<link rel="stylesheet" type="text/css" href="<c:url value="/js/libs/colorpicker/css/layout.css"/>"/>
+
+<script type="text/javascript" src="<c:url value="/js/libs/colorpicker/js/colorpicker.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/js/libs/colorpicker/js/eye.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/js/libs/colorpicker/js/utils.js"/>"></script>
 
 <script type="text/javascript" src="<c:url value="/js/script.js"/>"></script>
 
@@ -100,7 +106,7 @@ window.onload = function(){
 				<div class="slide1" id="slide1"><!-- <img alt="" src="images/sk/slide.jpg"> --></div>
 			</div>
 			<div id="div_left">
-				<div id="opiont1">
+				<div id="option1">
 					<table>
 						<colgroup><col width="40%"><col width="60%"></colgroup>
 						<tr>
@@ -133,7 +139,7 @@ window.onload = function(){
 						</tr>
 					</table>
 				</div>
-				<div id="opiont2">
+				<div id="option2">
 					<table>
 						<colgroup><col width="100%"></colgroup>
 						<tr>
@@ -153,32 +159,73 @@ window.onload = function(){
 						</tr>
 					</table>
 				</div>
-				<div id="opiont3">
+				<div id="option3">
 					<table>
-						<colgroup><col width="50%"><col width="50%"></colgroup>
+						<colgroup><col width="60%"><col width="40%"></colgroup>
 						<tr>
 							<th class="t_left" colspan="2">선박</th>
 						</tr>
 						<tr>
-							<td class="t_center"><img alt="" src="images/sk/opt3_1.jpg">
-							<div></div></td>
+							<td class="t_center">
+								<div class="option3_1">
+									<span>기호</span>
+								</div>
+								<div id="colorSelector1" style="width: 34px;height: 34px;"><div style="background-color: #0000ff;width: 30px;height: 30px;"></div></div>
+							</td>
 							<td class="t_center"><img alt="" src="images/sk/btn_chg.jpg"></td>
 						</tr>
 						<tr>
-							<td class="t_center" style="background-image: url(images/sk/opt3_2.jpg);"><button data-jscolor="{width:250, paletteCols:15, value:'#3399FF'}"></button></td>
+							<td class="t_center">
+							<div class="option3_1">
+									<span>항적</span>
+								</div>
+								<div id="colorSelector2" style="width: 34px;height: 34px;"><div style="background-color: #0000ff;width: 30px;height: 30px;"></div></div>
+							</td>
 							<td class="t_center"><img alt="" src="images/sk/btn_chg.jpg"></td>
 						</tr>
 						<tr>
-							<td class="t_center" style="background-image: url(images/sk/timebox.jpg);"></td>
-							<td class="t_center">선박 표시시간</td>
+							<td>
+								<div class="option3_2">
+									<input type="text"><span>분</span>
+								</div>
+							</td>
+							<td class="t_center" style="font-weight: bold;">선박 표시시간</td>
 						</tr>
 						<tr>
-							<td class="t_center" style="background-image: url(images/sk/timebox.jpg);"></td>
-							<td class="t_center">항적 저장시간</td>
+							<td>
+								<div class="option3_2">
+									<input type="text"><span>분</span>
+								</div>
+							</td>
+							<td class="t_center" style="font-weight: bold;">항적 저장시간</td>
 						</tr>
 					</table>
 				</div>
-				
+				<div id="option4">
+					<table>
+						<colgroup><col width="60%"><col width="40%"></colgroup>
+						<tr>
+							<th class="t_left" colspan="2">표지</th>
+						</tr>
+						<tr>
+							<td class="t_center">
+								<div class="option3_1">
+									<span>기호</span>
+								</div>
+								<div id="colorSelector1" style="width: 34px;height: 34px;"><div style="background-color: #0000ff;width: 30px;height: 30px;"></div></div>
+							</td>
+							<td class="t_center"><img alt="" src="images/sk/btn_chg.jpg"></td>
+						</tr>
+						<tr>
+							<td>
+								<div class="option3_2">
+									<input type="text"><span>분</span>
+								</div>
+							</td>
+							<td class="t_center" style="font-weight: bold;">표지 저장시간</td>
+						</tr>
+					</table>
+				</div>
 			</div>
 			<div class="con_center">
 				<div class="map" id="dvMap" style="width:100%; height:100%;"></div>

@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.sk.SkShipVO;
 import com.sk.service.mapService;
 
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
@@ -47,5 +48,10 @@ public class mapServiceImpl extends EgovAbstractServiceImpl implements mapServic
 	@Override
 	public int testCnt() throws Exception {
 		return mapDAO.testCnt();
+	}
+	
+	@Override
+	public List<SkShipVO> searchTbAisList(SkShipVO vo) throws Exception {
+		return mapDAO.searchTbAisList(vo);
 	}
 }

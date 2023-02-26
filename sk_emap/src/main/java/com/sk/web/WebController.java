@@ -15,25 +15,23 @@
  */
 package com.sk.web;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import com.sk.service.mapService;
-import egovframework.rte.fdl.property.EgovPropertyService;
-import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.support.SessionStatus;
 import org.springmodules.validation.commons.DefaultBeanValidator;
+
+import com.sk.SkShipVO;
+import com.sk.service.LibJson;
+import com.sk.service.mapService;
+
+import egovframework.rte.fdl.property.EgovPropertyService;
 
 /**
  * @Class Name : EgovSampleController.java
@@ -66,14 +64,40 @@ public class WebController {
 	@Resource(name = "mapService")
     private mapService mapService;
 
-
+	LibJson json = new LibJson(); //json 설정
+	
 	//초기화면
 	@RequestMapping(value = "/index.do")
 	public String selectSampleList(ModelMap model) throws Exception {
 	
 		int cnt = mapService.testCnt();
-		System.out.println("ddddddddd : "+cnt);
+		System.out.println("ddddddddd : "+cnt);	
 		
 		return "sk/map/map";
+	}
+	
+	//선박 리스트
+	@RequestMapping("getShipList.do")
+	public void getStationList(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		System.out.println("getStationList : start!");		
+		
+//		System.out.println(req.getParameter("lon1"));
+//		System.out.println(req.getParameter("lon2"));
+//		System.out.println(req.getParameter("lat1"));
+//		System.out.println(req.getParameter("lat2"));
+		
+		SkShipVO vo = new SkShipVO();
+		vo.setLon1((String)req.getParameter("lon1"));
+		vo.setLon2((String)req.getParameter("lon2"));
+		vo.setLat1((String)req.getParameter("lat1"));
+		vo.setLat2((String)req.getParameter("lat2"));
+		
+		List<SkShipVO> slist = mapService.searchTbAisList(vo);		
+		
+		System.out.println("slist.size() : "+slist.size());
+		if(slist.size() > 0) {			
+			/*json으로 정보 전달*/
+			json.Json(res, slist);
+		}				
 	}
 }

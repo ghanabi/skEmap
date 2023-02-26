@@ -150,17 +150,16 @@ function mapInit(){
     mapEvent();
     
     
-    //선박 벡터레이어
+    //test
     wfs_layer = new ol.layer.Vector({
-    	id: "shipLayer",
 		source: wfsSource,
 		style: new ol.style.Style({
             fill: new ol.style.Fill({
                 color: 'rgba(255, 228, 0, 0.5)'
             }),
             stroke: new ol.style.Stroke({
-                color: '#FF007F',
-                width: 2
+                color: '#ff0000',
+                width: 3
             }),
         }),
         zIndex : 9999
@@ -242,145 +241,17 @@ function setActiveDrawTool(type, isOn) {
     	drawInteration = new ol.interaction.Draw(drawOption);
     	const drawendCallback = function (e) {
     		lyr.getSource().clear();
-    		wfs_layer.getSource().clear();
         	e.feature.set('type', "box");  
-        	//console.log(e.feature);   
+        	console.log(e.feature);   
         	let feat = e.feature;
         	let featClone = feat.clone();
-        	//console.log(featClone.getGeometry());        	
+        	console.log(featClone.getGeometry());        	
         	let c_geometry = featClone.getGeometry().transform( 'EPSG:3857',  'EPSG:4326').getCoordinates();
-        	console.log(c_geometry);     
-        	
-        	var lon1 = 110;
-        	var lat1 = 18;
-        	var lon2 = 140;
-        	var lat2 = 47;
-        	console.log("c_geometry.length : "+c_geometry.length);  
-        	var coord = c_geometry[0];
-        	for(var i=0;i<coord.length;i++){
-        		var item = coord[i];
-        		console.log(item);
-        		if(Number(item[0]) < lon2){
-        			lon2 = item[0];
-        		}
-        		if(Number(item[0]) > lon1){
-        			lon1 = item[0];
-        		}
-        		if(Number(item[1]) < lat2){
-        			lat2 = item[1];
-        		}
-        		if(Number(item[1]) > lat1){
-        			lat1 = item[1];
-        		}        		
-        	}
-        	get_ship(lon1,lat1,lon2,lat2);	
+        	console.log(c_geometry);        	
     	}
     	drawInteration.on('drawend', drawendCallback);
     	map.addInteraction(drawInteration);
     }    
-}
-
-
-//선박 리스트 가져오기.
-function get_ship(lon1,lat1,lon2,lat2){
-	if(confirm("해당 범위의 선박을 검색하시겠습니까?")){
-		$.ajax({
-			type: "POST",
-			dataType: "json",
-			url: "getShipList.do",
-			data : {
-				lon1 : lon1,
-				lat1 : lat1,
-				lon2 : lon2,
-				lat2 : lat2
-			},
-			success: function(data) {		    
-				if(data != null){
-					//console.log(data);
-					var list = data;		
-					var shipList = [];			
-					for(var i=0;i<list.length;i++){
-						var item = list[i];
-						var chk = true;
-						for(var j=0;j<shipList.length;j++){
-							if(item.mmsi == shipList[j].mmsi){
-								if(Number(item.longitude)<140 && Number(item.longitude)>110 && Number(item.latitude) < 47 && Number(item.latitude) > 18){
-									shipList[j].feat_line.push([Number(item.longitude),Number(item.latitude)]);
-									chk = false;
-									break;				
-								}		 
-							}
-						}
-						
-						if(chk){
-							if(Number(item.longitude)<140 && Number(item.longitude)>110 && Number(item.latitude) < 47 && Number(item.latitude) > 18){
-								var obj = {
-									mmsi : item.mmsi,
-									feat_line : [[Number(item.longitude),Number(item.latitude)]]
-								};
-								shipList.push(obj);
-							}
-							
-						}
-					}
-					//console.log(shipList);
-					
-					//선박 레이어 라인 표시
-					for(var i=0;i<shipList.length;i++){
-						if(shipList[i].feat_line.length>1){
-							//if(shipList[i].mmsi == "440200240"){
-								//console.log(shipList[i]);
-								var feat_line = new ol.Feature({
-									geometry:new ol.geom.LineString(shipList[i].feat_line)
-								});								
-      	
-								const styles = [
-								    // linestring
-								    new ol.style.Style({
-								      stroke: new ol.style.Stroke({
-								        color: '#ffcc33',
-								        width: 2,
-								      }),
-								    }),
-								];
-  			
-								let c_geometry = feat_line.getGeometry().transform( 'EPSG:4326',  'EPSG:3857');
-								
-								c_geometry.forEachSegment(function (start, end) {
-								    const dx = end[0] - start[0];
-								    const dy = end[1] - start[1];
-							    	const rotation = Math.atan2(dy, dx);
-							    	// arrows
-							    	styles.push(
-							      		new ol.style.Style({
-								        	geometry: new ol.geom.Point(end),
-								        	image: new ol.style.Icon({
-									          	src: 'images/sk/arrow.png',
-									          	anchor: [0.75, 0.5],
-									          	rotateWithView: true,
-									          	rotation: -rotation,
-							        		}),
-							      		})
-							    	);
-							  	});
-							  	
-							  	feat_line.setStyle(styles);
-							  
-								//console.log("111111111111");
-								try{
-									wfs_layer.getSource().addFeature(feat_line);
-								}catch(e){
-									console.log(e);
-									console.log("shipList[i] error : "+shipList[i].mmsi);
-								}
-								//console.log("22222222");
-							//}									
-						}
-					}
-				}		   
-			},
-	    });
-	}	
 }
 
 //항로범위 활성화
@@ -437,7 +308,7 @@ function setActiveDrawToolSearch(type) {
 		                textAlign: 'center',
 		                font:  'bold 10px Arial',
 		                fill: new ol.style.Fill({color: 'rgba(255,0, 0, 0.8)'}),
-		                stroke: new ol.style.Stroke({color:'#ffffff', width:0}),
+		                stroke: new ol.style.Stroke({color:'#ffffff', width:4}),
 		                text: String(dis),
 		                offsetX: 0,
 		                offsetY: -10,
@@ -451,7 +322,7 @@ function setActiveDrawToolSearch(type) {
     	map.addInteraction(drawInteration_search);
     }    
 }
-//거리구하기
+
 function calDistance(featClone){
     let c_geometry = featClone.getGeometry().transform( 'EPSG:3857',  'EPSG:4326');
     
@@ -600,8 +471,120 @@ function wmslayer(){
 
 
 
+
 function clear_wmslayer(){
 	map.removeLayer(cbndWms);
+}
+
+function setSld(){
+	if(cbndWms == null){
+		return;
+	}
+	cbndWms.getSource().updateParams({
+		SLD_BODY : encodeURIComponent(sld())
+	});
+}
+
+function sld() {
+	var lyNm = 'lt_c_uq111';
+	
+    var sld = '<StyledLayerDescriptor xmlns="http://www.opengis.net/sld" xmlns:ogc="http://www.opengis.net/ogc" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.0" xsi:schemaLocation="http://www.opengis.net/sld StyledLayerDescriptor.xsd">';
+    sld += '<NamedLayer>';
+    sld += '<Name>sop:'+lyNm+'</Name>';
+    sld += '<UserStyle>';
+    sld += '<Name>Default Styler</Name>';
+    sld += '<Title>테스트</Title>';
+    sld += '<Abstract>테스트</Abstract>';
+    sld += ' <FeatureTypeStyle>';
+    sld += '<Rule>';
+    sld += '<Name>도시지역</Name>';
+    sld += '<Title>도시지역</Title>';
+    //sld += '<Filter xmlns="http://www.opengis.net/ogc">';
+    //if(type != "emd"){
+    //  sld += '<PropertyIsLike wildCard="_" singleChar="!" escapeChar="?">';
+    //  sld += '<PropertyName>'+lyCol+'</PropertyName>';
+    //  sld += '<Literal>'+lyVal+'_</Literal>';
+    //  sld += '</PropertyIsLike>';
+    // }else{
+    //   sld += '<PropertyIsEqualTo>';
+    //   sld += '<PropertyName>'+lyCol+'</PropertyName>';
+    //   sld += '<Literal>'+lyVal+'</Literal>';
+    //   sld += '</PropertyIsEqualTo>';
+    // }
+    //sld += '</Filter>';
+    sld += '<PolygonSymbolizer>';
+    sld += '<Fill>';
+    sld += '<CssParameter name="fill">#000000</CssParameter>';
+    sld += '<CssParameter name="fill-opacity">1</CssParameter>';
+    sld += '</Fill>';
+    sld += '<Stroke>';
+    sld += '<CssParameter name="stroke">';
+    sld += '<Literal xmlns="http://www.opengis.net/ogc">#FF0000</Literal>';
+    sld += '<CssParameter name="stroke-width">3</CssParameter>';
+    sld += '</CssParameter>';
+    sld += '</Stroke>';
+    sld += '</PolygonSymbolizer>';
+    // sld += '<TextSymbolizer>';
+    // sld += '<Label>';
+    // sld += '<PropertyName>sig_kor_nm</PropertyName>';
+    // sld += '</Label>';
+    // sld += '<Font>';
+    // sld += '<CssParameter name="font-family">Arial</CssParameter>';
+    // sld += '<CssParameter name="font-size">17</CssParameter>';
+    // sld += '<CssParameter name="font-style">italic</CssParameter>';
+    // sld += '</Font>';
+    // sld += '<Fill>';
+    // sld += '<CssParameter name="fill">#FFFF00</CssParameter>';
+    // sld += '</Fill>';
+    // sld += '</TextSymbolizer>';
+    sld += '</Rule>';
+    sld += '</FeatureTypeStyle>';
+    sld += '</UserStyle>';
+    sld += '</NamedLayer>';
+    sld += '</StyledLayerDescriptor>';
+    
+    return sld;
+}
+
+function startWfs(){
+	
+	var str = "http://api.vworld.kr/req/wfs?SERVICE=WFS&REQUEST=GetFeature&TYPENAME=lt_c_uq111&BBOX=13987670,3912271,14359383,4642932&PROPERTYNAME=mnum,sido_cd,sigungu_cd,dyear,dnum,ucode,bon_bun,bu_bun,uname,sido_name,sigg_name,ag_geom&VERSION=1.1.0&MAXFEATURES=40&SRSNAME=EPSG:3857&OUTPUT=GML3&EXCEPTIONS=text/xml&KEY=90D6D336-FE7B-3EAD-860C-19793AC8FE9E&DOMAIN=localhost:8080";
+	
+	var param = encodeURIComponent(str);
+	
+	$.ajax({
+		type : "GET",
+		url : './proxyGetMap.jsp?url='+param,
+		dataType : "text",
+		outputFormat : "json",
+		success : function(gml) {
+			console.log(gml);
+			fn_searchParser_move_smap(gml);
+		},
+		error : function(e) {
+			alert("검색결과를 가져오는데 실패했습니다.");
+		}
+	});	
+}
+
+//지도 위치 이동 + 하이라이팅
+function fn_searchParser_move_smap(xml) {
+	var gmlParser = new ol.format.GML3();
+	gmlParser.extractAttributes = true;
+	var features = gmlParser.readFeatures(xml);
+	//console.log(features);
+	if (features) {
+		for (var i = 0; i < features.length; i++) {
+			var feature = features[i];
+			//var result_feature = getFeature(feature);
+			// map.getLayerByName("search_juso").addFeatures(result_feature);
+			// var result_feature = init_feature_style(feature);
+			wfsSource.addFeature(feature);
+			// var point_w = feature.geometry.getBounds().getCenterLonLat();
+		}
+	} else {
+		alert("해당지역의 공간데이터가 없습니다.");
+	}
 }
 
 function clear_wfslayer(){

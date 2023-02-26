@@ -3,8 +3,9 @@
 
 <sqlMap namespace="sk">
 	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="SkShipVO" type="com.sk.SkShipVO"/>
 	
-	<select id="map.test">
+	<select id="map.test" resultClass="egovMap">
 		<![CDATA[ 
 			SELECT 
 			Buoy_No AS BUOY_NO
@@ -15,8 +16,22 @@
 	
 	<select id="map.testCnt" resultClass="int">
 		<![CDATA[ 
-			SELECT count(Buoy_No)
-			FROM SPM.dbo.TB_AIS21			
+			SELECT count(a.mmsi)
+			FROM SPM.dbo.TB_AIS123 a, SPM.dbo.TB_AIS5 b
+			where a.MMSI =b.mmsi and a.TimeStampK = b.TimeStampK 
+			and a.Latitude > '35.34033442007605' and a.Latitude < '35.74038185534101'
+			and a.Longitude > '129.34066772460938' and a.Longitude < '130.21820068359375'					
+		]]>
+	</select>
+	
+	<select id="map.searchTbAisList" resultClass="SkShipVO" parameterClass="SkShipVO">
+		<![CDATA[ 			 
+			SELECT a.mmsi, a.TimeStampK as timestampk, a.Latitude as latitude, a.Longitude as longitude 
+			FROM SPM.dbo.TB_AIS123 a, SPM.dbo.TB_AIS5 b
+			where a.MMSI =b.mmsi and a.TimeStampK = b.TimeStampK 
+			and a.Latitude > #lat2# and a.Latitude < #lat1#
+			and a.Longitude > #lon2# and a.Longitude < #lon1#
+			order by a.MMSI, a.TimeStampK 
 		]]>
 	</select>
 </sqlMap>            

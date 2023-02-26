@@ -3,11 +3,11 @@ package com.sk.service.impl;
 import java.util.List;
 import java.util.Map;
 
-import egovframework.com.cmm.ComDefaultCodeVO;
-import egovframework.com.cmm.service.CmmnDetailCode;
-import egovframework.com.cmm.service.impl.EgovComAbstractDAO;
-
 import org.springframework.stereotype.Repository;
+
+import com.sk.SkShipVO;
+
+import egovframework.com.cmm.service.impl.EgovComAbstractDAO;
 
 /**
  * @Class Name : CmmUseDAO.java
@@ -42,5 +42,10 @@ public class mapDAO extends EgovComAbstractDAO {
     @SuppressWarnings("unchecked")
    	public int testCnt() throws Exception {
    	return (int) select("map.testCnt", null);
+    }
+    
+    @SuppressWarnings("unchecked")
+   	public List<SkShipVO> searchTbAisList(SkShipVO vo) throws Exception {
+    	return (List<SkShipVO>) list("map.searchTbAisList", vo);
     }
 }

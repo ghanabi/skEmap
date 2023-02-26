@@ -209,6 +209,23 @@ function mapEvent(){
 function deactiveInteractions() {
     map.removeInteraction(drawInteration);
     map.removeInteraction(drawInteration_search);    
+    var layers = map.getLayers().getArray();
+	for(let i in layers) {
+        let l = layers[i];
+        const thisLayerId = layers[i].get('id');
+
+        if("mapSearch1" === thisLayerId) {
+            l.getSource().clear();
+        }
+        if("shipLayer" === thisLayerId) {
+            l.getSource().clear();
+        }
+        if("mapSearch2" === thisLayerId) {
+            l.getSource().clear();
+        }
+    }
+    
+    
     //$measure.off();
     //dragInteraction.setActive(false);
     //modStyleSelectInteraction.setActive(false);
@@ -248,18 +265,17 @@ function setActiveDrawTool(type, isOn) {
         	let feat = e.feature;
         	let featClone = feat.clone();
         	//console.log(featClone.getGeometry());        	
-        	let c_geometry = featClone.getGeometry().transform( 'EPSG:3857',  'EPSG:4326').getCoordinates();
-        	console.log(c_geometry);     
+        	let c_geometry = featClone.getGeometry().transform( 'EPSG:3857',  'EPSG:4326').getCoordinates();  
         	
         	var lon1 = 110;
         	var lat1 = 18;
         	var lon2 = 140;
         	var lat2 = 47;
-        	console.log("c_geometry.length : "+c_geometry.length);  
+        	  
         	var coord = c_geometry[0];
         	for(var i=0;i<coord.length;i++){
         		var item = coord[i];
-        		console.log(item);
+        		//console.log(item);
         		if(Number(item[0]) < lon2){
         			lon2 = item[0];
         		}

@@ -195,12 +195,14 @@ function mapEvent(){
 	 });
 	 
 	 //항로범위
-	 $("#mapSearch1").on('click',function(e){	 	
+	 $("#mapSearch1").on('click',function(e){	
+	 	deactiveInteractions(); 	
 	 	setActiveDrawToolSearch('circle');
 	 });
 	 
 	 //항로추적
 	 $("#mapSearch3").on('click',function(e){
+	 	deactiveInteractions();
 	 	setActiveDrawTool('box',null);
 	 });
 }

@@ -26,7 +26,7 @@
 	
 	<select id="map.searchTbAisList" resultClass="SkShipVO" parameterClass="SkShipVO">
 		<![CDATA[ 			 
-			SELECT a.mmsi, a.TimeStampK as timestampk, a.Latitude as latitude, a.Longitude as longitude 
+			SELECT a.mmsi, a.TimeStampK as timestampk, a.Latitude as latitude, a.Longitude as longitude, b.ShipName as shipname
 			FROM SPM.dbo.TB_AIS123 a, SPM.dbo.TB_AIS5 b
 			where a.MMSI =b.mmsi and a.TimeStampK = b.TimeStampK 
 			and a.Latitude > #lat2# and a.Latitude < #lat1#

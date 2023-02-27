@@ -46,7 +46,18 @@ public class SkShipVO implements Serializable {
     /** lat2 */
     private String lat2 = "";
     
+    /** 선박명 */
+    private String shipname = "";
     
+    
+
+	public String getShipname() {
+		return shipname;
+	}
+
+	public void setShipname(String shipname) {
+		this.shipname = shipname;
+	}
 
 	public String getLon1() {
 		return lon1;

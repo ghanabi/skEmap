@@ -1,12 +1,9 @@
 
-var cbndWms;
 var vworldTile;
 var googlemap;
-var wfsSource = new ol.source.Vector();
-var wfs_layer;
 var drawInteration;
 var drawInteration_search;
-var geoserverWmsUrl = "http://141.164.62.150:8089/geoserver/wms";
+
 
 var featTest;
 
@@ -37,135 +34,12 @@ function mapInit(){
 		],
 		target: 'dvMap',
 		view: view
-	});	
-	
-	//wms 바다(기본맵처럼사용)
-	var DEPAREA = new ol.layer.Tile({
-		id : 'DEPAREA',
-    	title: 'DEPAREA',
-    	opacity: 1,
-        source: new ol.source.TileWMS({
-            url: geoserverWmsUrl,
-            serverType: 'geoserver',
-            crossOrigin: 'anonymous',            
-            params: { 
-            	'VERSION': '1.1.0' , 
-                'LAYERS': 'skemap:DEPAREA',               
-                'CRS' : 'EPSG:3857',
-            },            
-        })
-    });
-    map.addLayer(DEPAREA);
+	});		
     
-    //wms 대지(기본맵처럼사용)
-    var LNDAREA_A = new ol.layer.Tile({
-		id : 'LNDAREA_A',
-    	title: 'LNDAREA_A',
-    	opacity: 1,
-        source: new ol.source.TileWMS({
-            url: geoserverWmsUrl,
-            serverType: 'geoserver',
-            crossOrigin: 'anonymous',            
-            params: { 
-            	'VERSION': '1.1.0' , 
-                'LAYERS': 'skemap:LNDAREA_A',               
-                'CRS' : 'EPSG:3857',
-            },            
-        })
-    });
-    map.addLayer(LNDAREA_A);
-    
-    //wms 강(기본맵처럼사용)
-    var rivers = new ol.layer.Tile({
-		id : 'rivers',
-    	title: 'rivers',
-    	opacity: 1,
-        source: new ol.source.TileWMS({
-            url: geoserverWmsUrl,
-            serverType: 'geoserver',
-            crossOrigin: 'anonymous',            
-            params: { 
-            	'VERSION': '1.1.0' , 
-                'LAYERS': 'skemap:rivers',               
-                'CRS' : 'EPSG:3857',
-            },            
-        })
-    });
-    map.addLayer(rivers);
-    
-    //wms 강(기본맵처럼사용)
-    var souding = new ol.layer.Tile({
-		id : 'souding',
-    	title: 'souding',
-    	opacity: 1,
-        source: new ol.source.TileWMS({
-            url: geoserverWmsUrl,
-            serverType: 'geoserver',
-            crossOrigin: 'anonymous',            
-            params: { 
-            	'VERSION': '1.1.0' , 
-                'LAYERS': 'skemap:SOUNDG',               
-                'CRS' : 'EPSG:3857',
-            },            
-        })
-    });
-    map.addLayer(souding);
-    
-    map.removeLayer(vworldTile); //배경맵 삭제
-    wmslayer(); //등대,등표,부표 호출
-    
-    //항로범위
-    const mapSearch2 = new ol.layer.Vector({
-        id: "mapSearch2",
-        source: new ol.source.Vector(),
-        style: new ol.style.Style({
-            fill: new ol.style.Fill({
-                color: 'rgba(255, 0, 0, 0)'
-            }),
-            stroke: new ol.style.Stroke({
-                color: 'rgba(255,0, 0, 0.8)',
-                width: 3,
-                lineDash: [.1, 5]
-            })
-      	})
-    });
-    map.addLayer(mapSearch2);
-    
-    //항로검색용
-    const mapSearch1 = new ol.layer.Vector({
-        id: "mapSearch1",
-        source: new ol.source.Vector(),
-        style: new ol.style.Style({
-            fill: new ol.style.Fill({                
-                color: '#FF000033'
-            }),
-            stroke: new ol.style.Stroke({                
-                color: '#ff0000ff',
-                width: 2
-            })
-      	})
-    });
-    map.addLayer(mapSearch1);
-    
+    wmsInit(); //베이스 wms레이어    
+    map.removeLayer(vworldTile); //배경맵 삭제    
+    vectorInit(); //베이스 vector레이어
     mapEvent();
-    
-    
-    //선박 벡터레이어
-    wfs_layer = new ol.layer.Vector({
-    	id: "shipLayer",
-		source: wfsSource,
-		style: new ol.style.Style({
-            fill: new ol.style.Fill({
-                color: 'rgba(255, 228, 0, 0.5)'
-            }),
-            stroke: new ol.style.Stroke({
-                color: '#FF007F',
-                width: 2
-            }),
-        }),
-        zIndex : 9999
-	});
-    map.addLayer(wfs_layer);
 }
 
 //맵 이벤트
@@ -227,14 +101,12 @@ function deactiveInteractions() {
         }
     }
     
-    
-    //$measure.off();
     //dragInteraction.setActive(false);
     //modStyleSelectInteraction.setActive(false);
     //modStyleSelectedFeature = null;
 }
 
-//항로검색 활성화
+//항적조회 이벤트 활성화
 function setActiveDrawTool(type, isOn) {
 	let lyr=null;
 	var layers = map.getLayers().getArray();
@@ -299,7 +171,7 @@ function setActiveDrawTool(type, isOn) {
 }
 
 
-//선박 리스트 가져오기.
+//항적조회1
 function get_ship(lon1,lat1,lon2,lat2){
 	if(confirm("해당 범위의 선박을 검색하시겠습니까?")){
 		$.ajax({
@@ -334,6 +206,7 @@ function get_ship(lon1,lat1,lon2,lat2){
 							if(Number(item.longitude)<140 && Number(item.longitude)>110 && Number(item.latitude) < 47 && Number(item.latitude) > 18){
 								var obj = {
 									mmsi : item.mmsi,
+									shipname : item.shipname,
 									feat_line : [[Number(item.longitude),Number(item.latitude)]]
 								};
 								shipList.push(obj);
@@ -341,64 +214,75 @@ function get_ship(lon1,lat1,lon2,lat2){
 							
 						}
 					}
-					//console.log(shipList);
-					
-					//선박 레이어 라인 표시
-					for(var i=0;i<shipList.length;i++){
-						if(shipList[i].feat_line.length>1){
-							//if(shipList[i].mmsi == "440200240"){
-								//console.log(shipList[i]);
-								var feat_line = new ol.Feature({
-									geometry:new ol.geom.LineString(shipList[i].feat_line)
-								});								
-      	
-								const styles = [
-								    // linestring
-								    new ol.style.Style({
-								      stroke: new ol.style.Stroke({
-								        color: '#ffcc33',
-								        width: 2,
-								      }),
-								    }),
-								];
-  			
-								let c_geometry = feat_line.getGeometry().transform( 'EPSG:4326',  'EPSG:3857');
-								
-								c_geometry.forEachSegment(function (start, end) {
-								    const dx = end[0] - start[0];
-								    const dy = end[1] - start[1];
-							    	const rotation = Math.atan2(dy, dx);
-							    	// arrows
-							    	styles.push(
-							      		new ol.style.Style({
-								        	geometry: new ol.geom.Point(end),
-								        	image: new ol.style.Icon({
-									          	src: 'images/sk/arrow.png',
-									          	anchor: [0.75, 0.5],
-									          	rotateWithView: true,
-									          	rotation: -rotation,
-							        		}),
-							      		})
-							    	);
-							  	});
-							  	
-							  	feat_line.setStyle(styles);
-							  
-								//console.log("111111111111");
-								try{
-									wfs_layer.getSource().addFeature(feat_line);
-								}catch(e){
-									console.log(e);
-									console.log("shipList[i] error : "+shipList[i].mmsi);
-								}
-								//console.log("22222222");
-							//}									
-						}
-					}
+					//console.log(shipList);					
+					get_ship_to_map(shipList); //항적조회2
 				}		   
 			},
 	    });
 	}	
+}
+
+//항적조회2
+function get_ship_to_map(shipList){
+	//선박 레이어 라인 표시
+	for(var i=0;i<shipList.length;i++){
+		if(shipList[i].feat_line.length>1){
+			//if(shipList[i].mmsi == "440200240"){
+				//console.log(shipList[i]);
+				var feat_line = new ol.Feature({
+					geometry:new ol.geom.LineString(shipList[i].feat_line)
+				});								
+
+				const styles = [
+				    // linestring
+				    new ol.style.Style({
+				      stroke: new ol.style.Stroke({
+				        color: '#ffcc33',
+				        width: 2,
+				      }),
+				      text: new ol.style.Text({
+			                textAlign: 'center',
+			                font:  'bold 10px Arial',
+			                fill: new ol.style.Fill({color: 'rgba(255,0, 0, 0.8)'}),
+			                stroke: new ol.style.Stroke({color:'#ffffff', width:0}),
+			                text: shipList[i].shipname,
+			                offsetX: 0,
+			                offsetY: -10,
+			                overflow:true,
+			            })
+				    }),
+				];
+
+				let c_geometry = feat_line.getGeometry().transform( 'EPSG:4326',  'EPSG:3857');
+				
+				c_geometry.forEachSegment(function (start, end) {
+				    const dx = end[0] - start[0];
+				    const dy = end[1] - start[1];
+			    	const rotation = Math.atan2(dy, dx);
+			    	// arrows
+			    	styles.push(
+			      		new ol.style.Style({
+				        	geometry: new ol.geom.Point(end),
+				        	image: new ol.style.Icon({
+					          	src: 'images/sk/arrow.png',
+					          	anchor: [0.75, 0.5],
+					          	rotateWithView: true,
+					          	rotation: -rotation,
+			        		}),
+			      		})
+			    	);
+			  	});
+			  	
+			  	feat_line.setStyle(styles);			
+				try{
+					wfs_layer.getSource().addFeature(feat_line);
+				}catch(e){
+					console.log(e);
+					console.log("shipList[i] error : "+shipList[i].mmsi);
+				}				
+			//}									
+		}
+	}
 }
 
 //항로범위 활성화
@@ -432,11 +316,7 @@ function setActiveDrawToolSearch(type) {
         	let featClone = feat.clone();
         	featTest = featClone;        	
         	let fpoint = feat.getGeometry().getCenter();        	
-        	//console.log("fpoint");
-        	//console.log(fpoint);
-        	let lpoint = feat.getGeometry().getLastCoordinate();   	
-        	//console.log("lpoint");
-        	//console.log(lpoint);       	
+        	let lpoint = feat.getGeometry().getLastCoordinate();        	     	
 	        
 	        var feat_line = new ol.Feature({
 				geometry:new ol.geom.LineString([
@@ -517,111 +397,4 @@ function calDistance(featClone){
 	str += ", "+brng+"도";
 	
 	return str;
-}
-
-
-
-//등대,등표,부표 보여주기
-function wmslayer(){     
-	//등대
-   cbndWms = new ol.layer.Tile({
-		id : 'lighthouse',
-    	title: 'lighthouse',
-    	opacity: 1,
-        source: new ol.source.TileWMS({
-            url: geoserverWmsUrl,
-            serverType: 'geoserver',
-            crossOrigin: 'anonymous',            
-            params: { 
-            	'VERSION': '1.1.0' , 
-                'LAYERS': 'skemap:lighthouse',
-                //'SLD_BODY': text_SLD,
-                //'format' : 'image/png', 
-                //'transparent' : 'true',
-                'CRS' : 'EPSG:3857',
-            },            
-        })
-    });   
-    map.addLayer(cbndWms);    
-    //등표
-    var lightmark = new ol.layer.Tile({
-		id : 'lightmark',
-    	title: 'lightmark',
-    	opacity: 1,
-        source: new ol.source.TileWMS({
-            url: geoserverWmsUrl,
-            serverType: 'geoserver',
-            crossOrigin: 'anonymous',            
-            params: { 
-            	'VERSION': '1.1.0' , 
-                'LAYERS': 'skemap:lightmark',               
-                'CRS' : 'EPSG:3857',
-            },            
-        })
-    });   
-    map.addLayer(lightmark);    
-    //부표
-     var buoy = new ol.layer.Tile({
-		id : 'buoy',
-    	title: 'buoy',
-    	opacity: 1,
-        source: new ol.source.TileWMS({
-            url: geoserverWmsUrl,
-            serverType: 'geoserver',
-            crossOrigin: 'anonymous',            
-            params: { 
-            	'VERSION': '1.1.0' , 
-                'LAYERS': 'skemap:buoy',               
-                'CRS' : 'EPSG:3857',
-            },            
-        })
-    });   
-    map.addLayer(buoy);       
-    
-    //wrecks
-     var wrecks = new ol.layer.Tile({
-		id : 'wrecks',
-    	title: 'wrecks',
-    	opacity: 1,
-        source: new ol.source.TileWMS({
-            url: geoserverWmsUrl,
-            serverType: 'geoserver',
-            crossOrigin: 'anonymous',            
-            params: { 
-            	'VERSION': '1.1.0' , 
-                'LAYERS': 'skemap:wrecks',               
-                'CRS' : 'EPSG:3857',
-            },            
-        })
-    });   
-    map.addLayer(wrecks);       
-}  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function clear_wmslayer(){
-	map.removeLayer(cbndWms);
-}
-
-function clear_wfslayer(){
-	wfsSource.clear();
 }

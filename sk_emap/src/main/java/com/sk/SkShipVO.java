@@ -49,6 +49,22 @@ public class SkShipVO implements Serializable {
     /** 선박명 */
     private String shipname = "";
     
+    /** 날짜1 */
+    private String date1 = "";
+
+    /** 날짜2 */
+    private String date2 = "";
+
+    /** mmsi/선박명 */
+    private String kind = "";
+    
+    /** 최초 timeStampK */
+    private String min_timestampk = "";
+
+    /** 최종 timeStampK */
+    private String max_timestampk = "";
+    
+    
     
 
 	public String getShipname() {
@@ -122,5 +138,45 @@ public class SkShipVO implements Serializable {
 	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
- 
+
+	public String getDate1() {
+		return date1;
+	}
+
+	public void setDate1(String date1) {
+		this.date1 = date1;
+	}
+
+	public String getDate2() {
+		return date2;
+	}
+
+	public void setDate2(String date2) {
+		this.date2 = date2;
+	}
+
+	public String getKind() {
+		return kind;
+	}
+
+	public void setKind(String kind) {
+		this.kind = kind;
+	}
+
+	public String getMin_timestampk() {
+		return min_timestampk;
+	}
+
+	public void setMin_timestampk(String min_timestampk) {
+		this.min_timestampk = min_timestampk;
+	}
+
+	public String getMax_timestampk() {
+		return max_timestampk;
+	}
+
+	public void setMax_timestampk(String max_timestampk) {
+		this.max_timestampk = max_timestampk;
+	}
+	
 }

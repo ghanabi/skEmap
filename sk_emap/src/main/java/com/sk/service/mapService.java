@@ -11,4 +11,6 @@ public interface mapService {
 	public int testCnt() throws Exception;
 	
 	public List<SkShipVO> searchTbAisList(SkShipVO vo) throws Exception;
+	
+	public List<SkShipVO> getShipList(SkShipVO vo) throws Exception;
 }

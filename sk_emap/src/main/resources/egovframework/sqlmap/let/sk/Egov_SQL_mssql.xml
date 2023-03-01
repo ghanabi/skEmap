@@ -34,4 +34,23 @@
 			order by a.MMSI, a.TimeStampK 
 		]]>
 	</select>
+	
+	<select id="map.getShipList" resultClass="SkShipVO" parameterClass="SkShipVO">
+		<![CDATA[ 			 
+			SELECT a.mmsi, min(a.TimeStampK) as min_timestampk, max(a.TimeStampK) as max_timestampk, b.ShipName as shipname
+			  FROM SPM.dbo.TB_AIS123 a, SPM.dbo.TB_AIS5 b
+			 WHERE a.MMSI =b.mmsi and a.TimeStampK = b.TimeStampK 
+			   AND CONVERT(DATE, a.TimeStampK) BETWEEN CONVERT(DATE, #date1#) AND CONVERT(DATE, #date2#)
+		]]>
+			<isEqual prepend="AND" property="kind" compareValue="MMSI" >			    	
+			a.MMSI like '%$mmsi$%'
+	   		</isEqual>
+			<isEqual prepend="AND" property="kind" compareValue="SHIPNAME" >			    	
+			b.ShipName like '%$shipname$%'
+	   		</isEqual>
+		<![CDATA[ 					   
+			 GROUP BY a.MMSI, b.ShipName
+			 ORDER BY a.MMSI, b.ShipName
+		]]>
+	</select>
 </sqlMap>            

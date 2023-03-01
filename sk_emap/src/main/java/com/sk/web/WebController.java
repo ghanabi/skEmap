@@ -100,4 +100,24 @@ public class WebController {
 			json.Json(res, slist);
 		}				
 	}
+	
+	//선박 리스트
+	@RequestMapping("getShipList2.do")
+	public void getShipList(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		System.out.println("getStationList2 : start!");		
+		
+		SkShipVO vo = new SkShipVO();
+		vo.setDate1((String)req.getParameter("date1"));
+		vo.setDate2((String)req.getParameter("date2"));
+		vo.setShipname((String)req.getParameter("text"));
+		vo.setKind((String)req.getParameter("kind"));
+		
+		List<SkShipVO> slist = mapService.getShipList(vo);		
+		
+		System.out.println("slist.size() : "+slist.size());
+		if(slist.size() > 0) {			
+			/*json으로 정보 전달*/
+			json.Json(res, slist);
+		}				
+	}
 }

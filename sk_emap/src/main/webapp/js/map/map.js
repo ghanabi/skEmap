@@ -44,41 +44,105 @@ function mapInit(){
 
 //맵 이벤트
 function mapEvent(){
-	 //기본
-	 $("#mapDefalt").on('click',function(e){
-	 	deactiveInteractions();
-	 });
+	//기본
+	$("#mapDefalt").on('click',function(e){
+		deactiveInteractions();
+	});
 	 
-	 //확대
-	 $("#mapZoomIn").on('click',function(e){
+	//확대
+	$("#mapZoomIn").on('click',function(e){
 	 	let thisZoom = map.getView().getZoom();
 	 	thisZoom++;
         map.getView().animate({zoom: thisZoom, duration: 300});
-	 });
+	});
 	 
-	 //축소
-	 $("#mapZoomOut").on('click',function(e){
+	//축소
+	$("#mapZoomOut").on('click',function(e){
 	 	let thisZoom = map.getView().getZoom();
 	 	thisZoom--;
         map.getView().animate({zoom: thisZoom, duration: 300});
-	 });
+	});
 	 
-	 //move
-	 $("#mapMove").on('click',function(e){
+	//move
+	$("#mapMove").on('click',function(e){
 	 	deactiveInteractions();
-	 });
+	});
 	 
-	 //항로범위
-	 $("#mapSearch1").on('click',function(e){	
+	//항로범위
+	$("#mapSearch1").on('click',function(e){	
 	 	deactiveInteractions(); 	
 	 	setActiveDrawToolSearch('circle');
-	 });
+	});
 	 
-	 //항로추적
-	 $("#mapSearch3").on('click',function(e){
-	 	deactiveInteractions();
-	 	setActiveDrawTool('box',null);
-	 });
+	//항로추적
+	$("#mapSearch3").on('click',function(e){
+	 	//deactiveInteractions();
+	 	//setActiveDrawTool('box',null);
+		let dis = $("#div_left_mapSearch").css("display");
+		if(dis == "block") {
+			$("#div_left_mapSearch").css("display","none");
+		} else {			
+			$("#div_left_mapSearch").css("display","block");
+		}
+	 	$("#slide1").click();
+	});
+
+	//레이어 설정
+	$("#mapSetting").on('click',function(e){
+		
+		let dis = $("#div_left_mapSetting").css("display");
+		if(dis == "block") {
+			$("#div_left_mapSetting").css("display","none");
+		} else {			
+			$("#div_left_mapSetting").css("display","block");
+		}
+	 	$("#slide1").click();
+	});
+	
+	//항적표시 검색
+	$("#shipsearch").on('click',function(e){
+		console.log($("#date1").val());
+		console.log($("#date2").val());
+		console.log($("#txt_search").val());
+		let date1 = $("#date1").val();
+		let date2 = $("#date2").val();
+		let txt = $("#txt_search").val();
+		let kind = $('input[name="kind"]:checked').val();
+		
+		if(date1==""||date2=="") {
+			alert("날짜 입력 하시기 바랍니다.");
+			return;
+		}
+		
+		$.ajax({
+			type: "POST",
+			dataType: "json",
+			url: "getShipList2.do",
+			data:{
+				date1 : date1,
+				date2 : date2,
+				kind : kind,
+				text : txt
+			},
+			success: function(data) {		    
+				if(data != null){
+					let str = "<table>";
+					str += "<colgroup><col width='20%'><col width='20%'><col width='30%'><col width='30%'></colgroup>";
+					str += "<tr><th>MMSI</th><th>선박명칭</th><th>최초수신시간</th><th>최종수신시간</th></tr>";
+					for(var i=0; i<data.length; i++) {
+						str += "<tr>";
+						str += "<td>"+data[i].mmsi+"</td>";
+						str += "<td>"+data[i].shipname+"</td>";
+						str += "<td>"+data[i].min_timestampk+"</td>";
+						str += "<td>"+data[i].max_timestampk+"</td>";
+						str += "</tr>"; 
+					}
+					str += "</table>";
+					$("#ship_result").html(str);
+				}		   
+			},
+	    });
+	});
 }
 
 //interaction 비활성화

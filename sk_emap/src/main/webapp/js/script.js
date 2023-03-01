@@ -40,10 +40,10 @@
 		var window_h = $( window ).height();
 		var left_w = $(".con_left").width();
 		var right_w = $(".con_right").width();
-		var l_div = $("#div_left").width();
+		var l_div = $(".div_left").width();
 		var r_div = $("#div_right").width();
 		
-		if($("#div_left").css("display") == "none") {
+		if($(".div_left").css("display") == "none") {
 			l_div = 0;
 		}else l_div += 1;
 		
@@ -72,11 +72,15 @@
 			if(c == "slide1_on") {
 		    	$(this).addClass('slide1');
 		    	$(this).removeClass('slide1_on');
-				$("#div_left").css("display","none");
+
+				$(".div_left").css("display","none");
+				$("#div_left_mapSetting").css("display","none");
+				$("#div_left_mapSearch").css("display","none");				
 			} else {				
 	    		$(this).addClass('slide1_on');
 	    		$(this).removeClass('slide1');
-				$("#div_left").css("display","block");
+
+				$(".div_left").css("display","block");
 			}
 			setSize();
 	    	return false;

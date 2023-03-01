@@ -81,121 +81,138 @@ table input[type='checkbox'] {
 	border-right: 1px solid #d4d4d4;
 }
 
-#div_left {
+.div_left {
 	width: 295px;
 	height: 100%;
 	float: left;
 	display: none;
 	border-right: 1px solid #d4d4d4;
 }
-#div_left #option1{
+.div_left #option1{
 	margin-top: 50px;
 }
-#div_left table {
+.div_left table {
 	width: 90%;
 	border-bottom: 1px solid;
 	margin: 0 13px;
 }
-#div_left table th {
+.div_left table th {
 	padding: 5px;
 	border-bottom: 1px solid;
 	font-size: 15px;
 }
-#div_left #option1 table th:first-child {
+.div_left #option1 table th:first-child {
 	border-right: 1px solid;
 }
-#div_left table td {
+.div_left table td {
 	padding: 5px;
 	font-size: 14px;
 }
-#div_left #option1 table td:first-child {
+.div_left #option1 table td:first-child {
 	border-right: 1px solid;
 }
-#div_left table .t_left {
+.div_left table .t_left {
 	padding: 5px 0 5px 5px;
 }
-#div_left #option2 {
+.div_left #option2 {
 	margin-top: 20px;
 }
 
-#div_left #option3 {
+.div_left #option3 {
 	margin-top: 20px;
 }
-#div_left #option3 input {
+.div_left #option3 input {
 	width: 37px;
 	height: 37px;
 }
-#div_left #option3 table td:first-child {
+.div_left #option3 table td:first-child {
 	padding: 5px 0;
 }
-#div_left #option3 table td img {
+.div_left #option3 table td img {
 	float: left;
 }
-#div_left #option3 table td div {
+.div_left #option3 table td div {
 	float: left;
 	width: 24px;
 	height: 37px;
 }
-#div_left #option3 .option3_1 {
+.div_left #option3 .option3_1 {
 	width: 101px;
 	height: 30px;
 	border: 2px solid #8C8C8C;
 	text-align: center;
 	line-height: 30px;
 }
-#div_left #option3 .option3_2 {
+.div_left #option3 .option3_2 {
 	border: 2px solid #8C8C8C;
 	width: 90%;
 	height: 35px;
 	line-height: 35px;
 }
-#div_left #option3 .option3_2 input[type='text'] {
+.div_left #option3 .option3_2 input[type='text'] {
 	border: 0px;
 	width: 85%;
 	height: 33px;
 }
-#div_left #option3 .option3_2 span {
+.div_left #option3 .option3_2 span {
 	font-weight: bold;
 }
 
-#div_left #option4 {
+.div_left #option4 {
 	margin-top: 20px;
 }
-#div_left #option4 input {
+.div_left #option4 input {
 	width: 37px;
 	height: 37px;
 }
-#div_left #option4 table td:first-child {
+.div_left #option4 table td:first-child {
 	padding: 5px 0;
 }
-#div_left #option4 table td img {
+.div_left #option4 table td img {
 	float: left;
 }
-#div_left #option4 table td div {
+.div_left #option4 table td div {
 	float: left;
 	width: 24px;
 	height: 37px;
 }
-#div_left #option4 .option3_1 {
+.div_left #option4 .option3_1 {
 	width: 101px;
 	height: 30px;
 	border: 2px solid #8C8C8C;
 	text-align: center;
 	line-height: 30px;
 }
-#div_left #option4 .option3_2 {
+.div_left #option4 .option3_2 {
 	border: 2px solid #8C8C8C;
 	width: 90%;
 	height: 35px;
 	line-height: 35px;
 }
-#div_left #option4 .option3_2 input[type='text'] {
+.div_left #option4 .option3_2 input[type='text'] {
 	border: 0px;
 	width: 85%;
 	height: 33px;
 }
-#div_left #option4 .option3_2 span {
+.div_left #option4 .option3_2 span {
 	font-weight: bold;
+}
+
+.div_left #option5{
+	margin-top: 50px;
+	text-align: left;
+}
+
+.div_left #option5 .option_h {
+    font-size: 20px;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.div_left #option5 .option_h2 {
+    font-size: 13px;
+    margin-left: 20px;
+    font-weight: bold;
 }
 
 .logo {

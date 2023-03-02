@@ -72,6 +72,24 @@ function wmsInit(){
     });
     map.addLayer(souding);   
     
+    //wms OBSTRN(기본맵처럼사용)
+    var OBSTRN = new ol.layer.Tile({
+		id : 'OBSTRN',
+    	title: 'OBSTRN',
+    	opacity: 0,
+        source: new ol.source.TileWMS({
+            url: geoserverWmsUrl,
+            serverType: 'geoserver',
+            crossOrigin: 'anonymous',            
+            params: { 
+            	'VERSION': '1.1.0' , 
+                'LAYERS': 'skemap:OBSTRN',               
+                'CRS' : 'EPSG:3857',
+            },            
+        })
+    });
+    map.addLayer(OBSTRN);   
+    
     wmslayer(); //등대,등표,부표 호출
 }
 

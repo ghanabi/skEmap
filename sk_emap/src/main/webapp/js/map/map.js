@@ -462,3 +462,26 @@ function calDistance(featClone){
 	
 	return str;
 }
+
+//OBSTRN 레이어 on/off
+function ViewLayerChk(checked){
+	let lyr=null;
+	var layers = map.getLayers().getArray();
+	for(let i in layers) {
+        const l = layers[i];
+        const thisLayerId = layers[i].get('id');
+
+        if("OBSTRN" === thisLayerId) {
+            lyr = l;
+            break;
+        }
+    }
+    
+    if(lyr != null){
+    	if(checked){
+			lyr.setOpacity(1);
+		}else{
+			lyr.setOpacity(0);
+		}
+    }	
+}

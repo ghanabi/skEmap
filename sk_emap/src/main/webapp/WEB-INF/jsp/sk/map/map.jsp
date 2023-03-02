@@ -121,7 +121,7 @@ window.onload = function(){
 								<td class="t_left">크게 <input type="checkbox" >&nbsp;작게 <input type="checkbox" ></td>
 							</tr>
 							<tr>
-								<td class="t_center">상세 <input type="checkbox" ></td>
+								<td class="t_center">상세 <input type="checkbox" onclick="ViewLayerChk(this.checked);"></td>
 								<td class="t_left">지도 주야간</td>
 							</tr>
 							<tr>

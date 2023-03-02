@@ -230,7 +230,7 @@ window.onload = function(){
 					<div id="option5">
 						<span class="option_h">항적표시</span>
 						<div>
-						<img style="width: 70%; margin: 5px;" alt="" src="images/sk/Areasetting.jpg">
+						<img id="boxsearch" style="width: 70%; margin: 5px;" alt="" src="images/sk/Areasetting.jpg">
 						</div>
 						<span class="option_h2">검색기간(DAY)</span>
 						<div style="text-align: center; margin: 10px;">

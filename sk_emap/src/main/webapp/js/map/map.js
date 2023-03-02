@@ -101,9 +101,6 @@ function mapEvent(){
 	
 	//항적표시 검색
 	$("#shipsearch").on('click',function(e){
-		console.log($("#date1").val());
-		console.log($("#date2").val());
-		console.log($("#txt_search").val());
 		let date1 = $("#date1").val();
 		let date2 = $("#date2").val();
 		let txt = $("#txt_search").val();
@@ -143,6 +140,12 @@ function mapEvent(){
 			},
 	    });
 	});
+	
+	//항적표시 해당지역 설정하기
+	$("#boxsearch").on('click',function(e){		
+	 	deactiveInteractions();
+	 	setActiveDrawTool('box',null);
+	});	
 }
 
 //interaction 비활성화

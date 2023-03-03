@@ -54,11 +54,11 @@ function wmsInit(){
     });
     map.addLayer(rivers);
     
-    //wms 강(기본맵처럼사용)
+    //wms 수심텍스트(기본맵처럼사용)
     var souding = new ol.layer.Tile({
 		id : 'souding',
     	title: 'souding',
-    	opacity: 1,
+    	opacity: 0,
         source: new ol.source.TileWMS({
             url: geoserverWmsUrl,
             serverType: 'geoserver',

@@ -487,4 +487,24 @@ function ViewLayerChk(checked){
 			lyr.setOpacity(0);
 		}
     }	
+    
+    //수심테스트 
+	var layers = map.getLayers().getArray();
+	for(let i in layers) {
+        const l = layers[i];
+        const thisLayerId = layers[i].get('id');
+
+        if("souding" === thisLayerId) {
+            lyr = l;
+            break;
+        }
+    }
+    
+    if(lyr != null){
+    	if(checked){
+			lyr.setOpacity(1);
+		}else{
+			lyr.setOpacity(0);
+		}
+    }	
 }

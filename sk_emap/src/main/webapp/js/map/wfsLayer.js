@@ -1,6 +1,7 @@
 var wfsSource = new ol.source.Vector();
 var wfs_layer;
 function vectorInit(){
+    
 	//항로범위
     const mapSearch2 = new ol.layer.Vector({
         id: "mapSearch2",

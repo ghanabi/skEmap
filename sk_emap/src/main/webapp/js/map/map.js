@@ -48,16 +48,14 @@ function mapEvent(){
 	 
 	//확대
 	$("#mapZoomIn").on('click',function(e){
-	 	let thisZoom = map.getView().getZoom();
-	 	thisZoom++;
-        map.getView().animate({zoom: thisZoom, duration: 300});
+		deactiveInteractions();
+		see_zoomControl(false);	 	
 	});
 	 
 	//축소
 	$("#mapZoomOut").on('click',function(e){
-	 	let thisZoom = map.getView().getZoom();
-	 	thisZoom--;
-        map.getView().animate({zoom: thisZoom, duration: 300});
+		deactiveInteractions();
+		see_zoomControl(true);	 	
 	});
 	 
 	//move
@@ -143,6 +141,17 @@ function mapEvent(){
 	 	deactiveInteractions();
 	 	setActiveDrawTool('box',null);
 	});	
+}
+
+//줌인, 줌아웃 드래그
+function see_zoomControl(type) {    
+    drawInteration = new ol.interaction.DragZoom({
+        condition: (e) => {
+            return ol.events.condition.click
+        },
+        out: type
+    });
+    map.addInteraction(drawInteration);
 }
 
 //interaction 비활성화
@@ -520,3 +529,5 @@ function ViewLayerChk(checked){
 		}
     }	
 }
+
+

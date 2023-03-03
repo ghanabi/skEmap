@@ -4,6 +4,13 @@ var googlemap;
 var drawInteration;
 var drawInteration_search;
 
+//항적조회 범위값 저장 (연호보아라)
+var searchBox = {
+	lon1 : "",
+	lat1 : "",
+	lon2 : "",
+	lat2 : ""
+};
 
 var featTest;
 
@@ -14,30 +21,20 @@ function mapInit(){
 		zoom: 7,
 	});
 	
-	vworldTile = new ol.layer.Tile({
-        id : 'vworldTile',
-        visible: true,
-        source: new ol.source.XYZ({
-        	crossOrigin: 'anonymous',
-            url: 'http://xdworld.vworld.kr:8080/2d/Base/service/{z}/{x}/{y}.png'
-        })
-    });
-	//vworldTile.set("name" , 'vworldTile');
-	
 	googlemap = new ol.layer.Tile({
 		source: new ol.source.OSM(),
 	});	
     
 	map = new ol.Map({
 		layers: [
-			vworldTile
+			googlemap
 		],
 		target: 'dvMap',
 		view: view
 	});		
     
     wmsInit(); //베이스 wms레이어    
-    map.removeLayer(vworldTile); //배경맵 삭제    
+    map.removeLayer(googlemap); //배경맵 삭제    
     vectorInit(); //베이스 vector레이어
     mapEvent();
 }
@@ -201,6 +198,12 @@ function setActiveDrawTool(type, isOn) {
     	const drawendCallback = function (e) {
     		lyr.getSource().clear();
     		wfs_layer.getSource().clear();
+    		searchBox = {
+				lon1 : "",
+				lat1 : "",
+				lon2 : "",
+				lat2 : ""
+			};
         	e.feature.set('type', "box");  
         	//console.log(e.feature);   
         	let feat = e.feature;
@@ -230,7 +233,15 @@ function setActiveDrawTool(type, isOn) {
         			lat1 = item[1];
         		}        		
         	}
-        	get_ship(lon1,lat1,lon2,lat2);	
+        	
+        	//항적조회 값 넣기.
+        	searchBox = {
+				lon1 : lon1,
+				lat1 : lat1,
+				lon2 : lon2,
+				lat2 : lat2
+			};
+        	get_ship();	
     	}
     	drawInteration.on('drawend', drawendCallback);
     	map.addInteraction(drawInteration);
@@ -239,18 +250,19 @@ function setActiveDrawTool(type, isOn) {
 
 
 //항적조회1
-function get_ship(lon1,lat1,lon2,lat2){
+function get_ship(){
 	if(confirm("해당 범위의 선박을 검색하시겠습니까?")){
 		$.ajax({
 			type: "POST",
 			dataType: "json",
 			url: "getShipList.do",
-			data : {
-				lon1 : lon1,
-				lat1 : lat1,
-				lon2 : lon2,
-				lat2 : lat2
-			},
+			//data : {
+			//	lon1 : lon1,
+			//	lat1 : lat1,
+			//	lon2 : lon2,
+			//	lat2 : lat2
+			//},
+			data : searchBox,
 			success: function(data) {		    
 				if(data != null){
 					//console.log(data);

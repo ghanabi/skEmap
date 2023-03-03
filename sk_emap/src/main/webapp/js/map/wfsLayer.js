@@ -24,7 +24,7 @@ function vectorInit(){
         source: new ol.source.Vector(),
         style: new ol.style.Style({
             fill: new ol.style.Fill({                
-                color: '#FF000033'
+                color: '#FF000000'
             }),
             stroke: new ol.style.Stroke({                
                 color: '#ff0000ff',

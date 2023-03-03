@@ -29,8 +29,23 @@
 			SELECT a.mmsi, a.TimeStampK as timestampk, a.Latitude as latitude, a.Longitude as longitude, b.ShipName as shipname
 			FROM SPM.dbo.TB_AIS123 a, SPM.dbo.TB_AIS5 b
 			where a.MMSI =b.mmsi and a.TimeStampK = b.TimeStampK 
-			and a.Latitude > #lat2# and a.Latitude < #lat1#
-			and a.Longitude > #lon2# and a.Longitude < #lon1#
+		]]>
+			<isNotEmpty prepend="AND" property="lat2">
+			a.Latitude <![CDATA[>]]> #lat2# and a.Latitude <![CDATA[<]]> #lat1#
+			and a.Longitude <![CDATA[>]]> #lon2# and a.Longitude <![CDATA[<]]> #lon1#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="date1">
+			<isNotEmpty prepend="AND" property="date2">
+			CONVERT(DATE, a.TimeStampK) BETWEEN CONVERT(DATE, #date1#) AND CONVERT(DATE, #date2#)
+			</isNotEmpty>
+			</isNotEmpty>
+			<isEqual prepend="AND" property="kind" compareValue="MMSI" >			    	
+			a.MMSI like '%$mmsi$%'
+	   		</isEqual>
+			<isEqual prepend="AND" property="kind" compareValue="SHIPNAME" >			    	
+			b.ShipName like '%$shipname$%'
+	   		</isEqual>
+		<![CDATA[ 					   
 			order by a.MMSI, a.TimeStampK 
 		]]>
 	</select>
@@ -40,8 +55,16 @@
 			SELECT a.mmsi, min(a.TimeStampK) as min_timestampk, max(a.TimeStampK) as max_timestampk, b.ShipName as shipname
 			  FROM SPM.dbo.TB_AIS123 a, SPM.dbo.TB_AIS5 b
 			 WHERE a.MMSI =b.mmsi and a.TimeStampK = b.TimeStampK 
-			   AND CONVERT(DATE, a.TimeStampK) BETWEEN CONVERT(DATE, #date1#) AND CONVERT(DATE, #date2#)
 		]]>
+			<isNotEmpty prepend="AND" property="lat2">
+			a.Latitude <![CDATA[>]]> #lat2# and a.Latitude <![CDATA[<]]> #lat1#
+			and a.Longitude <![CDATA[>]]> #lon2# and a.Longitude <![CDATA[<]]> #lon1#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="date1">
+			<isNotEmpty prepend="AND" property="date2">
+			CONVERT(DATE, a.TimeStampK) BETWEEN CONVERT(DATE, #date1#) AND CONVERT(DATE, #date2#)
+			</isNotEmpty>
+			</isNotEmpty>
 			<isEqual prepend="AND" property="kind" compareValue="MMSI" >			    	
 			a.MMSI like '%$mmsi$%'
 	   		</isEqual>

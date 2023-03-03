@@ -253,7 +253,96 @@ window.onload = function(){
 				<div class="map" id="dvMap" style="width:100%; height:100%;"></div>
 			</div>
 			<div id="div_right">
-					
+				<div id="r_title" style="margin-top:20px;">선박정보</div>
+				<div id="right_result" class="right_result">
+					<table>
+						<colgroup><col width="40%"><col width="60%"></colgroup>
+						<tr>
+							<th>MMSI</th>
+							<td></td>
+						</tr>
+						<tr>
+							<th>선박명</th>
+							<td></td>
+						</tr>
+						<tr>
+							<th>선박부호</th>
+							<td></td>
+						</tr>
+						<tr>
+							<th>IMO</th>
+							<td></td>
+						</tr>
+						<tr>
+							<th>선박위치</th>
+							<td></td>
+						</tr>
+						<tr>
+							<th>대지속력</th>
+							<td></td>
+						</tr>
+						<tr>
+							<th>대지방향</th>
+							<td></td>
+						</tr>
+						<tr>
+							<th>선수방위</th>
+							<td></td>
+						</tr>
+						<tr>
+							<th>회두력</th>
+							<td></td>
+						</tr>
+						<tr>
+							<th>항행상태</th>
+							<td></td>
+						</tr>
+						<tr>
+							<th>선박형태</th>
+							<td></td>
+						</tr>
+						<tr>
+							<th>홀수</th>
+							<td></td>
+						</tr>
+						<tr>
+							<th>선박크기</th>
+							<td></td>
+						</tr>
+						<tr>
+							<th>도착정보</th>
+							<td></td>
+						</tr>
+						<tr>
+							<th>수신시간</th>
+							<td></td>
+						</tr>
+					</table>
+				</div>
+				<div id="right_shiplist" class="right_result">
+				</div>
+				<div id="ship_option" style="height: 70px; margin: 10px;">
+					<div>
+						<img alt="" src="images/sk/clean_btn.jpg">
+						<img alt="" src="images/sk/setting_btn.jpg">
+					</div>
+					<div style="width: 100%;">
+					<table style="width: 100%;">
+					<colgroup><col width="33%"><col width="33%"><col width="33%"></colgroup>
+					<tr>
+					<th>항적표시</th>
+					<th>태그표시</th>
+					<th>선박수 :<span id="ship_num"></span></th>
+					</tr>
+					</table>
+					</div>
+				</div>
+				<div id="div_ship_search" style="height: 40px; margin: 10px;">
+					<span style="font-size: 20px; vertical-align: middle;">검색</span> 
+					<input type="text" style="height: 30px;">
+					<img alt="" src="images/sk/ship_search.jpg">
+				</div>
+				
 			</div>
 			<div class="con_right">
 				<div class="slide2" id="slide2">

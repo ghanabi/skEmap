@@ -91,6 +91,10 @@ public class WebController {
 		vo.setLon2((String)req.getParameter("lon2"));
 		vo.setLat1((String)req.getParameter("lat1"));
 		vo.setLat2((String)req.getParameter("lat2"));
+		vo.setDate1((String)req.getParameter("date1"));
+		vo.setDate2((String)req.getParameter("date2"));
+		vo.setShipname((String)req.getParameter("text"));
+		vo.setKind((String)req.getParameter("kind"));
 		
 		List<SkShipVO> slist = mapService.searchTbAisList(vo);		
 		
@@ -107,6 +111,10 @@ public class WebController {
 		System.out.println("getStationList2 : start!");		
 		
 		SkShipVO vo = new SkShipVO();
+		vo.setLon1((String)req.getParameter("lon1"));
+		vo.setLon2((String)req.getParameter("lon2"));
+		vo.setLat1((String)req.getParameter("lat1"));
+		vo.setLat2((String)req.getParameter("lat2"));
 		vo.setDate1((String)req.getParameter("date1"));
 		vo.setDate2((String)req.getParameter("date2"));
 		vo.setShipname((String)req.getParameter("text"));

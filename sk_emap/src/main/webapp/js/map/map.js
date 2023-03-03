@@ -9,7 +9,11 @@ var searchBox = {
 	lon1 : "",
 	lat1 : "",
 	lon2 : "",
-	lat2 : ""
+	lat2 : "",
+	date1 : "",
+	date2 : "",
+	kind : "",
+	text : ""
 };
 
 var featTest;
@@ -96,44 +100,9 @@ function mapEvent(){
 	
 	//항적표시 검색
 	$("#shipsearch").on('click',function(e){
-		let date1 = $("#date1").val();
-		let date2 = $("#date2").val();
-		let txt = $("#txt_search").val();
-		let kind = $('input[name="kind"]:checked').val();
 		
-		if(date1==""||date2=="") {
-			alert("날짜 입력 하시기 바랍니다.");
-			return;
-		}
+		get_ship();	
 		
-		$.ajax({
-			type: "POST",
-			dataType: "json",
-			url: "getShipList2.do",
-			data:{
-				date1 : date1,
-				date2 : date2,
-				kind : kind,
-				text : txt
-			},
-			success: function(data) {		    
-				if(data != null){
-					let str = "<table>";
-					str += "<colgroup><col width='20%'><col width='20%'><col width='30%'><col width='30%'></colgroup>";
-					str += "<tr><th>MMSI</th><th>선박명칭</th><th>최초수신시간</th><th>최종수신시간</th></tr>";
-					for(var i=0; i<data.length; i++) {
-						str += "<tr>";
-						str += "<td>"+data[i].mmsi+"</td>";
-						str += "<td>"+data[i].shipname+"</td>";
-						str += "<td>"+data[i].min_timestampk+"</td>";
-						str += "<td>"+data[i].max_timestampk+"</td>";
-						str += "</tr>"; 
-					}
-					str += "</table>";
-					$("#ship_result").html(str);
-				}		   
-			},
-	    });
 	});
 	
 	//항적표시 해당지역 설정하기
@@ -211,7 +180,11 @@ function setActiveDrawTool(type, isOn) {
 				lon1 : "",
 				lat1 : "",
 				lon2 : "",
-				lat2 : ""
+				lat2 : "",
+				date1 : "",
+				date2 : "",
+				kind : "",
+				text : ""
 			};
         	e.feature.set('type', "box");  
         	//console.log(e.feature);   
@@ -244,13 +217,11 @@ function setActiveDrawTool(type, isOn) {
         	}
         	
         	//항적조회 값 넣기.
-        	searchBox = {
-				lon1 : lon1,
-				lat1 : lat1,
-				lon2 : lon2,
-				lat2 : lat2
-			};
-        	get_ship();	
+			searchBox.lon1 = lon1;
+			searchBox.lon2 = lon2;
+			searchBox.lat1 = lat1;
+			searchBox.lat2 = lat2;
+        	//get_ship();	
     	}
     	drawInteration.on('drawend', drawendCallback);
     	map.addInteraction(drawInteration);
@@ -260,7 +231,15 @@ function setActiveDrawTool(type, isOn) {
 
 //항적조회1
 function get_ship(){
-	if(confirm("해당 범위의 선박을 검색하시겠습니까?")){
+	let date1 = $("#date1").val();
+	let date2 = $("#date2").val();
+	let txt = $("#txt_search").val();
+	let kind = $('input[name="kind"]:checked').val();
+	searchBox.date1 = date1;
+	searchBox.date2 = date2;
+	searchBox.txt = txt;
+	searchBox.kind = kind;
+	//if(confirm("해당 범위의 선박을 검색하시겠습니까?")){
 		$.ajax({
 			type: "POST",
 			dataType: "json",
@@ -307,7 +286,7 @@ function get_ship(){
 				}		   
 			},
 	    });
-	}	
+	//}	
 }
 
 //항적조회2
@@ -371,8 +350,34 @@ function get_ship_to_map(shipList){
 			//}									
 		}
 	}
+	get_ship2();
 }
 
+function get_ship2() {
+	$.ajax({
+			type: "POST",
+			dataType: "json",
+			url: "getShipList2.do",			
+			data : searchBox,
+			success: function(data) {		    
+				if(data != null){
+					let str = "<table>";
+					str += "<colgroup><col width='20%'><col width='20%'><col width='30%'><col width='30%'></colgroup>";
+					str += "<tr><th>MMSI</th><th>선박명칭</th><th>최초수신시간</th><th>최종수신시간</th></tr>";
+					for(var i=0; i<data.length; i++) {
+						str += "<tr>";
+						str += "<td>"+data[i].mmsi+"</td>";
+						str += "<td>"+data[i].shipname+"</td>";
+						str += "<td>"+data[i].min_timestampk+"</td>";
+						str += "<td>"+data[i].max_timestampk+"</td>";
+						str += "</tr>"; 
+					}
+					str += "</table>";
+					$("#ship_result").html(str);
+				}		   
+			},
+	    });
+}
 //항로범위 활성화
 function setActiveDrawToolSearch(type) {
 	let lyr=null;

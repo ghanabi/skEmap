@@ -64,7 +64,38 @@ public class SkShipVO implements Serializable {
     /** 최종 timeStampK */
     private String max_timestampk = "";
     
+    /** 선박부호 */
+    private String callsign = "";
     
+    /** imo번호 */
+    private String imonumeric = "";
+    
+    /** 대지속력 */
+    private String sog = "";
+    
+    /** 대지방향 */
+    private String cog = "";
+    
+    /** 선수방위 */
+    private String theading = "";
+    
+    /** 회두력 */
+    private String rateturn = "";
+    
+    /** 항행상태 */
+    private String cstate = "";
+    
+    /** 선박형태 */
+    private String shiptype = "";
+    
+    /** 선박크기 */
+    private String shipsize = "";
+    
+    /** 도착시간 */
+    private String destitime = "";
+    
+    /** 도착지 */
+    private String destination = "";    
     
 
 	public String getShipname() {
@@ -177,6 +208,94 @@ public class SkShipVO implements Serializable {
 
 	public void setMax_timestampk(String max_timestampk) {
 		this.max_timestampk = max_timestampk;
+	}
+
+	public String getCallsign() {
+		return callsign;
+	}
+
+	public void setCallsign(String callsign) {
+		this.callsign = callsign;
+	}
+
+	public String getImonumeric() {
+		return imonumeric;
+	}
+
+	public void setImonumeric(String imonumeric) {
+		this.imonumeric = imonumeric;
+	}
+
+	public String getSog() {
+		return sog;
+	}
+
+	public void setSog(String sog) {
+		this.sog = sog;
+	}
+
+	public String getCog() {
+		return cog;
+	}
+
+	public void setCog(String cog) {
+		this.cog = cog;
+	}
+
+	public String getTheading() {
+		return theading;
+	}
+
+	public void setTheading(String theading) {
+		this.theading = theading;
+	}
+
+	public String getRateturn() {
+		return rateturn;
+	}
+
+	public void setRateturn(String rateturn) {
+		this.rateturn = rateturn;
+	}
+
+	public String getCstate() {
+		return cstate;
+	}
+
+	public void setCstate(String cstate) {
+		this.cstate = cstate;
+	}
+
+	public String getShiptype() {
+		return shiptype;
+	}
+
+	public void setShiptype(String shiptype) {
+		this.shiptype = shiptype;
+	}
+
+	public String getShipsize() {
+		return shipsize;
+	}
+
+	public void setShipsize(String shipsize) {
+		this.shipsize = shipsize;
+	}
+
+	public String getDestitime() {
+		return destitime;
+	}
+
+	public void setDestitime(String destitime) {
+		this.destitime = destitime;
+	}
+
+	public String getDestination() {
+		return destination;
+	}
+
+	public void setDestination(String destination) {
+		this.destination = destination;
 	}
 	
 }

@@ -76,4 +76,28 @@
 			 ORDER BY a.MMSI, b.ShipName
 		]]>
 	</select>
+	
+	<select id="map.getShipSearch" resultClass="SkShipVO" parameterClass="SkShipVO">
+		<![CDATA[ 			 
+			SELECT a.mmsi, b.ShipName as shipname
+			  FROM SPM.dbo.TB_AIS123 a, SPM.dbo.TB_AIS5 b
+			 WHERE a.MMSI =b.mmsi and a.TimeStampK = b.TimeStampK
+			   AND b.ShipName LIKE '%$shipname$%'
+			 GROUP BY a.MMSI, b.ShipName
+			 ORDER BY a.MMSI, b.ShipName
+		]]>
+	</select>
+	
+	<select id="map.getShipSearch_Detail" resultClass="SkShipVO" parameterClass="SkShipVO">
+		<![CDATA[ 			 
+			SELECT TOP(1) b.MMSI, b.shipname, b.callsign, b.imonumeric, a.latitude, 
+				   a.longitude, a.sog, a.cog, a.theading, a.rateturn, 
+				   a.cstate, b.shiptype, b.dimena+b.dimenb shipsize, 
+				   b.destitime, b.destination, b.timestampk
+			  FROM SPM.dbo.TB_AIS123 a, SPM.dbo.TB_AIS5 b
+			 WHERE a.MMSI =b.mmsi and a.TimeStampK = b.TimeStampK
+			   AND a.mmsi = #mmsi#
+			 ORDER BY timestampk DESC
+		]]>
+	</select>
 </sqlMap>            

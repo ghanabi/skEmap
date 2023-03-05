@@ -13,4 +13,8 @@ public interface mapService {
 	public List<SkShipVO> searchTbAisList(SkShipVO vo) throws Exception;
 	
 	public List<SkShipVO> getShipList(SkShipVO vo) throws Exception;
+	
+	public List<SkShipVO> getShipSearch(SkShipVO vo) throws Exception;
+	
+	public List<SkShipVO> getShipSearch_Detail(SkShipVO vo) throws Exception;
 }

@@ -256,70 +256,86 @@ window.onload = function(){
 				<div id="r_title" style="margin-top:20px;">선박정보</div>
 				<div id="right_result" class="right_result">
 					<table>
-						<colgroup><col width="40%"><col width="60%"></colgroup>
+						<colgroup><col width="45%"><col width="55%"></colgroup>
 						<tr>
 							<th>MMSI</th>
-							<td></td>
+							<td><span id="txt_mmsi"></span></td>
 						</tr>
 						<tr>
 							<th>선박명</th>
-							<td></td>
+							<td><span id="txt_shipname"></span></td>
 						</tr>
 						<tr>
 							<th>선박부호</th>
-							<td></td>
+							<td><span id="txt_callsign"></span></td>
 						</tr>
 						<tr>
 							<th>IMO</th>
-							<td></td>
+							<td><span id="txt_imo"></span></td>
 						</tr>
 						<tr>
 							<th>선박위치</th>
-							<td></td>
+							<td><span id="txt_lonlat"></span></td>
 						</tr>
 						<tr>
 							<th>대지속력</th>
-							<td></td>
+							<td><span id="txt_sog"></span></td>
 						</tr>
 						<tr>
 							<th>대지방향</th>
-							<td></td>
+							<td><span id="txt_cog"></span></td>
 						</tr>
 						<tr>
 							<th>선수방위</th>
-							<td></td>
+							<td><span id="txt_theading"></span></td>
 						</tr>
 						<tr>
 							<th>회두력</th>
-							<td></td>
+							<td><span id="txt_rateturn"></span></td>
 						</tr>
 						<tr>
 							<th>항행상태</th>
-							<td></td>
+							<td><span id="txt_cstate"></span></td>
 						</tr>
 						<tr>
 							<th>선박형태</th>
-							<td></td>
+							<td><span id="txt_shiptype"></span></td>
 						</tr>
-						<tr>
+						<!-- <tr>
 							<th>홀수</th>
-							<td></td>
-						</tr>
+							<td id="txt_cstate"></td>
+						</tr> -->
 						<tr>
 							<th>선박크기</th>
-							<td></td>
+							<td><span id="txt_shipsize"></span></td>
 						</tr>
 						<tr>
 							<th>도착정보</th>
-							<td></td>
+							<td><span id="txt_desti"></span></td>
 						</tr>
 						<tr>
 							<th>수신시간</th>
-							<td></td>
+							<td><span id="txt_timestamp"></span></td>
 						</tr>
 					</table>
 				</div>
 				<div id="right_shiplist" class="right_result">
+					<table style="height: 26px;">
+						<colgroup><col width="50%"><col width="50%"></colgroup>
+						<tr>
+							<th>MMSI</th>
+							<th>선  명</th>
+						</tr>
+					</table>
+					<div id="shiplist_result" style="height:344px;border: 1px solid #444444;">
+						<table>
+						<colgroup><col width="50%"><col width="50%"></colgroup>
+						<tr>
+							<td></td>
+							<td></td>
+						</tr>
+					</table>
+					</div>
 				</div>
 				<div id="ship_option" style="height: 70px; margin: 10px;">
 					<div>
@@ -339,8 +355,8 @@ window.onload = function(){
 				</div>
 				<div id="div_ship_search" style="height: 40px; margin: 10px;">
 					<span style="font-size: 20px; vertical-align: middle;">검색</span> 
-					<input type="text" style="height: 30px;">
-					<img alt="" src="images/sk/ship_search.jpg">
+					<input id="search_word" type="text" style="height: 30px;">
+					<img id="shipsearch2" alt="" src="images/sk/ship_search.jpg">
 				</div>
 				
 			</div>

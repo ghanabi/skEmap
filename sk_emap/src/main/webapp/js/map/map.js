@@ -100,9 +100,12 @@ function mapEvent(){
 	
 	//항적표시 검색
 	$("#shipsearch").on('click',function(e){
-		
-		get_ship();	
-		
+		get_ship();
+	});
+	
+	//선박정보검색
+	$("#shipsearch2").on('click',function(e){
+		getShipSearch();
 	});
 	
 	//항적표시 해당지역 설정하기
@@ -535,4 +538,71 @@ function ViewLayerChk(checked){
     }	
 }
 
+//선박정보 검색 리스트
+function getShipSearch() {
+	let txt = $("#search_word").val();
+	
+	if(txt == "") {
+		alert("검색할 선명을 입력해 주세요");
+		return;
+	}
+	
+	$.ajax({
+		type: "POST",
+		dataType: "json",
+		url: "getShipSearch.do",			
+		data : {
+			shipname : txt
+		},
+		success: function(data) {		    
+			if(data != null){
+				let style="";
+				if(data.length < 13) {
+					style = "style='height: "+(26*data.length)+"px;'";
+				}
+				
+				let str = "<table "+style+">";
+				str += "<colgroup><col width='50%'><col width='50%'></colgroup>";
+				for(var i=0; i<data.length; i++) {
+					str += "<tr style='cursor:pointer;' onclick='getShipSearch_Detail("+data[i].mmsi+");'>";
+					str += "<td>"+data[i].mmsi+"</td>";
+					str += "<td>"+data[i].shipname+"</td>";
+					str += "</tr>"; 
+				}
+				str += "</table>";
+				$("#shiplist_result").html(str);
+			}		   
+		}
+	});
+}
+
+//선박정보 상세 정보
+function getShipSearch_Detail(mmsi) {
+	$.ajax({
+		type: "POST",
+		dataType: "json",
+		url: "getShipSearch_Detail.do",			
+		data : {
+			mmsi : mmsi
+		},
+		success: function(data) {		    
+			if(data != null){
+				$("#txt_mmsi").text(data[0].mmsi);
+				$("#txt_shipname").text(data[0].shipname);
+				$("#txt_callsign").text(data[0].callsign);
+				$("#txt_imo").text(data[0].imonumeric);
+				$("#txt_lonlat").text(data[0].longitude + " / " + data[0].latitude);
+				$("#txt_sog").text(data[0].sog);
+				$("#txt_cog").text(data[0].cog);
+				$("#txt_theading").text(data[0].theading);
+				$("#txt_rateturn").text(data[0].rateturn);
+				$("#txt_cstate").text(data[0].cstate);
+				$("#txt_shiptype").text(data[0].shiptype);
+				$("#txt_shipsize").text(data[0].shipsize);
+				$("#txt_desti").text(data[0].destination);
+				$("#txt_timestamp").text(data[0].timestampk);
+			}		   
+		}
+	});
+}
 

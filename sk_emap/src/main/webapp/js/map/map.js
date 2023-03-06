@@ -113,6 +113,41 @@ function mapEvent(){
 	 	deactiveInteractions();
 	 	setActiveDrawTool('box',null);
 	});	
+	
+	//목록 갱신
+	$("#ship_clean").on('click',function(e){
+		$("#txt_mmsi").text("");
+		$("#txt_shipname").text("");
+		$("#txt_callsign").text("");
+		$("#txt_imo").text("");
+		$("#txt_lonlat").text("");
+		$("#txt_sog").text("");
+		$("#txt_cog").text("");
+		$("#txt_theading").text("");
+		$("#txt_rateturn").text("");
+		$("#txt_cstate").text("");
+		$("#txt_shiptype").text("");
+		$("#txt_shipsize").text("");
+		$("#txt_desti").text("");
+		$("#txt_timestamp").text("");
+		$("#shiplist_result").html("");
+	});
+	
+	//선박관리
+	$("#ship_setting").on('click',function(e){		
+	 	$("#mapSetting").click();
+	});
+	
+	//항적표시
+	$("#feather_see").on('click',function(e){		
+	 	alert("준비중 입니다.");
+	});
+	
+	//항적표시
+	$("#tag_see").on('click',function(e){		
+	 	alert("준비중 입니다.");
+	});
+	
 }
 
 //줌인, 줌아웃 드래그
@@ -571,6 +606,7 @@ function getShipSearch() {
 				}
 				str += "</table>";
 				$("#shiplist_result").html(str);
+				$("#ship_num").text(data.length);
 			}		   
 		}
 	});
@@ -591,7 +627,7 @@ function getShipSearch_Detail(mmsi) {
 				$("#txt_shipname").text(data[0].shipname);
 				$("#txt_callsign").text(data[0].callsign);
 				$("#txt_imo").text(data[0].imonumeric);
-				$("#txt_lonlat").text(data[0].longitude + " / " + data[0].latitude);
+				$("#txt_lonlat").text(data[0].latitude + " / " + data[0].longitude);
 				$("#txt_sog").text(data[0].sog);
 				$("#txt_cog").text(data[0].cog);
 				$("#txt_theading").text(data[0].theading);

@@ -107,34 +107,18 @@ window.onload = function(){
 				<div id="div_left_mapSetting" style="display: none;">
 					<div id="option1">
 						<table>
-							<colgroup><col width="40%"><col width="60%"></colgroup>
+							<colgroup><col width="100%"></colgroup>
 							<tr>
-								<th class="t_center">보기설정</th>
-								<th class="t_center">상세 표기</th>
+								<th class="t_center">보기 설정</th>
 							</tr>
 							<tr>
-								<td class="t_center">기본 <input type="checkbox" ></td>
-								<td class="t_left">등광크기</td>
+								<td class="t_left">기본 <input type="checkbox" ></td>
 							</tr>
 							<tr>
-								<td class="t_center">표준 <input type="checkbox" ></td>
-								<td class="t_left">크게 <input type="checkbox" >&nbsp;작게 <input type="checkbox" ></td>
+								<td class="t_left">표준 <input type="checkbox" ></td>
 							</tr>
 							<tr>
-								<td class="t_center">상세 <input type="checkbox" onclick="ViewLayerChk(this.checked);"></td>
-								<td class="t_left">지도 주야간</td>
-							</tr>
-							<tr>
-								<td class="t_center">수심 <input type="checkbox" ></td>
-								<td class="t_left">주간 <input type="checkbox" >&nbsp;야간 <input type="checkbox" ></td>
-							</tr>
-							<tr>
-								<td class="t_center">등광 <input type="checkbox" ></td>
-								<td class="t_left">경위도</td>
-							</tr>
-							<tr>
-								<td class="t_center"></td>
-								<td class="t_left">도 <input type="checkbox" >&nbsp;도분 <input type="checkbox" >&nbsp;도분초 <input type="checkbox" ></td>
+								<td class="t_left">상세<input type="checkbox" ></td>
 							</tr>
 						</table>
 					</div>
@@ -205,15 +189,6 @@ window.onload = function(){
 							<colgroup><col width="60%"><col width="40%"></colgroup>
 							<tr>
 								<th class="t_left" colspan="2">표지</th>
-							</tr>
-							<tr>
-								<td class="t_center">
-									<div class="option3_1">
-										<span>기호</span>
-									</div>
-									<div id="colorSelector1" style="width: 34px;height: 34px;"><div style="background-color: #0000ff;width: 30px;height: 30px;"></div></div>
-								</td>
-								<td class="t_center"><img alt="" src="images/sk/btn_chg.jpg"></td>
 							</tr>
 							<tr>
 								<td>
@@ -339,24 +314,24 @@ window.onload = function(){
 				</div>
 				<div id="ship_option" style="height: 70px; margin: 10px;">
 					<div>
-						<img alt="" src="images/sk/clean_btn.jpg">
-						<img alt="" src="images/sk/setting_btn.jpg">
+						<img id="ship_clean" class="pointer" alt="" src="images/sk/clean_btn.jpg">
+						<img id="ship_setting" class="pointer" alt="" src="images/sk/setting_btn.jpg">
 					</div>
 					<div style="width: 100%;">
 					<table style="width: 100%;">
 					<colgroup><col width="33%"><col width="33%"><col width="33%"></colgroup>
 					<tr>
-					<th>항적표시</th>
-					<th>태그표시</th>
-					<th>선박수 :<span id="ship_num"></span></th>
+					<th><span id="feather_see">항적표시</span></th>
+					<th><span id="tag_see">태그표시</span></th>
+					<th>선박수 : <span id="ship_num"></span></th>
 					</tr>
 					</table>
 					</div>
 				</div>
 				<div id="div_ship_search" style="height: 40px; margin: 10px;">
-					<span style="font-size: 20px; vertical-align: middle;">검색</span> 
+					<span style="font-size: 20px; vertical-align: middle; cursor: default;">검색</span> 
 					<input id="search_word" type="text" style="height: 30px;">
-					<img id="shipsearch2" alt="" src="images/sk/ship_search.jpg">
+					<img id="shipsearch2" class="pointer" alt="" src="images/sk/ship_search.jpg">
 				</div>
 				
 			</div>

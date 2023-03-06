@@ -101,15 +101,9 @@ table input[type='checkbox'] {
 	border-bottom: 1px solid;
 	font-size: 15px;
 }
-.div_left #option1 table th:first-child {
-	border-right: 1px solid;
-}
 .div_left table td {
 	padding: 5px;
 	font-size: 14px;
-}
-.div_left #option1 table td:first-child {
-	border-right: 1px solid;
 }
 .div_left table .t_left {
 	padding: 5px 0 5px 5px;
@@ -326,7 +320,7 @@ table input[type='checkbox'] {
 	border-collapse:collapse;
 }
 
-#div_right #right_shiplist table th, td {
+#div_right #right_shiplist table th, #div_right #right_shiplist table td {
 	text-align: center;
 	border: 1px solid #444444;
 	border-collapse:collapse;
@@ -358,12 +352,14 @@ table input[type='checkbox'] {
 .slide2 {	
 	width: 72px;
 	height: 142px;
+	cursor: pointer;
 	background-image: url(../images/sk/shipinfo_btn.jpg);
 }
 
 .slide2_on {	
 	width: 72px;
 	height: 142px;
+	cursor: pointer;
 	background-image: url(../images/sk/shipinfo_btn_off.jpg);
 }
 
@@ -377,4 +373,8 @@ table input[type='checkbox'] {
 	text-align: center;
 	font-size: 25px;
 	font-weight:bold;
+}
+
+.pointer {
+	cursor: pointer;
 }

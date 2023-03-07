@@ -15,13 +15,33 @@ var searchBox = {
 	kind : "",
 	text : ""
 };
-
+var shipList = [];		//선박리스트
+var ship_styles = [
+    // linestring
+    new ol.style.Style({
+      stroke: new ol.style.Stroke({
+        color: '#ffcc33',
+        width: 2,
+      }),
+      text: new ol.style.Text({
+            textAlign: 'center',
+            font:  'bold 10px Arial',
+            fill: new ol.style.Fill({color: 'rgba(255,0, 0, 0.8)'}),
+            stroke: new ol.style.Stroke({color:'#ffffff', width:0}),
+            text: "",
+            offsetX: 0,
+            offsetY: -10,
+            overflow:true,
+        })
+    }),
+];
+				
 var featTest;
 
 //35.5468629,129.3005359 울산
 function mapInit(){
 	var view = new ol.View({
-		center: ol.proj.fromLonLat([129.3604722,35.35916667]),
+		center: ol.proj.fromLonLat([129.3005359,35.5468629]),
 		zoom: 7,
 	});
 	
@@ -146,6 +166,25 @@ function mapEvent(){
 	//항적표시
 	$("#tag_see").on('click',function(e){		
 	 	alert("준비중 입니다.");
+	});
+	
+	//보기설정 - 상세
+	$("#chkViewLayerDetail").on('click',function(e){		
+	 	ViewLayerChk(this.checked);
+	});
+	
+	//보기설정 - 표지OFF
+	$("#chkViewLayerMark").on('click',function(e){		
+	 	ViewLayerChkMark(this.checked);
+	});
+	
+	//보기설정 - 선박OFF
+	$("#chkViewLayerMark").on('click',function(e){	
+		if(this.checked){
+		
+		}else{
+			get_ship_to_map();
+		}	
 	});
 	
 }
@@ -281,19 +320,13 @@ function get_ship(){
 		$.ajax({
 			type: "POST",
 			dataType: "json",
-			url: "getShipList.do",
-			//data : {
-			//	lon1 : lon1,
-			//	lat1 : lat1,
-			//	lon2 : lon2,
-			//	lat2 : lat2
-			//},
+			url: "getShipList.do",			
 			data : searchBox,
 			success: function(data) {		    
 				if(data != null){
 					//console.log(data);
 					var list = data;		
-					var shipList = [];			
+					shipList = [];			
 					for(var i=0;i<list.length;i++){
 						var item = list[i];
 						var chk = true;
@@ -319,8 +352,11 @@ function get_ship(){
 							
 						}
 					}
-					//console.log(shipList);					
-					get_ship_to_map(shipList); //항적조회2
+					//console.log(shipList);		
+					var chkShip = $("#chkViewLayerShip").prop("checked");
+					if(!chkShip){
+						get_ship_to_map(); //항적조회2
+					}					
 				}		   
 			},
 	    });
@@ -328,7 +364,7 @@ function get_ship(){
 }
 
 //항적조회2
-function get_ship_to_map(shipList){
+function get_ship_to_map(){
 	//선박 레이어 라인 표시
 	for(var i=0;i<shipList.length;i++){
 		if(shipList[i].feat_line.length>1){
@@ -553,7 +589,6 @@ function ViewLayerChk(checked){
     }	
     
     //수심테스트 
-	var layers = map.getLayers().getArray();
 	for(let i in layers) {
         const l = layers[i];
         const thisLayerId = layers[i].get('id');
@@ -569,6 +604,48 @@ function ViewLayerChk(checked){
 			lyr.setOpacity(1);
 		}else{
 			lyr.setOpacity(0);
+		}
+    }	
+}
+
+//표지 레이어 on/off
+function ViewLayerChkMark(checked){
+	let lyr=null;
+	var layers = map.getLayers().getArray();
+	for(let i in layers) {
+        const l = layers[i];
+        const thisLayerId = layers[i].get('id');
+
+        if("lightmark" === thisLayerId) {
+            lyr = l;
+            break;
+        }
+    }
+    
+    if(lyr != null){
+    	if(checked){
+			lyr.setOpacity(0);
+		}else{
+			lyr.setOpacity(1);
+		}
+    }	
+    
+    //부표 
+	for(let i in layers) {
+        const l = layers[i];
+        const thisLayerId = layers[i].get('id');
+
+        if("buoy" === thisLayerId) {
+            lyr = l;
+            break;
+        }
+    }
+    
+    if(lyr != null){
+    	if(checked){
+			lyr.setOpacity(0);
+		}else{
+			lyr.setOpacity(1);
 		}
     }	
 }

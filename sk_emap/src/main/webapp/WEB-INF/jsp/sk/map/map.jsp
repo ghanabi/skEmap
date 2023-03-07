@@ -118,7 +118,7 @@ window.onload = function(){
 								<td class="t_left">표준 <input type="checkbox" ></td>
 							</tr>
 							<tr>
-								<td class="t_left">상세<input type="checkbox" ></td>
+								<td class="t_left">상세<input type="checkbox" id="chkViewLayerDetail"></td>
 							</tr>
 						</table>
 					</div>
@@ -129,16 +129,16 @@ window.onload = function(){
 								<th class="t_center">선박/표지 표기</th>
 							</tr>
 							<tr>
-								<td class="t_left">선박   OFF <input type="checkbox" ></td>
+								<td class="t_left">선박   OFF <input type="checkbox" id="chkViewLayerShip"></td>
 							</tr>
 							<tr>
 								<td class="t_left">전체 <input type="checkbox" >&nbsp;이동 <input type="checkbox" >&nbsp;정박 <input type="checkbox" ></td>
 							</tr>
 							<tr>
-								<td class="t_left">이름 <input type="checkbox" >&nbsp;ID <input type="checkbox" >&nbsp;표기안함 <input type="checkbox" ></td>
+								<td class="t_left">이름 <input type="radio" name="ShipLabel" value="name" checked>&nbsp;ID <input type="radio" name="ShipLabel" value="id">&nbsp;표기안함 <input type="radio" name="ShipLabel" value="none"></td>
 							</tr>
 							<tr>
-								<td class="t_left">표지   OFF <input type="checkbox" ></td>
+								<td class="t_left">표지   OFF <input type="checkbox" id="chkViewLayerMark"></td>
 							</tr>
 						</table>
 					</div>

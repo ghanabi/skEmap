@@ -97,7 +97,6 @@ window.onload = function(){
 							<li class="opt_tool2" id="mapSetting"><img alt="" src="images/sk/maptool/opt2.jpg"></li>
 							<li class="opt_tool3"><img alt="" src="images/sk/maptool/opt3.jpg"></li>
 							<li class="opt_tool4"><img alt="" src="images/sk/maptool/opt4.jpg"></li>
-							<li class="opt_tool5"><img alt="" src="images/sk/maptool/opt5.jpg"></li>
 						</ul>
 					</div>
 				</div>
@@ -203,23 +202,25 @@ window.onload = function(){
 				<div id="div_left_mapSearch" style="display: none; width: 100%;">
 					<div id="option5">
 						<span class="option_h">항적표시</span>
+						<div style="height: 200px;">
+							<div><img id="boxsearch" style="width: 70%; margin: 5px;" alt="" src="images/sk/Areasetting.jpg"></div>						
+							<span class="option_h2">검색기간(DAY)</span>
+							<div style="text-align: center; margin: 10px;">
+								<input type="date" id="date1" > ~ 
+								<input type="date" id="date2" >
+							</div>
+							<div style="text-align: center; margin: 10px;">
+								선택 : 
+								<input type="radio" name="kind" value="MMSI" checked/>MMSI
+	  							<input type="radio" name="kind" value="SHIPNAME" />선박명칭
+							</div>
+							<div style="text-align: center; margin: 10px;">MMSI / 선박명칭 : <input type="text" id="txt_search"></div>
+							<img id="shipsearch"style="float: right; width: 100px; margin-right: 10px;" alt="" src="images/sk/shipsearch.jpg">
+						</div>
 						<div>
-						<img id="boxsearch" style="width: 70%; margin: 5px;" alt="" src="images/sk/Areasetting.jpg">
-						</div>
-						<span class="option_h2">검색기간(DAY)</span>
-						<div style="text-align: center; margin: 10px;">
-							<input type="date" id="date1" > ~ 
-							<input type="date" id="date2" >
-						</div>
-						<div style="text-align: center; margin: 10px;">
-							선택 : 
-							<input type="radio" name="kind" value="MMSI" checked/>MMSI
-  							<input type="radio" name="kind" value="SHIPNAME" />선박명칭
-						</div>
-						<div style="text-align: center; margin: 10px;">MMSI / 선박명칭 : <input type="text" id="txt_search"></div>
-						<img id="shipsearch"style="float: right; width: 100px; margin: 15px 5px 0 0;" alt="" src="images/sk/shipsearch.jpg">
 						<span class="option_h">결과</span>
-						<div id="ship_result" style="width: 100%;height: 650px;overflow: auto;"></div>
+						<div id="ship_result" style="width: 100%;height: 630px;overflow-y: auto;"></div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -294,14 +295,14 @@ window.onload = function(){
 					</table>
 				</div>
 				<div id="right_shiplist" class="right_result">
-					<table style="height: 26px;">
+					<table style="height: 26px;width: 259px;">
 						<colgroup><col width="50%"><col width="50%"></colgroup>
 						<tr>
 							<th>MMSI</th>
 							<th>선  명</th>
 						</tr>
 					</table>
-					<div id="shiplist_result" style="height:344px;border: 1px solid #444444;">
+					<div id="shiplist_result" style="height:344px;border: 1px solid #444444;overflow-y: scroll;">
 						<table>
 						<colgroup><col width="50%"><col width="50%"></colgroup>
 						<tr>
@@ -328,7 +329,7 @@ window.onload = function(){
 					</div>
 				</div>
 				<div id="div_ship_search" style="height: 40px; margin: 10px;">
-					<span style="font-size: 20px; vertical-align: middle; cursor: default;">검색</span> 
+					<span style="font-size: 1em; vertical-align: middle; cursor: default;">검색</span> 
 					<input id="search_word" type="text" style="height: 30px;">
 					<img id="shipsearch2" class="pointer" alt="" src="images/sk/ship_search.jpg">
 				</div>

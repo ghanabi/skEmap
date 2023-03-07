@@ -42,6 +42,8 @@ function mapInit(){
     map.removeLayer(googlemap); //배경맵 삭제    
     vectorInit(); //베이스 vector레이어
     mapEvent();
+
+	$("#mapSearch3").click();
 }
 
 //맵 이벤트
@@ -117,21 +119,7 @@ function mapEvent(){
 	
 	//목록 갱신
 	$("#ship_clean").on('click',function(e){
-		$("#txt_mmsi").text("");
-		$("#txt_shipname").text("");
-		$("#txt_callsign").text("");
-		$("#txt_imo").text("");
-		$("#txt_lonlat").text("");
-		$("#txt_sog").text("");
-		$("#txt_cog").text("");
-		$("#txt_theading").text("");
-		$("#txt_rateturn").text("");
-		$("#txt_cstate").text("");
-		$("#txt_shiptype").text("");
-		$("#txt_shipsize").text("");
-		$("#txt_desti").text("");
-		$("#txt_timestamp").text("");
-		$("#shiplist_result").html("");
+		shiplist_clean();
 	});
 	
 	//선박관리
@@ -665,17 +653,13 @@ function ViewLayerChkMark(checked){
 
 //선박정보 검색 리스트
 function getShipSearch() {
+	shiplist_clean();
 	let txt = $("#search_word").val();
-	
-	if(txt == "") {
-		alert("검색할 선명을 입력해 주세요");
-		return;
-	}
-	
 	$.ajax({
 		type: "POST",
 		dataType: "json",
-		url: "getShipSearch.do",			
+		url: "getShipSearch.do",
+		asyn: false,
 		data : {
 			shipname : txt
 		},
@@ -707,7 +691,8 @@ function getShipSearch_Detail(mmsi) {
 	$.ajax({
 		type: "POST",
 		dataType: "json",
-		url: "getShipSearch_Detail.do",			
+		url: "getShipSearch_Detail.do",
+		asyn: false,			
 		data : {
 			mmsi : mmsi
 		},
@@ -730,5 +715,24 @@ function getShipSearch_Detail(mmsi) {
 			}		   
 		}
 	});
+}
+
+function shiplist_clean() {
+	$("#search_word").val("");
+	$("#txt_mmsi").text("");
+	$("#txt_shipname").text("");
+	$("#txt_callsign").text("");
+	$("#txt_imo").text("");
+	$("#txt_lonlat").text("");
+	$("#txt_sog").text("");
+	$("#txt_cog").text("");
+	$("#txt_theading").text("");
+	$("#txt_rateturn").text("");
+	$("#txt_cstate").text("");
+	$("#txt_shiptype").text("");
+	$("#txt_shipsize").text("");
+	$("#txt_desti").text("");
+	$("#txt_timestamp").text("");
+	$("#shiplist_result").html("");
 }
 

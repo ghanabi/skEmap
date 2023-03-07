@@ -96,6 +96,7 @@
 	    		$(this).addClass('slide2_on');
 	    		$(this).removeClass('slide2');
 				$("#div_right").css("display","block");
+				getShipSearch();
 			}
 			setSize();
 	    	return false;

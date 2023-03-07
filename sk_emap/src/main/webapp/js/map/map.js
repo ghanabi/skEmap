@@ -16,25 +16,6 @@ var searchBox = {
 	text : ""
 };
 var shipList = [];		//선박리스트
-var ship_styles = [
-    // linestring
-    new ol.style.Style({
-      stroke: new ol.style.Stroke({
-        color: '#ffcc33',
-        width: 2,
-      }),
-      text: new ol.style.Text({
-            textAlign: 'center',
-            font:  'bold 10px Arial',
-            fill: new ol.style.Fill({color: 'rgba(255,0, 0, 0.8)'}),
-            stroke: new ol.style.Stroke({color:'#ffffff', width:0}),
-            text: "",
-            offsetX: 0,
-            offsetY: -10,
-            overflow:true,
-        })
-    }),
-];
 				
 var featTest;
 
@@ -42,7 +23,7 @@ var featTest;
 function mapInit(){
 	var view = new ol.View({
 		center: ol.proj.fromLonLat([129.3005359,35.5468629]),
-		zoom: 7,
+		zoom: 9,
 	});
 	
 	googlemap = new ol.layer.Tile({
@@ -179,14 +160,19 @@ function mapEvent(){
 	});
 	
 	//보기설정 - 선박OFF
-	$("#chkViewLayerMark").on('click',function(e){	
-		if(this.checked){
-			wfs_layer.getSource().clear();
-		}else{
-			wfs_layer.getSource().clear();
-			get_ship_to_map();
-		}	
+	$("#chkViewLayerShip").on('click',function(e){	
+		get_ship_to_map();
 	});
+	
+	//보기설정 - 선박라벨
+	$('input[name=ShipLabel]').on('click',function(e){	
+		get_ship_to_map();		
+	});	
+	
+	//보기설정 - 선박 항적색깔
+	$('input[name=ShipIcon]').on('click',function(e){	
+		get_ship_to_map();		
+	});	
 	
 }
 
@@ -253,7 +239,7 @@ function setActiveDrawTool(type, isOn) {
     	drawInteration = new ol.interaction.Draw(drawOption);
     	const drawendCallback = function (e) {
     		lyr.getSource().clear();
-    		wfs_layer.getSource().clear();
+    		wfs_layer.getSource().clear();    		
     		searchBox = {
 				lon1 : "",
 				lat1 : "",
@@ -353,11 +339,8 @@ function get_ship(){
 							
 						}
 					}
-					//console.log(shipList);		
-					var chkShip = $("#chkViewLayerShip").prop("checked"); //보기설정 선박 OFF 일경우 지도위에 항적표시 X
-					if(!chkShip){
-						get_ship_to_map(); //항적조회2
-					}					
+					//console.log(shipList);
+					get_ship_to_map(); //항적조회2											
 				}		   
 			},
 	    });
@@ -366,92 +349,97 @@ function get_ship(){
 
 //항적조회2
 function get_ship_to_map(){
-	//선박 레이어 라인 표시
-	for(var i=0;i<shipList.length;i++){
-		if(shipList[i].feat_line.length>1){
-			//if(shipList[i].mmsi == "440200240"){
-				//console.log(shipList[i]);
-				var feat_line = new ol.Feature({
-					geometry:new ol.geom.LineString(shipList[i].feat_line)
-				});								
-
-				let val = $('input[name=ShipLabel]:checked').val();
-				
-				let styles = [];
-				//라벨 표시 여부.
-				if(val != "none"){
-					var text = "";
-					if(val=="name"){ 
-						text = shipList[i].shipname; //이름인경우
+	wfs_layer.getSource().clear();
+	var chkShip = $("#chkViewLayerShip").prop("checked"); //보기설정 선박 OFF 일경우 지도위에 항적표시 X
+	if(!chkShip){
+		//선박 레이어 라인 표시
+		for(var i=0;i<shipList.length;i++){
+			if(shipList[i].feat_line.length>1){
+				//if(shipList[i].mmsi == "440200240"){
+					//console.log(shipList[i]);
+					var feat_line = new ol.Feature({
+						geometry:new ol.geom.LineString(shipList[i].feat_line)
+					});								
+	
+					let val = $('input[name=ShipLabel]:checked').val();
+					let color = $('input[name=ShipIcon]:checked').val();
+					let styles = [];
+					//라벨 표시 여부.
+					if(val != "none"){
+						var text = "";
+						if(val=="name"){ 
+							text = shipList[i].shipname; //이름인경우
+						}else{
+							text = shipList[i].mmsi; //ID인경우
+						}
+						
+						styles = [
+						    // linestring
+						    new ol.style.Style({
+						      stroke: new ol.style.Stroke({
+						        color: '#'+color,
+						        width: 2,
+						      }),
+						      text: new ol.style.Text({
+					                textAlign: 'center',
+					                font:  'bold 10px Arial',
+					                fill: new ol.style.Fill({color: 'rgba(255,0, 0, 0.8)'}),
+					                stroke: new ol.style.Stroke({color:'#ffffff', width:0}),
+					                text: text,
+					                offsetX: 0,
+					                offsetY: -10,
+					                overflow:true,
+					            })
+						    }),
+						];
 					}else{
-						text = shipList[i].mmsi; //ID인경우
+						styles = [
+						    // linestring
+						    new ol.style.Style({
+						      stroke: new ol.style.Stroke({
+						        color: '#'+color,
+						        width: 2,
+						      }),			
+						    }),
+						];
 					}
 					
-					styles = [
-					    // linestring
-					    new ol.style.Style({
-					      stroke: new ol.style.Stroke({
-					        color: '#ffcc33',
-					        width: 2,
-					      }),
-					      text: new ol.style.Text({
-				                textAlign: 'center',
-				                font:  'bold 10px Arial',
-				                fill: new ol.style.Fill({color: 'rgba(255,0, 0, 0.8)'}),
-				                stroke: new ol.style.Stroke({color:'#ffffff', width:0}),
-				                text: shipList[i].shipname,
-				                offsetX: 0,
-				                offsetY: -10,
-				                overflow:true,
-				            })
-					    }),
-					];
-				}else{
-					styles = [
-					    // linestring
-					    new ol.style.Style({
-					      stroke: new ol.style.Stroke({
-					        color: '#ffcc33',
-					        width: 2,
-					      }),			
-					    }),
-					];
-				}
-				
-
-				let c_geometry = feat_line.getGeometry().transform( 'EPSG:4326',  'EPSG:3857');
-				
-				c_geometry.forEachSegment(function (start, end) {
-				    const dx = end[0] - start[0];
-				    const dy = end[1] - start[1];
-			    	const rotation = Math.atan2(dy, dx);
-			    	// arrows
-			    	styles.push(
-			      		new ol.style.Style({
-				        	geometry: new ol.geom.Point(end),
-				        	image: new ol.style.Icon({
-					          	src: 'images/sk/arrow.png',
-					          	anchor: [0.75, 0.5],
-					          	rotateWithView: true,
-					          	rotation: -rotation,
-			        		}),
-			      		})
-			    	);
-			  	});
-			  	
-			  	feat_line.setStyle(styles);			
-				try{
-					wfs_layer.getSource().addFeature(feat_line);
-				}catch(e){
-					console.log(e);
-					console.log("shipList[i] error : "+shipList[i].mmsi);
-				}				
-			//}									
+	
+					let c_geometry = feat_line.getGeometry().transform( 'EPSG:4326',  'EPSG:3857');
+					
+					c_geometry.forEachSegment(function (start, end) {
+					    const dx = end[0] - start[0];
+					    const dy = end[1] - start[1];
+				    	const rotation = Math.atan2(dy, dx);
+				    	// arrows
+				    	styles.push(
+				      		new ol.style.Style({
+					        	geometry: new ol.geom.Point(end),
+					        	image: new ol.style.Icon({
+						          	src: 'images/sk/'+color+'.png',
+						          	anchor: [0.75, 0.5],
+						          	rotateWithView: true,
+						          	rotation: -rotation,
+				        		}),
+				      		})
+				    	);
+				  	});
+				  	
+				  	feat_line.setStyle(styles);			
+					try{
+						wfs_layer.getSource().addFeature(feat_line);
+					}catch(e){
+						console.log(e);
+						console.log("shipList[i] error : "+shipList[i].mmsi);
+					}				
+				//}									
+			}
 		}
-	}
-	get_ship2();
+	}		
+	get_ship2(); //리스트 만들기
 }
 
+//선박 리스트 만들기
 function get_ship2() {
 	$.ajax({
 			type: "POST",

@@ -150,12 +150,20 @@ window.onload = function(){
 							</tr>
 							<tr>
 								<td class="t_center">
-									<div class="option3_1">
-										<span>항적</span>
-									</div>
-									<div id="colorSelector1" style="width: 34px;height: 34px;"><div style="background-color: #0000ff;width: 30px;height: 30px;"></div></div>
+									<div class="option3_1" style="width:120px;">
+										<span>항적아이콘설정</span>
+									</div>									
 								</td>
-								<td class="t_center"><img alt="" src="images/sk/btn_chg.jpg"></td>
+								<td class="t_center"></td>
+							</tr>
+							<tr>
+								<td class="t_left" colspan="2">
+									<img alt="" src="images/sk/ff0000.png" style="width:12px;height:12px;padding-top:5px;padding-right:5px;float:none;"> <input type="radio" name="ShipIcon" value="ff0000" style="width:15px;height:15px;" checked>&nbsp;
+									<img alt="" src="images/sk/00950b.png" style="width:12px;height:12px;padding-top:5px;padding-right:5px;float:none;"> <input type="radio" name="ShipIcon" value="00950b" style="width:15px;height:15px;" >&nbsp;
+									<img alt="" src="images/sk/0c00ff.png" style="width:12px;height:12px;padding-top:5px;padding-right:5px;float:none;"> <input type="radio" name="ShipIcon" value="0c00ff" style="width:15px;height:15px;" >&nbsp;
+									<img alt="" src="images/sk/ffcc33.png" style="width:12px;height:12px;padding-top:5px;padding-right:5px;float:none;"> <input type="radio" name="ShipIcon" value="ffcc33" style="width:15px;height:15px;" >&nbsp;
+									<img alt="" src="images/sk/000000.png" style="width:12px;height:12px;padding-top:5px;padding-right:5px;float:none;"> <input type="radio" name="ShipIcon" value="000000" style="width:15px;height:15px;" >
+								</td>
 							</tr>							
 							<tr>
 								<td>

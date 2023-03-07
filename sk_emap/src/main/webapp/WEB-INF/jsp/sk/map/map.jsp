@@ -158,11 +158,11 @@ window.onload = function(){
 							</tr>
 							<tr>
 								<td class="t_left" colspan="2">
-									<img alt="" src="images/sk/ff0000.png" style="width:12px;height:12px;padding-top:5px;padding-right:5px;float:none;"> <input type="radio" name="ShipIcon" value="ff0000" style="width:15px;height:15px;" checked>&nbsp;
-									<img alt="" src="images/sk/00950b.png" style="width:12px;height:12px;padding-top:5px;padding-right:5px;float:none;"> <input type="radio" name="ShipIcon" value="00950b" style="width:15px;height:15px;" >&nbsp;
-									<img alt="" src="images/sk/0c00ff.png" style="width:12px;height:12px;padding-top:5px;padding-right:5px;float:none;"> <input type="radio" name="ShipIcon" value="0c00ff" style="width:15px;height:15px;" >&nbsp;
-									<img alt="" src="images/sk/ffcc33.png" style="width:12px;height:12px;padding-top:5px;padding-right:5px;float:none;"> <input type="radio" name="ShipIcon" value="ffcc33" style="width:15px;height:15px;" >&nbsp;
-									<img alt="" src="images/sk/000000.png" style="width:12px;height:12px;padding-top:5px;padding-right:5px;float:none;"> <input type="radio" name="ShipIcon" value="000000" style="width:15px;height:15px;" >
+									<img alt="" src="images/sk/ff0000.png" style="width:12px;height:12px;margin-right:-4px;float:none;"> <input type="radio" name="ShipIcon" value="ff0000" style="width:15px;height:15px;padding-right:5px;" checked>&nbsp;
+									<img alt="" src="images/sk/00950b.png" style="width:12px;height:12px;margin-right:-4px;float:none;"> <input type="radio" name="ShipIcon" value="00950b" style="width:15px;height:15px;padding-right:5px;" >&nbsp;
+									<img alt="" src="images/sk/0c00ff.png" style="width:12px;height:12px;margin-right:-4px;float:none;"> <input type="radio" name="ShipIcon" value="0c00ff" style="width:15px;height:15px;padding-right:5px;" >&nbsp;
+									<img alt="" src="images/sk/ffcc33.png" style="width:12px;height:12px;margin-right:-4px;float:none;"> <input type="radio" name="ShipIcon" value="ffcc33" style="width:15px;height:15px;padding-right:5px;" >&nbsp;
+									<img alt="" src="images/sk/000000.png" style="width:12px;height:12px;margin-right:-4px;float:none;"> <input type="radio" name="ShipIcon" value="000000" style="width:15px;height:15px;" >
 								</td>
 							</tr>							
 							<tr>

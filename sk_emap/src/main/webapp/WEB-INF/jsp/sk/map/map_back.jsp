@@ -151,12 +151,21 @@ window.onload = function(){
 							<tr>
 								<td class="t_center">
 									<div class="option3_1">
-										<span>항적</span>
+										<span>기호</span>
 									</div>
 									<div id="colorSelector1" style="width: 34px;height: 34px;"><div style="background-color: #0000ff;width: 30px;height: 30px;"></div></div>
 								</td>
 								<td class="t_center"><img alt="" src="images/sk/btn_chg.jpg"></td>
-							</tr>							
+							</tr>
+							<tr>
+								<td class="t_center">
+								<div class="option3_1">
+										<span>항적</span>
+									</div>
+									<div id="colorSelector2" style="width: 34px;height: 34px;"><div style="background-color: #0000ff;width: 30px;height: 30px;"></div></div>
+								</td>
+								<td class="t_center"><img alt="" src="images/sk/btn_chg.jpg"></td>
+							</tr>
 							<tr>
 								<td>
 									<div class="option3_2">

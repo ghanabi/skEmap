@@ -181,8 +181,9 @@ function mapEvent(){
 	//보기설정 - 선박OFF
 	$("#chkViewLayerMark").on('click',function(e){	
 		if(this.checked){
-		
+			wfs_layer.getSource().clear();
 		}else{
+			wfs_layer.getSource().clear();
 			get_ship_to_map();
 		}	
 	});
@@ -353,7 +354,7 @@ function get_ship(){
 						}
 					}
 					//console.log(shipList);		
-					var chkShip = $("#chkViewLayerShip").prop("checked");
+					var chkShip = $("#chkViewLayerShip").prop("checked"); //보기설정 선박 OFF 일경우 지도위에 항적표시 X
 					if(!chkShip){
 						get_ship_to_map(); //항적조회2
 					}					
@@ -374,25 +375,49 @@ function get_ship_to_map(){
 					geometry:new ol.geom.LineString(shipList[i].feat_line)
 				});								
 
-				const styles = [
-				    // linestring
-				    new ol.style.Style({
-				      stroke: new ol.style.Stroke({
-				        color: '#ffcc33',
-				        width: 2,
-				      }),
-				      text: new ol.style.Text({
-			                textAlign: 'center',
-			                font:  'bold 10px Arial',
-			                fill: new ol.style.Fill({color: 'rgba(255,0, 0, 0.8)'}),
-			                stroke: new ol.style.Stroke({color:'#ffffff', width:0}),
-			                text: shipList[i].shipname,
-			                offsetX: 0,
-			                offsetY: -10,
-			                overflow:true,
-			            })
-				    }),
-				];
+				let val = $('input[name=ShipLabel]:checked').val();
+				
+				let styles = [];
+				//라벨 표시 여부.
+				if(val != "none"){
+					var text = "";
+					if(val=="name"){ 
+						text = shipList[i].shipname; //이름인경우
+					}else{
+						text = shipList[i].mmsi; //ID인경우
+					}
+					
+					styles = [
+					    // linestring
+					    new ol.style.Style({
+					      stroke: new ol.style.Stroke({
+					        color: '#ffcc33',
+					        width: 2,
+					      }),
+					      text: new ol.style.Text({
+				                textAlign: 'center',
+				                font:  'bold 10px Arial',
+				                fill: new ol.style.Fill({color: 'rgba(255,0, 0, 0.8)'}),
+				                stroke: new ol.style.Stroke({color:'#ffffff', width:0}),
+				                text: shipList[i].shipname,
+				                offsetX: 0,
+				                offsetY: -10,
+				                overflow:true,
+				            })
+					    }),
+					];
+				}else{
+					styles = [
+					    // linestring
+					    new ol.style.Style({
+					      stroke: new ol.style.Stroke({
+					        color: '#ffcc33',
+					        width: 2,
+					      }),			
+					    }),
+					];
+				}
+				
 
 				let c_geometry = feat_line.getGeometry().transform( 'EPSG:4326',  'EPSG:3857');
 				

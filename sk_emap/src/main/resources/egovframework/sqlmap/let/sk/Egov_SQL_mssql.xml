@@ -73,7 +73,7 @@
 	   		</isEqual>
 		<![CDATA[ 					   
 			 GROUP BY a.MMSI, b.ShipName
-			 ORDER by a.MMSI, b.ShipName, a.TimeStampK
+			 ORDER by a.MMSI, b.ShipName
 		]]>
 	</select>
 	

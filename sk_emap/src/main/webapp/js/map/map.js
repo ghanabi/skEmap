@@ -135,7 +135,7 @@ function mapEvent(){
 	
 	//태그표시
 	$("#tag_see").on('click',function(e){		
-	 	alert("준비중 입니다.");
+	 	$('input[name=ShipLabel]').click();
 	});
 	
 	//보기설정 - 상세
@@ -161,6 +161,12 @@ function mapEvent(){
 	
 	//보기설정 - 선박라벨
 	$('input[name=ShipLabel]').on('click',function(e){	
+		let val = $('input[name=ShipLabel]:checked').val();
+		if(val=="none") { 
+			$("#feather_see").css("font-weight","bold");
+		} else {
+			$("#feather_see").css("font-weight","normal");
+		}
 		get_ship_to_map(choice_idx);		
 	});	
 	
@@ -391,6 +397,7 @@ function get_ship_to_map(i){
 						    }),
 						];
 					}else{
+						
 						styles = [
 						    // linestring
 						    new ol.style.Style({

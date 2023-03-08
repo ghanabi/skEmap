@@ -46,7 +46,7 @@
 			b.ShipName like '%$shipname$%'
 	   		</isEqual>
 		<![CDATA[ 					   
-			order by a.MMSI, a.TimeStampK 
+			order by a.MMSI, b.ShipName, a.TimeStampK 
 		]]>
 	</select>
 	
@@ -73,7 +73,7 @@
 	   		</isEqual>
 		<![CDATA[ 					   
 			 GROUP BY a.MMSI, b.ShipName
-			 ORDER BY a.MMSI, b.ShipName
+			 ORDER by a.MMSI, b.ShipName, a.TimeStampK
 		]]>
 	</select>
 	

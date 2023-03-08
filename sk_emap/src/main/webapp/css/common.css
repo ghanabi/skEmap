@@ -96,14 +96,17 @@ table input[type='checkbox'] {
 	border-bottom: 1px solid;
 	margin: 0 13px;
 }
+.div_left table tr {
+	cursor: pointer;
+}
 .div_left table th {
 	padding: 5px;
 	border-bottom: 1px solid;
-	font-size: 15px;
+	font-size: 13px;
 }
 .div_left table td {
 	padding: 5px;
-	font-size: 14px;
+	font-size: 11px;
 }
 .div_left table .t_left {
 	padding: 5px 0 5px 5px;

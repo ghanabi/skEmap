@@ -219,7 +219,7 @@ window.onload = function(){
 						</div>
 						<div>
 						<span class="option_h">결과</span>
-						<div id="ship_result" style="width: 100%;height: 630px;overflow-y: auto;"></div>
+						<div id="ship_result" style="width: 295px;height: 630px;overflow-y: auto;"></div>
 						</div>
 					</div>
 				</div>
@@ -321,7 +321,7 @@ window.onload = function(){
 					<table style="width: 100%;">
 					<colgroup><col width="33%"><col width="33%"><col width="33%"></colgroup>
 					<tr>
-					<th><span id="feather_see">항적표시</span></th>
+					<th><span id="feather_see" style="font-weight: bold;">항적표시</span></th>
 					<th><span id="tag_see">태그표시</span></th>
 					<th>선박수 : <span id="ship_num"></span></th>
 					</tr>

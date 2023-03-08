@@ -129,13 +129,18 @@ function mapEvent(){
 	});
 	
 	//항적표시
-	$("#feather_see").on('click',function(e){		
+	$("#feather_see").on('click',function(e){
 	 	$("#chkViewLayerShip").click();
 	});
 	
 	//태그표시
-	$("#tag_see").on('click',function(e){		
-	 	$('input[name=ShipLabel]').click();
+	$("#tag_see").on('click',function(e){	
+		let val = $('input[name=ShipLabel]:checked').val();
+		if(val=="none") {
+	 		$("input:radio[name='ShipLabel']:radio[value='name']").click();
+		} else {
+	 		$("input:radio[name='ShipLabel']:radio[value='none']").click();	
+		}
 	});
 	
 	//보기설정 - 상세
@@ -163,9 +168,9 @@ function mapEvent(){
 	$('input[name=ShipLabel]').on('click',function(e){	
 		let val = $('input[name=ShipLabel]:checked').val();
 		if(val=="none") { 
-			$("#feather_see").css("font-weight","bold");
+			$("#tag_see").css("font-weight","normal");
 		} else {
-			$("#feather_see").css("font-weight","normal");
+			$("#tag_see").css("font-weight","bold");
 		}
 		get_ship_to_map(choice_idx);		
 	});	
@@ -357,6 +362,7 @@ function get_ship_to_map(i){
 	if(!chkShip){
 		//선박 레이어 라인 표시
 		//for(var i=0;i<shipList.length;i++){
+		if(shipList.length>0){
 			choice_idx = i;
 			if(shipList[i].feat_line.length>1){
 				//if(shipList[i].mmsi == "440200240"){
@@ -439,7 +445,7 @@ function get_ship_to_map(i){
 					}				
 				//}									
 			}
-		//}
+		}
 	}		
 }
 

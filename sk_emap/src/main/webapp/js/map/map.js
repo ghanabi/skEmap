@@ -44,7 +44,7 @@ function mapInit(){
     vectorInit(); //베이스 vector레이어
     mapEvent();
 
-	$("#mapSearch3").click();
+	//$("#mapSearch3").click();
 }
 
 //맵 이벤트
@@ -79,33 +79,46 @@ function mapEvent(){
 	 
 	//항로추적
 	$("#mapSearch3").on('click',function(e){
-	 	//deactiveInteractions();
-	 	//setActiveDrawTool('box',null);
 		let dis = $("#div_left_mapSearch").css("display");
 		if(dis == "block") {
+			$("#mapSearch3 img").attr("src","images/sk/maptool/btn7.jpg");
 			$("#div_left_mapSearch").css("display","none");
-		} else {			
+			$(".div_left").css("display","none");
+		} else {
+			$("#mapSearch3 img").attr("src","images/sk/maptool/btn7_on.jpg");
+			$("#div_left_mapSetting").css("display","none");
 			$("#div_left_mapSearch").css("display","block");
+			$(".div_left").css("display","block");
 		}
-	 	$("#slide1").click();
+		setSize();		
 	});
 
 	//레이어 설정
 	$("#mapSetting").on('click',function(e){
-		
 		let dis = $("#div_left_mapSetting").css("display");
 		if(dis == "block") {
 			$("#div_left_mapSetting").css("display","none");
-		} else {			
+			$(".div_left").css("display","none");
+		} else {
+			$("#mapSearch3 img").attr("src","images/sk/maptool/btn7.jpg");
+			$("#div_left_mapSearch").css("display","none");
 			$("#div_left_mapSetting").css("display","block");
+			$(".div_left").css("display","block");
 		}
-	 	$("#slide1").click();
+		setSize();	
 	});
 	
 	//항적표시 검색
 	$("#shipsearch").on('click',function(e){
 		get_ship();
 	});
+	
+	//항적표시 검색
+	$("#shipsearch2").on('click',function(e){
+		getShipSearch();
+	});
+	
+	
 	
 	//선박정보검색
 	$("#shipsearch2").on('click',function(e){
@@ -120,7 +133,7 @@ function mapEvent(){
 	
 	//목록 갱신
 	$("#ship_clean").on('click',function(e){
-		shiplist_clean();
+		getShipSearch();
 	});
 	
 	//선박관리
@@ -675,7 +688,7 @@ function ViewLayerChkMark(checked){
 
 //선박정보 검색 리스트
 function getShipSearch() {
-	//shiplist_clean();
+	getShipClean();
 	let txt = $("#search_word").val();
 	$.ajax({
 		type: "POST",
@@ -698,7 +711,7 @@ function getShipSearch() {
 					str += "<tr style='cursor:pointer;' onclick='getShipSearch_Detail("+data[i].mmsi+");'>";
 					str += "<td>"+data[i].mmsi+"</td>";
 					str += "<td>"+data[i].shipname+"</td>";
-					str += "</tr>"; 
+					str += "</tr>";
 				}
 				str += "</table>";
 				$("#shiplist_result").html(str);
@@ -739,8 +752,7 @@ function getShipSearch_Detail(mmsi) {
 	});
 }
 
-function shiplist_clean() {
-	$("#search_word").val("");
+function getShipClean() {
 	$("#txt_mmsi").text("");
 	$("#txt_shipname").text("");
 	$("#txt_callsign").text("");
@@ -755,6 +767,5 @@ function shiplist_clean() {
 	$("#txt_shipsize").text("");
 	$("#txt_desti").text("");
 	$("#txt_timestamp").text("");
-	$("#shiplist_result").html("");
 }
 

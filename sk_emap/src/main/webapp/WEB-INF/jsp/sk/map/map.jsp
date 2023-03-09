@@ -88,7 +88,7 @@ window.onload = function(){
 							<li class="tool4" id="mapMove"><img alt="" src="images/sk/maptool/btn4.jpg"></li>
 							<li class="tool5" id="mapSearch1"><img alt="" src="images/sk/maptool/btn5.jpg"></li>
 							<!-- <li class="tool6" id="mapSearch2"><img alt="" src="images/sk/maptool/btn6.jpg"></li>  -->
-							<li class="tool7" id="mapSearch3"><img alt="" src="images/sk/maptool/btn7.jpg"></li>
+							<li class="tool7" id="mapSearch3"><img alt="" src="images/sk/maptool/btn7_on.jpg"></li>
 						</ul>
 					</div>
 					<div class="option">
@@ -100,7 +100,7 @@ window.onload = function(){
 						</ul>
 					</div>
 				</div>
-				<div class="slide1" id="slide1"><!-- <img alt="" src="images/sk/slide.jpg"> --></div>
+				<!-- <div class="slide1" id="slide1"><img alt="" src="images/sk/slide.jpg"></div> -->
 			</div>
 			<div class="div_left">
 				<div id="div_left_mapSetting" style="display: none;">
@@ -199,7 +199,7 @@ window.onload = function(){
 						</table>
 					</div>
 				</div>
-				<div id="div_left_mapSearch" style="display: none; width: 100%;">
+				<div id="div_left_mapSearch" style="display: block; width: 100%;">
 					<div id="option5">
 						<span class="option_h">항적표시</span>
 						<div style="height: 200px;">
@@ -321,8 +321,8 @@ window.onload = function(){
 					<table style="width: 100%;">
 					<colgroup><col width="33%"><col width="33%"><col width="33%"></colgroup>
 					<tr>
-					<th><span id="feather_see" style="font-weight: bold;">항적표시</span></th>
-					<th><span id="tag_see">태그표시</span></th>
+					<th><span id="feather_see">항적표시</span><input type="checkbox" id="chkShipRoute"></th>
+					<th><span id="tag_see">태그표시</span><input type="checkbox" id="chkShipName"></th>
 					<th>선박수 : <span id="ship_num"></span></th>
 					</tr>
 					</table>

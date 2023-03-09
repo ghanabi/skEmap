@@ -35,7 +35,47 @@
 		setSize();
 	});
 	
-	function setSize() {
+	$(document).ready(function () {
+		/*$("#slide1").click(function() {
+			var c = $('#slide1').attr('class');
+			if(c == "slide1_on") {
+		    	//$(this).addClass('slide1');
+		    	//$(this).removeClass('slide1_on');
+
+				$(".div_left").css("display","none");
+				$("#div_left_mapSetting").css("display","none");
+				$("#div_left_mapSearch").css("display","none");				
+			} else {				
+	    		//$(this).addClass('slide1_on');
+	    		//$(this).removeClass('slide1');
+
+				$(".div_left").css("display","block");
+			}
+			setSize();
+	    	return false;
+		});*/
+		
+		$("#slide2").click(function() {
+			var c = $('#slide2').attr('class');
+			if(c == "slide2_on") {
+		    	$(this).addClass('slide2');
+		    	$(this).removeClass('slide2_on');
+				$("#div_right").css("display","none");
+			} else {				
+	    		$(this).addClass('slide2_on');
+	    		$(this).removeClass('slide2');
+				$("#div_right").css("display","block");
+				getShipSearch();
+			}
+			setSize();
+	    	return false;
+		});
+		 
+	});
+})(jQuery);
+
+
+function setSize() {
 		var window_w = $( window ).width();
 		var window_h = $( window ).height();
 		var left_w = $(".con_left").width();
@@ -64,43 +104,5 @@
 		
 		$(".scale").css({'left': 85+l_div+"px"});
 		
-		$(".slide1").css({'top': (window_h/2)+60+"px"});
-	}
-	$(document).ready(function () {
-		$("#slide1").click(function() {
-			var c = $('#slide1').attr('class');
-			if(c == "slide1_on") {
-		    	$(this).addClass('slide1');
-		    	$(this).removeClass('slide1_on');
-
-				$(".div_left").css("display","none");
-				$("#div_left_mapSetting").css("display","none");
-				$("#div_left_mapSearch").css("display","none");				
-			} else {				
-	    		$(this).addClass('slide1_on');
-	    		$(this).removeClass('slide1');
-
-				$(".div_left").css("display","block");
-			}
-			setSize();
-	    	return false;
-		});
-		
-		$("#slide2").click(function() {
-			var c = $('#slide2').attr('class');
-			if(c == "slide2_on") {
-		    	$(this).addClass('slide2');
-		    	$(this).removeClass('slide2_on');
-				$("#div_right").css("display","none");
-			} else {				
-	    		$(this).addClass('slide2_on');
-	    		$(this).removeClass('slide2');
-				$("#div_right").css("display","block");
-				getShipSearch();
-			}
-			setSize();
-	    	return false;
-		});
-		 
-	});
-})(jQuery);
+		//$(".slide1").css({'top': (window_h/2)+60+"px"});
+}

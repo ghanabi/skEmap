@@ -85,7 +85,7 @@ table input[type='checkbox'] {
 	width: 295px;
 	height: 100%;
 	float: left;
-	display: none;
+	display: block;
 	border-right: 1px solid #d4d4d4;
 }
 .div_left #option1{

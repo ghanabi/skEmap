@@ -225,10 +225,7 @@ function deactiveInteractions() {
             l.getSource().clear();
         }
     }
-    
-    //dragInteraction.setActive(false);
-    //modStyleSelectInteraction.setActive(false);
-    //modStyleSelectedFeature = null;
+    map.updateSize();
 }
 
 //항적조회 이벤트 활성화

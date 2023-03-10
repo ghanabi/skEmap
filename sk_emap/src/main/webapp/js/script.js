@@ -70,7 +70,16 @@
 			setSize();
 	    	return false;
 		});
+		let today = new Date(); 
+		let year = today.getFullYear(); // 년도
+		let month = ("0" + (1 + today.getMonth())).slice(-2);  // 월
+		let day = ("0" + today.getDate()).slice(-2);  // 날짜
+		
+		document.getElementById("date1").setAttribute("max", year + '-' + month + '-' + day);
+		
+		//슬라이더 설정
 		Ps.initialize(document.getElementById('shiplist_result'));
+		Ps.initialize(document.getElementById('ship_result'));
 		 
 	});
 })(jQuery);

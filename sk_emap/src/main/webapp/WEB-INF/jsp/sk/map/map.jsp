@@ -204,12 +204,11 @@ window.onload = function(){
 				<div id="div_left_mapSearch" style="display: block; width: 100%;">
 					<div id="option5">
 						<span class="option_h">항적표시</span>
-						<div style="height: 200px;">
+						<div style="height: 385px;">
 							<div><img id="boxsearch" style="width: 70%; margin: 5px;" alt="" src="images/sk/Areasetting.jpg"></div>						
 							<span class="option_h2">검색기간(DAY)</span>
 							<div style="text-align: center; margin: 10px;">
-								<input type="date" id="date1" > ~ 
-								<input type="date" id="date2" >
+								<input type="date" id="date1" >
 							</div>
 							<div style="text-align: center; margin: 10px;">
 								선택 : 
@@ -217,11 +216,23 @@ window.onload = function(){
 	  							<input type="radio" name="kind" value="SHIPNAME" />선박명칭
 							</div>
 							<div style="text-align: center; margin: 10px;">MMSI / 선박명칭 : <input type="text" id="txt_search"></div>
+							<table>
+								<colgroup><col width="25%"><col width="25%"><col width="25%"><col width="25%"></colgroup>
+								<tr><th colspan="4">시작점</th></tr>
+								<tr><td>위도</td><td><span id="s_lat_d"></span>도</td><td><span id="s_lat_m"></span>분</td><td><span id="s_lat_s"></span>초</td></tr>
+								<tr><td>경도</td><td><span id="s_lon_d"></span>도</td><td><span id="s_lon_m"></span>분</td><td><span id="s_lon_s"></span>초</td></tr>
+							</table>
+							<table style="margin: 10px 13px; ">
+								<colgroup><col width="25%"><col width="25%"><col width="25%"><col width="25%"></colgroup>
+								<tr><th colspan="4">끝점</th></tr>
+								<tr><td>위도</td><td><span id="e_lat_d"></span>도</td><td><span id="e_lat_m"></span>분</td><td><span id="e_lat_s"></span>초</td></tr>
+								<tr><td>경도</td><td><span id="e_lon_d"></span>도</td><td><span id="e_lon_m"></span>분</td><td><span id="e_lon_s"></span>초</td></tr>
+							</table>
 							<img id="shipsearch"style="float: right; width: 100px; margin-right: 10px;" alt="" src="images/sk/shipsearch.jpg">
 						</div>
 						<div>
 						<span class="option_h">결과</span>
-						<div id="ship_result" style="width: 295px;height: 630px;overflow-y: auto;"></div>
+						<div id="ship_result" style="height: 440px;overflow: hidden;position: relative;margin: 0px auto;padding: 0px;"></div>
 						</div>
 					</div>
 				</div>
@@ -297,8 +308,8 @@ window.onload = function(){
 					</table>
 				</div>
 				<div id="right_shiplist" class="right_result">
-					<table style="height: 26px;width: 100%">
-						<colgroup><col width="50%"><col width="50%"></colgroup>
+					<table style="height: 26px;">
+						<colgroup><col width="125"><col width="146"></colgroup>
 						<tr>
 							<th>MMSI</th>
 							<th>선  명</th>
@@ -306,7 +317,7 @@ window.onload = function(){
 					</table>
 					<div id="shiplist_result" style="height:344px;border: 1px solid #444444; overflow: hidden;position: relative;margin: 0px auto;padding: 0px;">
 						<table>
-						<colgroup><col width="50%"><col width="50%"></colgroup>
+						<colgroup><col width="125"><col width="146"></colgroup>
 						<tr>
 							<td></td>
 							<td></td>

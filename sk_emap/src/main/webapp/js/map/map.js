@@ -299,6 +299,33 @@ function setActiveDrawTool(type, isOn) {
 			searchBox.lon2 = lon2;
 			searchBox.lat1 = lat1;
 			searchBox.lat2 = lat2;
+			
+			//시작, 끝점 좌표 도분초 변환
+			let s_lat_d = Math.floor(lat2);
+			let s_lat_m = Math.floor((lat2-s_lat_d)*60);
+			let s_lat_s = Math.round((((lat2-s_lat_d)*60)-s_lat_m)*60*100)/100;
+			let s_lon_d = Math.floor(lon2);
+			let s_lon_m = Math.floor((lon2-s_lon_d)*60);
+			let s_lon_s = Math.round((((lon2-s_lon_d)*60)-s_lon_m)*60*100)/100;
+			let e_lat_d = Math.floor(lat1);
+			let e_lat_m = Math.floor((lat1-e_lat_d)*60);
+			let e_lat_s = Math.round((((lat1-e_lat_d)*60)-e_lat_m)*60*100)/100;
+			let e_lon_d = Math.floor(lon1);
+			let e_lon_m = Math.floor((lon1-e_lon_d)*60);
+			let e_lon_s = Math.round((((lon1-e_lon_d)*60)-e_lon_m)*60*100)/100;
+			
+			$("#s_lat_d").text(s_lat_d);  //시작점 위도 도
+			$("#s_lat_m").text(s_lat_m);  //시작점 위도 분
+			$("#s_lat_s").text(s_lat_s);  //시작점 위도 초
+			$("#s_lon_d").text(s_lon_d);  //시작점 경도 도
+			$("#s_lon_m").text(s_lon_m);  //시작점 경도 분
+			$("#s_lon_s").text(s_lon_s);  //시작점 경도 초
+			$("#e_lat_d").text(e_lat_d);  //끝점 위도 도
+			$("#e_lat_m").text(e_lat_m);  //끝점 위도 분
+			$("#e_lat_s").text(e_lat_s);  //끝점 위도 초
+			$("#e_lon_d").text(e_lon_d);  //끝점 경도 도
+			$("#e_lon_m").text(e_lon_m);  //끝점 경도 분
+			$("#e_lon_s").text(e_lon_s);  //끝점 경도 초
         	//get_ship();	
     	}
     	drawInteration.on('drawend', drawendCallback);
@@ -310,11 +337,13 @@ function setActiveDrawTool(type, isOn) {
 //항적조회1
 function get_ship(){
 	let date1 = $("#date1").val();
-	let date2 = $("#date2").val();
 	let txt = $("#txt_search").val();
 	let kind = $('input[name="kind"]:checked').val();
-	searchBox.date1 = date1;
-	searchBox.date2 = date2;
+	if(date1 == '') {
+		alert("날짜 설정 하세요.");
+		return;
+	}
+	searchBox.date1 = date1.replace(/-/g, '');
 	searchBox.txt = txt;
 	searchBox.kind = kind;
 	//if(confirm("해당 범위의 선박을 검색하시겠습니까?")){
@@ -361,6 +390,33 @@ function get_ship(){
 			},
 	    });
 	//}	
+}
+
+//선박 리스트 만들기
+function get_ship2() {
+	$.ajax({
+		type: "POST",
+		dataType: "json",
+		url: "getShipList2.do",			
+		data : searchBox,
+		success: function(data) {		    
+			if(data != null){
+				let str = "<table>";
+				str += "<colgroup><col width='15%'><col width='15%'><col width='30%'><col width='30%'></colgroup>";
+				str += "<tr><th>MMSI</th><th>선박명칭</th><th>최초수신시간</th><th>최종수신시간</th></tr>";
+				for(var i=0; i<data.length; i++) {
+					str += "<tr onclick='get_ship_to_map("+i+")'>";
+					str += "<td>"+data[i].mmsi+"</td>";
+					str += "<td>"+data[i].shipname+"</td>";
+					str += "<td>"+data[i].min_timestampk+"</td>";
+					str += "<td>"+data[i].max_timestampk+"</td>";
+					str += "</tr>"; 
+				}
+				str += "</table>";
+				$("#ship_result").html(str);
+			}		   
+		},
+	});
 }
 
 //항적조회2
@@ -457,32 +513,6 @@ function get_ship_to_map(i){
 	}		
 }
 
-//선박 리스트 만들기
-function get_ship2() {
-	$.ajax({
-			type: "POST",
-			dataType: "json",
-			url: "getShipList2.do",			
-			data : searchBox,
-			success: function(data) {		    
-				if(data != null){
-					let str = "<table style='width:100%'>";
-					str += "<colgroup><col width='20%'><col width='20%'><col width='30%'><col width='30%'></colgroup>";
-					str += "<tr><th>MMSI</th><th>선박명칭</th><th>최초수신시간</th><th>최종수신시간</th></tr>";
-					for(var i=0; i<data.length; i++) {
-						str += "<tr onclick='get_ship_to_map("+i+")'>";
-						str += "<td>"+data[i].mmsi+"</td>";
-						str += "<td>"+data[i].shipname+"</td>";
-						str += "<td>"+data[i].min_timestampk+"</td>";
-						str += "<td>"+data[i].max_timestampk+"</td>";
-						str += "</tr>"; 
-					}
-					str += "</table>";
-					$("#ship_result").html(str);
-				}		   
-			},
-	    });
-}
 //항로범위 활성화
 function setActiveDrawToolSearch(type) {
 	let lyr=null;

@@ -390,3 +390,19 @@ table input[type='checkbox'] {
 .pointer {
 	cursor: pointer;
 }
+
+#div_left_mapSearch #option5 table {
+	border: 1px solid #444444;
+}
+
+#div_left_mapSearch #option5 table th {
+	text-align: center;
+}
+
+#div_left_mapSearch #option5 table td {
+	text-align: right;
+}
+
+#div_left_mapSearch #option5 table td:first-child {
+	text-align: center;
+}

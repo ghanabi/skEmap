@@ -133,9 +133,6 @@ window.onload = function(){
 								<td class="t_left">선박   OFF <input type="checkbox" id="chkViewLayerShip"></td>
 							</tr>
 							<tr>
-								<td class="t_left">전체 <input type="checkbox" >&nbsp;이동 <input type="checkbox" >&nbsp;정박 <input type="checkbox" ></td>
-							</tr>
-							<tr>
 								<td class="t_left">이름 <input type="radio" name="ShipLabel" value="name" checked>&nbsp;ID <input type="radio" name="ShipLabel" value="id">&nbsp;표기안함 <input type="radio" name="ShipLabel" value="none"></td>
 							</tr>
 							<tr>
@@ -165,8 +162,22 @@ window.onload = function(){
 									<img alt="" src="images/sk/ffcc33.png" style="width:12px;height:12px;margin-right:-4px;float:none;"> <input type="radio" name="ShipIcon" value="ffcc33" style="width:15px;height:15px;padding-right:5px;" >&nbsp;
 									<img alt="" src="images/sk/000000.png" style="width:12px;height:12px;margin-right:-4px;float:none;"> <input type="radio" name="ShipIcon" value="000000" style="width:15px;height:15px;" >
 								</td>
-							</tr>							
+							</tr>
 							<tr>
+								<td class="t_center">폰트 크기</td>
+								<td>
+									<div class="option3_2">
+										<input type="text"><span>px</span>
+									</div>
+								</td>
+							</tr>	
+							<tr>
+								<td class="t_center">폰트 색</td>
+								<td>
+									<div id="colorSelector1" style="width: 34px;height: 34px;"><div style="background-color: #0000ff;width: 30px;height: 30px;"></div></div>
+								</td>
+							</tr>					
+							<!-- <tr>
 								<td>
 									<div class="option3_2">
 										<input type="text"><span>분</span>
@@ -181,10 +192,10 @@ window.onload = function(){
 									</div>
 								</td>
 								<td class="t_center" style="font-weight: bold;">항적 저장시간</td>
-							</tr>
+							</tr> -->
 						</table>
 					</div>
-					<div id="option4">
+					<!-- <div id="option4">
 						<table>
 							<colgroup><col width="60%"><col width="40%"></colgroup>
 							<tr>
@@ -199,7 +210,7 @@ window.onload = function(){
 								<td class="t_center" style="font-weight: bold;">표지 저장시간</td>
 							</tr>
 						</table>
-					</div>
+					</div> -->
 				</div>
 				<div id="div_left_mapSearch" style="display: block; width: 100%;">
 					<div id="option5">

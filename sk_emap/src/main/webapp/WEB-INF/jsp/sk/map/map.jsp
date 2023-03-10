@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="<c:url value="/js/libs/openlayers/ol-v5.30/ol.css"/>">
 <link rel="stylesheet" href="<c:url value="/js/libs/openlayers/ol-ext/ol-ext.min.css"/>"/>
 <link rel="stylesheet" href="<c:url value="/css/common.css"/>"/>
+<link type="text/css" href="<c:url value="/css/perfect-scrollbar.css"/>" rel="stylesheet"/>
 
 
 <!-- 지도 스크립트 -->
@@ -47,6 +48,7 @@
 
 <!-- 작업파일 -->
 <script type="text/javascript" src="<c:url value="/js/map/customDragInteraction.js?version=${nowDate}"/>"></script>
+<script type="text/javascript" src="<c:url value="/js/libs/perfect-scrollbar.min.js"/>"></script>
 
 <script>    
 	var ctx = "${ctx}";
@@ -295,14 +297,14 @@ window.onload = function(){
 					</table>
 				</div>
 				<div id="right_shiplist" class="right_result">
-					<table style="height: 26px;width: 259px;">
+					<table style="height: 26px;width: 100%">
 						<colgroup><col width="50%"><col width="50%"></colgroup>
 						<tr>
 							<th>MMSI</th>
 							<th>선  명</th>
 						</tr>
 					</table>
-					<div id="shiplist_result" style="height:344px;border: 1px solid #444444;overflow-y: scroll;">
+					<div id="shiplist_result" style="height:344px;border: 1px solid #444444; overflow: hidden;position: relative;margin: 0px auto;padding: 0px;">
 						<table>
 						<colgroup><col width="50%"><col width="50%"></colgroup>
 						<tr>
@@ -315,7 +317,7 @@ window.onload = function(){
 				<div id="ship_option" style="height: 70px; margin: 10px;">
 					<div>
 						<img id="ship_clean" class="pointer" alt="" src="images/sk/clean_btn.jpg">
-						<img id="ship_setting" class="pointer" alt="" src="images/sk/setting_btn.jpg">
+						<!-- <img id="ship_setting" class="pointer" alt="" src="images/sk/setting_btn.jpg"> -->
 					</div>
 					<div style="width: 100%;">
 					<table style="width: 100%;">

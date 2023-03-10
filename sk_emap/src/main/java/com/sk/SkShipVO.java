@@ -95,7 +95,10 @@ public class SkShipVO implements Serializable {
     private String destitime = "";
     
     /** 도착지 */
-    private String destination = "";    
+    private String destination = "";
+    
+    /** Table */
+    private String table_nm = "";
     
 
 	public String getShipname() {
@@ -296,6 +299,14 @@ public class SkShipVO implements Serializable {
 
 	public void setDestination(String destination) {
 		this.destination = destination;
+	}
+
+	public String getTable_nm() {
+		return table_nm;
+	}
+
+	public void setTable_nm(String table_nm) {
+		this.table_nm = table_nm;
 	}
 	
 }

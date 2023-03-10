@@ -83,9 +83,9 @@
 			  FROM (SELECT a.mmsi, b.ShipName as shipname, 
 						   a.Longitude,a.Latitude,a.TimeStampK,
 						   ROW_NUMBER() OVER (PARTITION BY a.mmsi, b.ShipName ORDER BY a.TimeStampK DESC) AS rank_no
-					  FROM SPM.dbo.TB_AIS123 a, SPM.dbo.TB_AIS5 b
+					  FROM $table_nm$ a, SPM.dbo.TB_AIS5 b
 					 WHERE a.MMSI =b.mmsi and a.TimeStampK = b.TimeStampK
-					   AND b.ShipName LIKE '%%') c
+					   AND b.ShipName LIKE '%$shipname$%') c
 			 WHERE rank_no =1
 			 ORDER BY mmsi,shipname
 		]]>
@@ -94,7 +94,7 @@
 	<select id="map.getShipSearch_all" resultClass="SkShipVO" parameterClass="SkShipVO">
 		<![CDATA[ 			 
 			SELECT a.mmsi, b.ShipName as shipname, a.Latitude as latitude, a.Longitude as longitude
-			  FROM SPM.dbo.TB_AIS123 a, SPM.dbo.TB_AIS5 b
+			  FROM $table_nm$ a, SPM.dbo.TB_AIS5 b
 			 WHERE a.MMSI =b.mmsi and a.TimeStampK = b.TimeStampK
 			   AND b.ShipName LIKE '%$shipname$%'
 			 ORDER BY a.MMSI, b.ShipName
@@ -107,7 +107,7 @@
 				   a.longitude, a.sog, a.cog, a.theading, a.rateturn, 
 				   a.cstate, b.shiptype, b.dimena+b.dimenb shipsize, 
 				   b.destitime, b.destination, b.timestampk
-			  FROM SPM.dbo.TB_AIS123 a, SPM.dbo.TB_AIS5 b
+			  FROM $table_nm$ a, SPM.dbo.TB_AIS5 b
 			 WHERE a.MMSI =b.mmsi and a.TimeStampK = b.TimeStampK
 			   AND a.mmsi = #mmsi#
 			 ORDER BY timestampk DESC

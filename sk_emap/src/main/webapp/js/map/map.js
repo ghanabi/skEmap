@@ -114,7 +114,7 @@ function mapEvent(){
 	});
 	
 	//항적표시 검색
-	$("#shipsearch2").on('click',function(e){
+	$("#shipsearch").on('click',function(e){
 		getShipSearch();
 	});
 	
@@ -134,11 +134,6 @@ function mapEvent(){
 	//목록 갱신
 	$("#ship_clean").on('click',function(e){
 		getShipSearch();
-	});
-	
-	//선박관리
-	$("#ship_setting").on('click',function(e){		
-	 	$("#mapSetting").click();
 	});
 	
 	//항적표시
@@ -192,6 +187,9 @@ function mapEvent(){
 	$('input[name=ShipIcon]').on('click',function(e){	
 		get_ship_to_map(choice_idx);		
 	});	
+	
+	// 2초 간격으로 메시지를 보여줌
+	setInterval(() => getShipSearch(), 5000);
 	
 }
 

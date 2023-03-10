@@ -15,6 +15,8 @@
  */
 package com.sk.web;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 
@@ -65,6 +67,14 @@ public class WebController {
     private mapService mapService;
 
 	LibJson json = new LibJson(); //json 설정
+	
+	LocalDate now = LocalDate.now();
+	 
+    // 포맷 정의
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+
+    // 포맷 적용
+    String formatedNow = now.format(formatter);
 	
 	//초기화면
 	@RequestMapping(value = "/index.do")
@@ -136,7 +146,7 @@ public class WebController {
 		
 		SkShipVO vo = new SkShipVO();
 		vo.setShipname((String)req.getParameter("shipname"));
-		
+		vo.setTable_nm("SPM.dbo.TB_AIS123_"+formatedNow);
 		List<SkShipVO> slist = mapService.getShipSearch(vo);		
 		
 		System.out.println("slist.size() : "+slist.size());
@@ -153,6 +163,7 @@ public class WebController {
 		
 		SkShipVO vo = new SkShipVO();
 		vo.setShipname((String)req.getParameter("shipname"));
+		vo.setTable_nm("SPM.dbo.TB_AIS123_"+formatedNow);
 		
 		List<SkShipVO> slist = mapService.getShipSearch_all(vo);		
 		
@@ -170,6 +181,7 @@ public class WebController {
 		
 		SkShipVO vo = new SkShipVO();
 		vo.setMmsi((String)req.getParameter("mmsi"));
+		vo.setTable_nm("SPM.dbo.TB_AIS123_"+formatedNow);
 		
 		List<SkShipVO> slist = mapService.getShipSearch_Detail(vo);		
 		

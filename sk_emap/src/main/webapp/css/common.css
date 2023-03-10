@@ -346,6 +346,15 @@ table input[type='checkbox'] {
 	cursor: default;
 }
 
+#right_shiplist table th {
+	font-size: 15px;
+	font-weight: bold;
+}
+
+#right_shiplist table td {
+	font-size: 15px;
+}
+
 .con_right {	
 	width: 72px;
 	height: 100%;

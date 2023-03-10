@@ -70,6 +70,7 @@
 			setSize();
 	    	return false;
 		});
+		Ps.initialize(document.getElementById('shiplist_result'));
 		 
 	});
 })(jQuery);

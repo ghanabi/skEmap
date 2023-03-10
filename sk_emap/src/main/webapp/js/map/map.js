@@ -157,9 +157,9 @@ function mapEvent(){
 	});
 	
 	//보기설정 - 상세
-	$("#chkViewLayerDetail").on('click',function(e){		
-	 	ViewLayerChk(this.checked);
-	});
+	//$("#chkViewLayerDetail").on('click',function(e){		
+	// 	ViewLayerChk(this.checked);
+	//});
 	
 	//보기설정 - 표지OFF
 	$("#chkViewLayerMark").on('click',function(e){		
@@ -533,7 +533,7 @@ function setActiveDrawToolSearch(type) {
 		            }),
 		            text: new ol.style.Text({
 		                textAlign: 'center',
-		                font:  'bold 10px Arial',
+		                font:  'bold 12px Arial',
 		                fill: new ol.style.Fill({color: 'rgba(255,0, 0, 0.8)'}),
 		                stroke: new ol.style.Stroke({color:'#ffffff', width:0}),
 		                text: String(dis),

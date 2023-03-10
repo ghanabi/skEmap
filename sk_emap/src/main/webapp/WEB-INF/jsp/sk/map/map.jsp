@@ -111,13 +111,13 @@ window.onload = function(){
 								<th class="t_center">보기 설정</th>
 							</tr>
 							<tr>
-								<td class="t_left">기본 <input type="checkbox" ></td>
+								<td class="t_left">기본 <input type="radio" name="ShipView" onclick="ViewLayerChk(false);" checked></td>
 							</tr>
 							<tr>
-								<td class="t_left">표준 <input type="checkbox" ></td>
+								<td class="t_left">표준 <input type="radio" name="ShipView" onclick="ViewLayerChk(false);"></td>
 							</tr>
 							<tr>
-								<td class="t_left">상세<input type="checkbox" id="chkViewLayerDetail"></td>
+								<td class="t_left">상세<input type="radio" name="ShipView" onclick="ViewLayerChk(true);"></td>
 							</tr>
 						</table>
 					</div>

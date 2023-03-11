@@ -18,9 +18,7 @@ function shipSelectEvent(){
             e.target.getFeatures().clear();
 
             if (selectedList.length > 0) {
-                const f = e.selected[0];
-                console.log("f");
-                console.log(f);
+                const f = e.selected[0];               
                 var fid = f.id;
                 var mmsi = fid.substring(5);
                 var c = $('#slide2').attr('class');

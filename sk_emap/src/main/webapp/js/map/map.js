@@ -21,7 +21,8 @@ var searchBox = {
 	kind : "",
 	text : ""
 };
-var shipList = [];		//선박리스트				
+var shipList = [];		//선박리스트	
+var shipMoveList = [];		//선박항적리스트			
 var chocieShipMmsi="";  //상세선박정보 id
 var featTest;
 
@@ -135,14 +136,8 @@ function mapEvent(){
 	
 	//항적표시 검색
 	$("#shipsearch").on('click',function(e){
-		get_ship();
-	});
-	
-	//항적표시 검색
-	$("#shipsearch").on('click',function(e){
-		getShipSearch(); 
-	});
-	
+		get_ship(); //항적표시 조회 (왼쪽DIV)
+	});	
 	
 	////////////
 	//선박정보검색 -- 우측DIV
@@ -320,8 +315,7 @@ function setActiveDrawTool(type, isOn) {
 			$("#e_lat_s").text(e_lat_s);  //끝점 위도 초
 			$("#e_lon_d").text(e_lon_d);  //끝점 경도 도
 			$("#e_lon_m").text(e_lon_m);  //끝점 경도 분
-			$("#e_lon_s").text(e_lon_s);  //끝점 경도 초
-        	//get_ship();	
+			$("#e_lon_s").text(e_lon_s);  //끝점 경도 초        		
     	}
     	drawInteration.on('drawend', drawendCallback);
     	map.addInteraction(drawInteration);
@@ -351,14 +345,15 @@ function get_ship(){
 				if(data != null){
 					//console.log(data);
 					var list = data;		
-					shipList = [];			
+					shipMoveList = [];			
 					for(var i=0;i<list.length;i++){
 						var item = list[i];
 						var chk = true;
-						for(var j=0;j<shipList.length;j++){
-							if(item.mmsi == shipList[j].mmsi){
+						for(var j=0;j<shipMoveList.length;j++){
+							if(item.mmsi == shipMoveList[j].mmsi){
 								if(Number(item.longitude)<140 && Number(item.longitude)>110 && Number(item.latitude) < 47 && Number(item.latitude) > 18){
-									shipList[j].feat_line.push([Number(item.longitude),Number(item.latitude)]);
+									shipMoveList[j].feat_line.push([Number(item.longitude),Number(item.latitude)]);
+									shipMoveList[j].timestampkList.push(item.timestampk);
 									chk = false;
 									break;				
 								}		 
@@ -370,17 +365,15 @@ function get_ship(){
 								var obj = {
 									mmsi : item.mmsi,
 									shipname : item.shipname,
+									timestampkList : [item.timestampk],
 									feat_line : [[Number(item.longitude),Number(item.latitude)]]
 								};
-								shipList.push(obj);
+								shipMoveList.push(obj);
 							}
 							
 						}
-					}
-					//console.log(shipList);
-					
-					get_ship2(); //리스트 만들기
-					//get_ship_to_map(); //항적조회2											
+					}					
+					get_ship2(); //리스트 만들기															
 				}		   
 			},
 	    });
@@ -400,7 +393,7 @@ function get_ship2() {
 				str += "<colgroup><col width='15%'><col width='15%'><col width='30%'><col width='30%'></colgroup>";
 				str += "<tr><th>MMSI</th><th>선박명칭</th><th>최초수신시간</th><th>최종수신시간</th></tr>";
 				for(var i=0; i<data.length; i++) {
-					str += "<tr onclick='get_ship_to_map("+i+")'>";
+					str += "<tr onclick='get_ship_to_map(\""+data[i].mmsi+"\");'>";
 					str += "<td>"+data[i].mmsi+"</td>";
 					str += "<td>"+data[i].shipname+"</td>";
 					str += "<td>"+data[i].min_timestampk+"</td>";
@@ -414,98 +407,125 @@ function get_ship2() {
 	});
 }
 
-//항적조회2
-function get_ship_to_map(i){
+//항적조회 - 지도위 항적그리기
+function get_ship_to_map(mmsi){	
 	wfs_layer.getSource().clear();
 	var chkShip = $("#chkViewLayerShip").prop("checked"); //보기설정 선박 OFF 일경우 지도위에 항적표시 X
 	if(!chkShip){
 		//선박 레이어 라인 표시
-		//for(var i=0;i<shipList.length;i++){
-		if(shipList.length>0){
-			choice_idx = i;
-			if(shipList[i].feat_line.length>1){
-				//if(shipList[i].mmsi == "440200240"){
-					//console.log(shipList[i]);
+		for(var i=0;i<shipMoveList.length;i++){	
+			var item = shipMoveList[i];
+			if(item.mmsi == mmsi){				
+				if(item.feat_line.length>1){
 					var feat_line = new ol.Feature({
-						geometry:new ol.geom.LineString(shipList[i].feat_line)
-					});								
-	
-					let val = $('input[name=ShipLabel]:checked').val();
-					let color = $('input[name=ShipIcon]:checked').val();
-					let styles = [];
-					//라벨 표시 여부.
-					if(val != "none"){
-						var text = "";
-						if(val=="name"){ 
-							text = shipList[i].shipname; //이름인경우
-						}else{
-							text = shipList[i].mmsi; //ID인경우
-						}
-						
-						styles = [
-						    // linestring
-						    new ol.style.Style({
-						      stroke: new ol.style.Stroke({
-						        color: '#'+color,
-						        width: 2,
-						      }),
-						      text: new ol.style.Text({
-					                textAlign: 'center',
-					                font:  'bold 10px Arial',
-					                fill: new ol.style.Fill({color: 'rgba(255,0, 0, 0.8)'}),
-					                stroke: new ol.style.Stroke({color:'#ffffff', width:0}),
-					                text: text,
-					                offsetX: 0,
-					                offsetY: -10,
-					                overflow:true,
-					            })
-						    }),
-						];
-					}else{
-						
-						styles = [
-						    // linestring
-						    new ol.style.Style({
-						      stroke: new ol.style.Stroke({
-						        color: '#'+color,
-						        width: 2,
-						      }),			
-						    }),
-						];
-					}
+						geometry:new ol.geom.LineString(item.feat_line)
+					});				
 					
-	
-					let c_geometry = feat_line.getGeometry().transform( 'EPSG:4326',  'EPSG:3857');
+					//항적 스타일주기
+					styles = [
+					    // linestring
+					    new ol.style.Style({
+					      stroke: new ol.style.Stroke({
+					        color: '#ff0000',
+					        width: 2,
+					      })					      
+					    }),
+					];
 					
-					c_geometry.forEachSegment(function (start, end) {
-					    const dx = end[0] - start[0];
-					    const dy = end[1] - start[1];
-				    	const rotation = Math.atan2(dy, dx);
-				    	// arrows
-				    	styles.push(
-				      		new ol.style.Style({
-					        	geometry: new ol.geom.Point(end),
-					        	image: new ol.style.Icon({
-						          	src: 'images/sk/'+color+'.png',
-						          	anchor: [0.75, 0.5],
-						          	rotateWithView: true,
-						          	rotation: -rotation,
-				        		}),
-				      		})
-				    	);
-				  	});
-				  	
-				  	feat_line.setStyle(styles);			
-					try{
+					let c_geometry = feat_line.getGeometry().transform( 'EPSG:4326',  'EPSG:3857');							  	
+				  	feat_line.setStyle(styles);
+				  	try{
 						wfs_layer.getSource().addFeature(feat_line);
+						
+						var lyrCenter = ol.extent.getCenter(feat_line.getGeometry().getExtent());			
+						//zoom, center 설정
+					    map.getView().setCenter(lyrCenter);
+					    map.getView().setZoom(17);						
 					}catch(e){
 						console.log(e);
-						console.log("shipList[i] error : "+shipList[i].mmsi);
-					}				
-				//}									
-			}
-		}
-	}		
+						console.log("error : "+item.mmsi);
+					}
+				  	//중간 이동경로 point 만들기.
+				  	for(var j=0;j<item.feat_line.length;j++){
+				  		var itemP = item.feat_line[j];
+				  		
+				  		
+				  		var pointFeature = new ol.Feature({
+							geometry: new ol.geom.Point(itemP)
+						});				
+						let c_geometry2 = pointFeature.getGeometry().transform( 'EPSG:4326',  'EPSG:3857');
+						let val = $('input[name=ShipLabel]:checked').val();
+						var shipNameText = "";
+						var pointLabel = "";
+						if(val=="name"){ 
+							shipNameText = item.mmsi+" "+item.shipname; //이름인경우
+							pointLabel = item.timestampkList[j];
+						}else if(val=="id"){
+							shipNameText = item.mmsi; //ID인경우
+							pointLabel = item.timestampkList[j];
+						}else{
+							shipNameText = "";
+							pointLabel = "";
+						}
+						pointFeature.id = "ship_"+item.mmsi;
+						
+						if(j == item.feat_line.length-1){
+							pointFeature.setStyle(
+								new ol.style.Style({		            
+						            image: new ol.style.Icon({
+							          	src: 'images/sk/shipIcon.png',
+							          	anchor: [0.8, 0.8],				          	
+					        		}),
+						            text: new ol.style.Text({
+						                textAlign: 'center',
+						                font:  'bold '+shipStyle.font+'px Arial',
+						                fill: new ol.style.Fill({color: shipStyle.color}),
+						                stroke: new ol.style.Stroke({color:'#ffffff', width:0}),
+						                text: shipNameText,
+						                offsetX: 0,
+						                offsetY: -25,
+						                overflow:true,
+						            })
+						      	})
+							);
+						}else{
+							pointFeature.setStyle(
+								new ol.style.Style({
+									image: new ol.style.Circle({
+							            radius: 4,
+							            fill: new ol.style.Fill({
+							                color: shipStyle.color
+							            }),
+							            stroke: new ol.style.Stroke({
+								        	color: '#ffffff',
+								        	width: 1,
+								      	})
+							        }),		            
+						            text: new ol.style.Text({
+						                textAlign: 'center',
+						                font:  'bold '+shipStyle.font+'px Arial',
+						                fill: new ol.style.Fill({color: shipStyle.color}),
+						                stroke: new ol.style.Stroke({color:'#ffffff', width:0}),
+						                text: pointLabel,
+						                offsetX: 70,
+						                offsetY: 0,
+						                overflow:true,
+						            })
+						      	})
+							);
+						}
+						
+						try{
+							wfs_layer.getSource().addFeature(pointFeature);
+						}catch(e){
+							console.log(e);
+							console.log("point error : "+item.mmsi);
+						}
+				  	}	//var j=0;j<item.feat_line.length;j++			  	
+				} //item.feat_line.length>1
+			} //item.mmsi == mmsi		
+		} //var i=0;i<shipMoveList.length;i++
+	}//!chkShip
 }
 
 

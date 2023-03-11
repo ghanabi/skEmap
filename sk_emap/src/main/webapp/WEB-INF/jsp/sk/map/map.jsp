@@ -242,8 +242,8 @@ window.onload = function(){
 							<img id="shipsearch"style="float: right; width: 100px; margin-right: 10px;" alt="" src="images/sk/shipsearch.jpg">
 						</div>
 						<div>
-						<span class="option_h">결과</span>
-						<div id="ship_result" style="height: 440px;overflow: hidden;position: relative;margin: 0px auto;padding: 0px;"></div>
+							<span class="option_h">결과</span>
+							<div id="ship_result" style="height: 440px;overflow: hidden;position: relative;margin: 0px auto;padding: 0px;"></div>
 						</div>
 					</div>
 				</div>

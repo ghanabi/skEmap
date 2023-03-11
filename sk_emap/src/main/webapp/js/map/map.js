@@ -1,11 +1,9 @@
-
-var vworldTile;
 var googlemap;
 var drawInteration;
 var drawInteration_search;
 var choice_idx;
 
-//항적조회 범위값 저장 (연호보아라)
+//항적조회 범위값 저장 
 var searchBox = {
 	lon1 : "",
 	lat1 : "",
@@ -16,8 +14,7 @@ var searchBox = {
 	kind : "",
 	text : ""
 };
-var shipList = [];		//선박리스트
-				
+var shipList = [];		//선박리스트				
 var featTest;
 
 //35.5468629,129.3005359 울산
@@ -42,12 +39,13 @@ function mapInit(){
     wmsInit(); //베이스 wms레이어    
     map.removeLayer(googlemap); //배경맵 삭제    
     vectorInit(); //베이스 vector레이어
-    mapEvent();
+    mapEvent(); //맵 버튼이벤트 설정
 
-	//$("#mapSearch3").click();
+	// 2초 간격으로 메시지를 보여줌
+	setInterval(() => getShipSearch(), 5000);	
 }
 
-//맵 이벤트
+//맵 버튼이벤트 설정
 function mapEvent(){
 	//기본
 	$("#mapDefalt").on('click',function(e){
@@ -141,20 +139,27 @@ function mapEvent(){
 	 	$("#chkViewLayerShip").click();
 	});
 	
-	//태그표시
-	$("#tag_see").on('click',function(e){	
-		let val = $('input[name=ShipLabel]:checked').val();
-		if(val=="none") {
+	//태그표시  ---- 보기설정 선박라벨과 연동
+	$("#chkShipName").on('click',function(e){
+		var chk = $(this).prop("checked");	
+		if(chk) {
 	 		$("input:radio[name='ShipLabel']:radio[value='name']").click();
 		} else {
 	 		$("input:radio[name='ShipLabel']:radio[value='none']").click();	
 		}
 	});
 	
-	//보기설정 - 상세
-	//$("#chkViewLayerDetail").on('click',function(e){		
-	// 	ViewLayerChk(this.checked);
-	//});
+	//보기설정 - 선박라벨  ---- 우측DIV 태그표시랑 연동
+	$('input[name=ShipLabel]').on('click',function(e){	
+		let val = $('input[name=ShipLabel]:checked').val();
+		if(val=="none") { 
+			$("#chkShipName").prop("checked",false);
+		} else {
+			$("#chkShipName").prop("checked",true);
+		}
+		get_ship_to_map(choice_idx);		
+	});	
+	
 	
 	//보기설정 - 표지OFF
 	$("#chkViewLayerMark").on('click',function(e){		
@@ -170,60 +175,12 @@ function mapEvent(){
 			$("#feather_see").css("font-weight","normal");
 		}
 		get_ship_to_map(choice_idx);
-	});
-	
-	//보기설정 - 선박라벨
-	$('input[name=ShipLabel]').on('click',function(e){	
-		let val = $('input[name=ShipLabel]:checked').val();
-		if(val=="none") { 
-			$("#tag_see").css("font-weight","normal");
-		} else {
-			$("#tag_see").css("font-weight","bold");
-		}
-		get_ship_to_map(choice_idx);		
 	});	
 	
 	//보기설정 - 선박 항적색깔
 	$('input[name=ShipIcon]').on('click',function(e){	
 		get_ship_to_map(choice_idx);		
 	});	
-	
-	// 2초 간격으로 메시지를 보여줌
-	setInterval(() => getShipSearch(), 5000);
-	
-}
-
-//줌인, 줌아웃 드래그
-function see_zoomControl(type) {    
-    drawInteration = new ol.interaction.DragZoom({
-        condition: (e) => {
-            return ol.events.condition.click
-        },
-        out: type
-    });
-    map.addInteraction(drawInteration);
-}
-
-//interaction 비활성화
-function deactiveInteractions() {
-    map.removeInteraction(drawInteration);
-    map.removeInteraction(drawInteration_search);    
-    var layers = map.getLayers().getArray();
-	for(let i in layers) {
-        let l = layers[i];
-        const thisLayerId = layers[i].get('id');
-
-        if("mapSearch1" === thisLayerId) {
-            l.getSource().clear();
-        }
-        if("shipLayer" === thisLayerId) {
-            l.getSource().clear();
-        }
-        if("mapSearch2" === thisLayerId) {
-            l.getSource().clear();
-        }
-    }
-    map.updateSize();
 }
 
 //항적조회 이벤트 활성화
@@ -513,218 +470,21 @@ function get_ship_to_map(i){
 	}		
 }
 
-//항로범위 활성화
-function setActiveDrawToolSearch(type) {
-	let lyr=null;
-	var layers = map.getLayers().getArray();
-	for(let i in layers) {
-        const l = layers[i];
-        const thisLayerId = layers[i].get('id');
-
-        if("mapSearch2" === thisLayerId) {
-            lyr = l;
-            break;
-        }
-    }
-    
-    if(lyr != null){
-    	const source = lyr.getSource();
-    	
-    	const tool = {
-	        type: 'Circle',	        
-	    };
-	    
-	    let drawOption = $.extend({}, tool);
-    	drawOption['source'] = source;
-    	drawInteration_search = new ol.interaction.Draw(drawOption);
-    	const drawendCallback = function (e) {
-    		lyr.getSource().clear();
-        	e.feature.set('type', "circle");       
-        	let feat = e.feature;
-        	let featClone = feat.clone();
-        	featTest = featClone;        	
-        	let fpoint = feat.getGeometry().getCenter();        	
-        	let lpoint = feat.getGeometry().getLastCoordinate();        	     	
-	        
-	        var feat_line = new ol.Feature({
-				geometry:new ol.geom.LineString([
-		            fpoint,lpoint              
-		        ])
-			});			          
-			
-			var dis = calDistance(featClone);	//거리구하기			
-			feat_line.setStyle(
-				new ol.style.Style({		            
-		            stroke: new ol.style.Stroke({
-		                color: 'rgba(255,0, 0, 1)',
-		                width: 2		             
-		            }),
-		            text: new ol.style.Text({
-		                textAlign: 'center',
-		                font:  'bold 12px Arial',
-		                fill: new ol.style.Fill({color: 'rgba(255,0, 0, 0.8)'}),
-		                stroke: new ol.style.Stroke({color:'#ffffff', width:0}),
-		                text: String(dis),
-		                offsetX: 0,
-		                offsetY: -10,
-		                overflow:true,
-		            })
-		      	})
-			);
-			lyr.getSource().addFeature(feat_line);
-    	}
-    	drawInteration_search.on('drawend', drawendCallback);
-    	map.addInteraction(drawInteration_search);
-    }    
-}
-//거리구하기
-function calDistance(featClone){
-    let c_geometry = featClone.getGeometry().transform( 'EPSG:3857',  'EPSG:4326');
-    
-    let fpoint = c_geometry.getCenter();	
-	let lpoint = c_geometry.getLastCoordinate();	
-	
-	const lat1 = fpoint[1];
-	const lon1 = fpoint[0];
-	const lat2 = lpoint[1];
-	const lon2 = lpoint[0];
-
-	const R = 6371e3; // metres
-	const φ1 = lat1 * Math.PI/180; // φ, λ in radians
-	const φ2 = lat2 * Math.PI/180;
-	const Δφ = (lat2-lat1) * Math.PI/180;
-	const Δλ = (lon2-lon1) * Math.PI/180;
-	
-	const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
-	          Math.cos(φ1) * Math.cos(φ2) *
-	          Math.sin(Δλ/2) * Math.sin(Δλ/2);
-	const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-	
-	const d = R * c; // in metres
-	
-	var str = "";
-	let dis = Math.round(d);
-	
-	//해리는 1해리 =1852m
-	let harry = Math.round(dis/1852*100)/100;
-	str = harry+"해리";
-	
-	if(Number(dis) > 1000){
-		var diskm = dis/1000;
-		str += " ("+diskm+")km";
-	}else{
-		str += " ("+dis+")m";
-	}
-	
-	var y = Math.sin(lon1-lon2) * Math.cos(lat1);
-	var x = Math.cos(lat2)*Math.sin(lat1) -
-	        Math.sin(lat2)*Math.cos(lat1)*Math.cos(lon1-lon2);
-	var brng = Math.atan2(y, x) * 180 / Math.PI;
-	brng = Math.round(brng);
-	//console.log("Bearing in degreee:  " + brng);
-	str += ", "+brng+"도";
-	
-	return str;
-}
-
-//OBSTRN 레이어 on/off
-function ViewLayerChk(checked){
-	let lyr=null;
-	var layers = map.getLayers().getArray();
-	for(let i in layers) {
-        const l = layers[i];
-        const thisLayerId = layers[i].get('id');
-
-        if("OBSTRN" === thisLayerId) {
-            lyr = l;
-            break;
-        }
-    }
-    
-    if(lyr != null){
-    	if(checked){
-			lyr.setOpacity(1);
-		}else{
-			lyr.setOpacity(0);
-		}
-    }	
-    
-    //수심테스트 
-	for(let i in layers) {
-        const l = layers[i];
-        const thisLayerId = layers[i].get('id');
-
-        if("souding" === thisLayerId) {
-            lyr = l;
-            break;
-        }
-    }
-    
-    if(lyr != null){
-    	if(checked){
-			lyr.setOpacity(1);
-		}else{
-			lyr.setOpacity(0);
-		}
-    }	
-}
-
-//표지 레이어 on/off
-function ViewLayerChkMark(checked){
-	let lyr=null;
-	var layers = map.getLayers().getArray();
-	for(let i in layers) {
-        const l = layers[i];
-        const thisLayerId = layers[i].get('id');
-
-        if("lightmark" === thisLayerId) {
-            lyr = l;
-            break;
-        }
-    }
-    
-    if(lyr != null){
-    	if(checked){
-			lyr.setOpacity(0);
-		}else{
-			lyr.setOpacity(1);
-		}
-    }	
-    
-    //부표 
-	for(let i in layers) {
-        const l = layers[i];
-        const thisLayerId = layers[i].get('id');
-
-        if("buoy" === thisLayerId) {
-            lyr = l;
-            break;
-        }
-    }
-    
-    if(lyr != null){
-    	if(checked){
-			lyr.setOpacity(0);
-		}else{
-			lyr.setOpacity(1);
-		}
-    }	
-}
-
-//선박정보 검색 리스트
+//선박정보 검색 리스트 (우측DIV)
 function getShipSearch() {
 	getShipClean();
-	let txt = $("#search_word").val();
 	$.ajax({
 		type: "POST",
 		dataType: "json",
 		url: "getShipSearch.do",
 		asyn: false,
 		data : {
-			shipname : txt
+			shipname : ""
 		},
-		success: function(data) {		    
+		success: function(data) {
+			console.log(data);		    
 			if(data != null){
+				shipList = data;
 				let style="";
 				if(data.length < 13) {
 					style = "style='height: "+(26*data.length)+"px;'";

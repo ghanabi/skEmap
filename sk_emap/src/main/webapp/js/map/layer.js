@@ -90,12 +90,12 @@ function wmsInit(){
     });
     map.addLayer(OBSTRN);   
     
-    wmslayer(); //등대,등표,부표 호출
+    lightIconlayer(); //등대,등표,부표 호출
 }
 
 
 //등대,등표,부표 보여주기
-function wmslayer(){     
+function lightIconlayer(){     
 	//등대
    cbndWms = new ol.layer.Tile({
 		id : 'lighthouse',
@@ -169,3 +169,109 @@ function wmslayer(){
     });   
     map.addLayer(wrecks);       
 }  
+
+//표지 레이어 on/off  (등대,등표,부표)
+function ViewLayerChkMark(checked){
+	let lyr=null;
+	var layers = map.getLayers().getArray();
+	
+	//등표
+	for(let i in layers) {
+        const l = layers[i];
+        const thisLayerId = layers[i].get('id');
+
+        if("lightmark" === thisLayerId) {
+            lyr = l;
+            break;
+        }
+    }
+    
+    if(lyr != null){
+    	if(checked){
+			lyr.setOpacity(0);
+		}else{
+			lyr.setOpacity(1);
+		}
+    }	
+    
+    //부표 
+	for(let i in layers) {
+        const l = layers[i];
+        const thisLayerId = layers[i].get('id');
+
+        if("buoy" === thisLayerId) {
+            lyr = l;
+            break;
+        }
+    }
+    
+    if(lyr != null){
+    	if(checked){
+			lyr.setOpacity(0);
+		}else{
+			lyr.setOpacity(1);
+		}
+    }	
+    
+    //등대 
+	for(let i in layers) {
+        const l = layers[i];
+        const thisLayerId = layers[i].get('id');
+
+        if("lighthouse" === thisLayerId) {
+            lyr = l;
+            break;
+        }
+    }
+    
+    if(lyr != null){
+    	if(checked){
+			lyr.setOpacity(0);
+		}else{
+			lyr.setOpacity(1);
+		}
+    }	
+}
+
+
+//OBSTRN 레이어 on/off
+function ViewLayerChk(checked){
+	let lyr=null;
+	var layers = map.getLayers().getArray();
+	for(let i in layers) {
+        const l = layers[i];
+        const thisLayerId = layers[i].get('id');
+
+        if("OBSTRN" === thisLayerId) {
+            lyr = l;
+            break;
+        }
+    }
+    
+    if(lyr != null){
+    	if(checked){
+			lyr.setOpacity(1);
+		}else{
+			lyr.setOpacity(0);
+		}
+    }	
+    
+    //수심테스트 
+	for(let i in layers) {
+        const l = layers[i];
+        const thisLayerId = layers[i].get('id');
+
+        if("souding" === thisLayerId) {
+            lyr = l;
+            break;
+        }
+    }
+    
+    if(lyr != null){
+    	if(checked){
+			lyr.setOpacity(1);
+		}else{
+			lyr.setOpacity(0);
+		}
+    }	
+}

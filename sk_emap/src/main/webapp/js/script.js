@@ -115,4 +115,8 @@ function setSize() {
 		$(".scale").css({'left': 85+l_div+"px"});
 		
 		//$(".slide1").css({'top': (window_h/2)+60+"px"});
+		
+		if(map != null){
+			map.updateSize();
+		}		
 }

@@ -1,5 +1,7 @@
 var wfsSource = new ol.source.Vector();
 var wfs_layer;
+var shipSource = new ol.source.Vector();
+var ship_layer;
 function vectorInit(){
     
 	//항로범위
@@ -35,9 +37,9 @@ function vectorInit(){
     });
     map.addLayer(mapSearch1);    
     
-    //선박 벡터레이어
+    //항적 벡터레이어
     wfs_layer = new ol.layer.Vector({
-    	id: "shipLayer",
+    	id: "shipMoveLayer",
 		source: wfsSource,
 		style: new ol.style.Style({
             fill: new ol.style.Fill({
@@ -51,4 +53,21 @@ function vectorInit(){
         zIndex : 9999
 	});
     map.addLayer(wfs_layer);
+    
+     //선박 벡터레이어
+    ship_layer = new ol.layer.Vector({
+    	id: "shipLayer",
+		source: shipSource,
+		style: new ol.style.Style({
+            fill: new ol.style.Fill({
+                color: 'rgba(255, 228, 0, 0.5)'
+            }),
+            stroke: new ol.style.Stroke({
+                color: '#FF007F',
+                width: 2
+            }),
+        }),
+        zIndex : 9999
+	});
+    map.addLayer(ship_layer);
 }

@@ -17,7 +17,7 @@
 			}
 		});
 		$('#colorSelector1').ColorPicker({
-			color: '#0000ff',
+			color: '#ff0000',
 			onShow: function (colpkr) {
 				$(colpkr).fadeIn(500);
 				return false;
@@ -28,6 +28,7 @@
 			},
 			onChange: function (hsb, hex, rgb) {
 				$('#colorSelector1 div').css('backgroundColor', '#' + hex);
+				ColorPickerValue = "#"+hex;
 			}
 		});
 	});

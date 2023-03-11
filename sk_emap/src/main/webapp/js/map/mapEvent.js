@@ -1,7 +1,43 @@
+//선박 선택 이벤트
+function shipSelectEvent(){
+	//TODO selected feature style 변경
+        modStyleSelectInteraction = new ol.interaction.Select({
+            condition: ol.events.condition.click,
+            layers: function (lyr) {
+                let id = lyr.get('id');
+                if (id === "shipLayer") {
+                    return true;
+                }
+                return false;
+            }
+        });
+        modStyleSelectInteraction.setActive(false);
+
+        modStyleSelectInteraction.on('select', function (e) {
+            const selectedList = e.selected;
+            e.target.getFeatures().clear();
+
+            if (selectedList.length > 0) {
+                const f = e.selected[0];
+                console.log("f");
+                console.log(f);
+                var fid = f.id;
+                var mmsi = fid.substring(5);
+                var c = $('#slide2').attr('class');
+                if(c != "slide2_on") {
+			    	$("#slide2").click();
+				}       
+				getShipSearch_Detail(mmsi); //선박 상세정보     
+            }
+        });
+        map.addInteraction(modStyleSelectInteraction);
+}
+
 //interaction 비활성화
 function deactiveInteractions() {
     map.removeInteraction(drawInteration);
-    map.removeInteraction(drawInteration_search);    
+    map.removeInteraction(drawInteration_search); 
+    modStyleSelectInteraction.setActive(false);   
     var layers = map.getLayers().getArray();
 	for(let i in layers) {
         let l = layers[i];
@@ -11,7 +47,7 @@ function deactiveInteractions() {
             l.getSource().clear();
         }
         if("shipLayer" === thisLayerId) {  //선박레이어
-            l.getSource().clear();
+            //l.getSource().clear();
         }
         if("mapSearch2" === thisLayerId) {
             l.getSource().clear();
@@ -145,3 +181,57 @@ function calDistance(featClone){
 	
 	return str;
 }
+
+
+// 지도 이미지 출력
+function fn_printPopup(){
+	map.once('postcompose', function(event) {
+		
+		var cnvs = event.context.canvas;
+		cnvs.crossOrigin = "anonymous";
+		var mapImage = cnvs.toDataURL('image/png');
+		
+		var popupWindow = window.open("","","width=800px,height=620px");
+		
+		popupWindow.document.write("<head>")
+		popupWindow.document.write('<script type="text/javascript" src="js/map/mapEvent.js"></script>')
+		popupWindow.document.write("</head>")
+		
+		popupWindow.document.write("<body>")
+		popupWindow.document.write("<div id=mapPopup>")
+		
+			popupWindow.document.write("<div id='printHead'>")
+				popupWindow.document.write("<div id='title' style='padding:10px;background:#f3f3f3;'>")
+				popupWindow.document.write("SK 지도 프린트 미리보기")
+				popupWindow.document.write("<button id='printBtn' style='padding:4px 10px 6px 10px;border-radius:5px;border:none;background:#24356E;font-size:12px;color:#fff;float:right;' onclick='fn_print()'>")
+				popupWindow.document.write("인 쇄")
+			    popupWindow.document.write("</button>")
+				popupWindow.document.write("</div>")
+
+			popupWindow.document.write("</div>")
+			
+			popupWindow.document.write("<div id='printBody'>")
+				popupWindow.document.write("<div id='mapView'>")
+			    popupWindow.document.write("<img src='"+mapImage+"' width='100%'/>");
+			    popupWindow.document.write("</div>")
+				
+			    //popupWindow.document.write("<div id='memoBox'>")
+			    //popupWindow.document.write("<textarea id='memo' placeholder='메모를 입력하세요.' style='width:100%;height:100px;'></textarea>");
+			    //popupWindow.document.write("</div>")
+		    popupWindow.document.write("</div>")
+	    
+	    popupWindow.document.write("</div>")
+	    popupWindow.document.write("</body>")
+	    
+	    popupWindow.document.close();
+	    popupWindow.focus();
+		
+	});
+	map.renderSync();
+}
+
+function fn_print(){
+	document.getElementById('printBtn').style.display = "none";
+	window.print();
+	window.close();
+};

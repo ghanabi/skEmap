@@ -97,7 +97,7 @@ window.onload = function(){
 						<ul>
 							<li class="opt_tool1"><img alt="" src="images/sk/maptool/opt1.jpg"></li>
 							<li class="opt_tool2" id="mapSetting"><img alt="" src="images/sk/maptool/opt2.jpg"></li>
-							<li class="opt_tool3"><img alt="" src="images/sk/maptool/opt3.jpg"></li>
+							<li class="opt_tool3" id="mapPrint"><img alt="" src="images/sk/maptool/opt3.jpg"></li>
 							<li class="opt_tool4"><img alt="" src="images/sk/maptool/opt4.jpg"></li>
 						</ul>
 					</div>
@@ -149,12 +149,12 @@ window.onload = function(){
 							<tr>
 								<td class="t_center">
 									<div class="option3_1" style="width:120px;">
-										<span>항적아이콘설정</span>
+										<span>항적스타일설정</span>
 									</div>									
 								</td>
-								<td class="t_center"></td>
+								<td class="t_center"><img id="changeShipStyle" alt="" src="images/sk/btn_chg.jpg"></td>
 							</tr>
-							<tr>
+							<!-- <tr>
 								<td class="t_left" colspan="2">
 									<img alt="" src="images/sk/ff0000.png" style="width:12px;height:12px;margin-right:-4px;float:none;"> <input type="radio" name="ShipIcon" value="ff0000" style="width:15px;height:15px;padding-right:5px;" checked>&nbsp;
 									<img alt="" src="images/sk/00950b.png" style="width:12px;height:12px;margin-right:-4px;float:none;"> <input type="radio" name="ShipIcon" value="00950b" style="width:15px;height:15px;padding-right:5px;" >&nbsp;
@@ -162,19 +162,19 @@ window.onload = function(){
 									<img alt="" src="images/sk/ffcc33.png" style="width:12px;height:12px;margin-right:-4px;float:none;"> <input type="radio" name="ShipIcon" value="ffcc33" style="width:15px;height:15px;padding-right:5px;" >&nbsp;
 									<img alt="" src="images/sk/000000.png" style="width:12px;height:12px;margin-right:-4px;float:none;"> <input type="radio" name="ShipIcon" value="000000" style="width:15px;height:15px;" >
 								</td>
-							</tr>
+							</tr>  -->
 							<tr>
 								<td class="t_center">폰트 크기</td>
 								<td>
 									<div class="option3_2">
-										<input type="text"><span>px</span>
+										<input type="text" id="featShipFont" value="12"><span>px</span>
 									</div>
 								</td>
 							</tr>	
 							<tr>
 								<td class="t_center">폰트 색</td>
 								<td>
-									<div id="colorSelector1" style="width: 34px;height: 34px;"><div style="background-color: #0000ff;width: 30px;height: 30px;"></div></div>
+									<div id="colorSelector1" style="width: 34px;height: 34px;"><div style="background-color: #ff0000;width: 30px;height: 30px;"></div></div>
 								</td>
 							</tr>					
 							<!-- <tr>

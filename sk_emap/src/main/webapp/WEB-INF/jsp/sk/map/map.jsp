@@ -233,7 +233,7 @@ window.onload = function(){
 								<tr><td>위도</td><td><span id="s_lat_d"></span>도</td><td><span id="s_lat_m"></span>분</td><td><span id="s_lat_s"></span>초</td></tr>
 								<tr><td>경도</td><td><span id="s_lon_d"></span>도</td><td><span id="s_lon_m"></span>분</td><td><span id="s_lon_s"></span>초</td></tr>
 							</table>
-							<table style="margin: 10px 13px; ">
+							<table>
 								<colgroup><col width="25%"><col width="25%"><col width="25%"><col width="25%"></colgroup>
 								<tr><th colspan="4">끝점</th></tr>
 								<tr><td>위도</td><td><span id="e_lat_d"></span>도</td><td><span id="e_lat_m"></span>분</td><td><span id="e_lat_s"></span>초</td></tr>
@@ -243,7 +243,7 @@ window.onload = function(){
 						</div>
 						<div>
 							<span class="option_h">결과</span>
-							<div id="ship_result" style="height: 440px;overflow: hidden;position: relative;margin: 0px auto;padding: 0px;"></div>
+							<div id="ship_result" style="height: 440px;overflow: hidden;position: relative;margin: 0px 13px;padding: 0px; border:1px solid; "></div>
 						</div>
 					</div>
 				</div>

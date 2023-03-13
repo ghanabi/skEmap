@@ -315,7 +315,8 @@ function setActiveDrawTool(type, isOn) {
 			$("#e_lat_s").text(e_lat_s);  //끝점 위도 초
 			$("#e_lon_d").text(e_lon_d);  //끝점 경도 도
 			$("#e_lon_m").text(e_lon_m);  //끝점 경도 분
-			$("#e_lon_s").text(e_lon_s);  //끝점 경도 초        		
+			$("#e_lon_s").text(e_lon_s);  //끝점 경도 초      
+		deactiveInteractions();  		
     	}
     	drawInteration.on('drawend', drawendCallback);
     	map.addInteraction(drawInteration);
@@ -389,8 +390,8 @@ function get_ship2() {
 		data : searchBox,
 		success: function(data) {		    
 			if(data != null){
-				let str = "<table>";
-				str += "<colgroup><col width='15%'><col width='15%'><col width='30%'><col width='30%'></colgroup>";
+				let str = "<table style='width: 265px;margin: 0;border: 0;overflow-x: hidden;'>";
+				str += "<colgroup><col width='40px'><col width='40px'><col width='79px'><col width='79px'></colgroup>";
 				str += "<tr><th>MMSI</th><th>선박명칭</th><th>최초수신시간</th><th>최종수신시간</th></tr>";
 				for(var i=0; i<data.length; i++) {
 					str += "<tr onclick='get_ship_to_map(\""+data[i].mmsi+"\");'>";
@@ -598,7 +599,7 @@ function findShipSearch(){
 		}
 	}
 	
-	if(chk){
+	if(!chk){
 		alert("해당 선박리스트에는 검색조건과 맞는 정보가 없습니다. \n mmsi 정보 및 선박명을 정확히 입력해주세요.");	
 	}
 }

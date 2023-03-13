@@ -212,6 +212,13 @@ table input[type='checkbox'] {
     font-weight: bold;
 }
 
+.div_left #shipsearch {
+	float: right;
+	width: 100px;
+	margin-right: 10px;
+	margin-top: 10px;
+} 
+
 .logo {
 	width: 51px;
 	height: 50px;

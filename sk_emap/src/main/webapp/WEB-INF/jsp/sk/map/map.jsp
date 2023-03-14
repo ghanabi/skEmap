@@ -324,7 +324,7 @@ window.onload = function(){
 							<colgroup><col width="125"><col width="146"></colgroup>
 							<tr>
 								<th>MMSI</th>
-								<th>선  명</th>
+								<th>선박명칭</th>
 							</tr>
 						</table>
 					</div>

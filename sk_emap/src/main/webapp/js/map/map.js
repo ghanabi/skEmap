@@ -625,9 +625,9 @@ function makeTableForShipList(){
 	let str_h = "";
 	if(shipList.length < 13) {
 		style = "style='height: "+(26*shipList.length)+"px;'";
-		str_h = "<table style='height: 26px;'><colgroup><col width='135'><col width='135'></colgroup><tr><th>MMSI</th><th>선  명</th></tr></table>";
+		str_h = "<table style='height: 26px;'><colgroup><col width='135'><col width='135'></colgroup><tr><th>MMSI</th><th>선박명칭</th></tr></table>";
 	} else{
-		str_h = "<table style='height: 26px;'><colgroup><col width='125'><col width='146'></colgroup><tr><th>MMSI</th><th>선  명</th></tr></table>";
+		str_h = "<table style='height: 26px;'><colgroup><col width='125'><col width='146'></colgroup><tr><th>MMSI</th><th>선박명칭</th></tr></table>";
 	}
 	$("#shiplist_header").html(str_h);
 	

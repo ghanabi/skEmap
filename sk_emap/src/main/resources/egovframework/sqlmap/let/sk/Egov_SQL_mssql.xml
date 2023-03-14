@@ -75,7 +75,7 @@
 						   ROW_NUMBER() OVER (PARTITION BY a.mmsi, b.ShipName ORDER BY a.TimeStampK DESC) AS rank_no
 					  FROM $table_nm$ a, SPM.dbo.TB_AIS5 b
 					 WHERE a.MMSI =b.mmsi and a.TimeStampK = b.TimeStampK
-					   AND b.ShipName LIKE '%$shipname$%') c
+					   AND (b.ShipName LIKE '%$shipname$%' OR b.mmsi LIKE '%$shipname$%')) c
 			 WHERE rank_no =1
 			 ORDER BY mmsi,shipname
 		]]>

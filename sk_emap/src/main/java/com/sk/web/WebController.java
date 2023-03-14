@@ -80,8 +80,8 @@ public class WebController {
 	@RequestMapping(value = "/index.do")
 	public String selectSampleList(ModelMap model) throws Exception {
 	
-		int cnt = mapService.testCnt();
-		System.out.println("ddddddddd : "+cnt);	
+		//int cnt = mapService.testCnt();
+		//System.out.println("ddddddddd : "+cnt);	
 		
 		return "sk/map/map";
 	}

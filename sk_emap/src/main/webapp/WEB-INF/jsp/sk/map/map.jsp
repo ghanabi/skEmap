@@ -319,13 +319,15 @@ window.onload = function(){
 					</table>
 				</div>
 				<div id="right_shiplist" class="right_result">
-					<table style="height: 26px;">
-						<colgroup><col width="125"><col width="146"></colgroup>
-						<tr>
-							<th>MMSI</th>
-							<th>선  명</th>
-						</tr>
-					</table>
+					<div id="shiplist_header">
+						<table style="height: 26px;">
+							<colgroup><col width="125"><col width="146"></colgroup>
+							<tr>
+								<th>MMSI</th>
+								<th>선  명</th>
+							</tr>
+						</table>
+					</div>
 					<div id="shiplist_result" style="height:344px;border: 1px solid #444444; overflow: hidden;position: relative;margin: 0px auto;padding: 0px;">
 						<table>
 						<colgroup><col width="125"><col width="146"></colgroup>

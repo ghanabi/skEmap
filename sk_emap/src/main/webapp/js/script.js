@@ -81,6 +81,25 @@
 		//슬라이더 설정
 		Ps.initialize(document.getElementById('shiplist_result'));
 		Ps.initialize(document.getElementById('ship_result'));
+		
+		$(".map_tool li img").on("click",function(){
+			if($(this).attr("src").indexOf("btn7") == -1) {
+				$(".div_left").css("display","none");
+				$("#div_left_mapSearch").css("display","none");
+				$("#div_left_mapSetting").css("display","none");
+			}
+			
+			for(let i=0; i<$(".map_tool li img").length; i++) {
+				$(".map_tool li img").eq(i).attr("src",$(".map_tool li img").eq(i).attr("src").replace("_on.jpg",".jpg"));
+			}
+			
+			$("#mapSetting img").attr("src",$("#mapSetting img").attr("src").replace("_on.jpg",".jpg"));
+			
+			var srcn = $(this).attr("src").slice(-5);
+			if (srcn == 'n.jpg') $(this).attr("src",$(this).attr("src").replace("_on.jpg",".jpg"));
+			else $(this).attr("src",$(this).attr("src").replace(".jpg","_on.jpg"));
+			setSize();
+		});
 		 
 	});
 })(jQuery);

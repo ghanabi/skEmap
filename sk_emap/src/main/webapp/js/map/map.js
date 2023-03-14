@@ -119,11 +119,16 @@ function mapEvent(){
 		if(dis == "block") {
 			$("#div_left_mapSetting").css("display","none");
 			$(".div_left").css("display","none");
+			$("#mapSetting img").attr("src",$("#mapSetting img").attr("src").replace("_on.jpg",".jpg"));
 		} else {
 			$("#mapSearch3 img").attr("src","images/sk/maptool/btn7.jpg");
 			$("#div_left_mapSearch").css("display","none");
 			$("#div_left_mapSetting").css("display","block");
 			$(".div_left").css("display","block");
+			$("#mapSetting img").attr("src",$("#mapSetting img").attr("src").replace(".jpg","_on.jpg"));
+			for(let i=0; i<$(".map_tool li img").length; i++) {
+				$(".map_tool li img").eq(i).attr("src",$(".map_tool li img").eq(i).attr("src").replace("_on.jpg",".jpg"));
+			}
 		}
 		setSize();	
 	});
@@ -142,7 +147,8 @@ function mapEvent(){
 	////////////
 	//선박정보검색 -- 우측DIV
 	$("#shipsearch2").on('click',function(e){
-		findShipSearch(); //선박정보 검색 리스트중에 찾기 (우측DIV)
+		//findShipSearch(); //선박정보 검색 리스트중에 찾기 (우측DIV)
+		getShipSearch();
 	});
 	
 	//목록 갱신 -- 우측DIV
@@ -591,55 +597,6 @@ function makeShipFeature(){
 	}
 }
 
-//선박정보 리스트중에서 찾기
-function findShipSearch(){
-	var search = $("#search_word").val();
-	var chk = true;
-	for(var i=0; i<shipList.length; i++) {
-		var item = shipList[i];
-		if(item.mmsi == search || item.shipname == search){
-			makeTableForShipList(item.mmsi); //우측DIV 선박리스트 표만들기
-			getShipSearch_Detail(item.mmsi); //선박상세정보
-			chk = false;
-			break;
-		}
-	}
-	
-	if(chk){
-		alert("해당 선박리스트에는 검색조건과 맞는 정보가 없습니다. \n mmsi 정보 및 선박명을 정확히 입력해주세요.");	
-	}
-}
-
-function makeTableForShipList(findKey){
-	var findkeyCheck=false;
-	let style="";
-	if(shipList.length < 13) {
-		style = "style='height: "+(26*shipList.length)+"px;'";
-	}
-	
-	let str = "<table "+style+">";
-	str += "<colgroup><col width='50%'><col width='50%'></colgroup>";
-	for(var i=0; i<shipList.length; i++) {
-		str += "<tr style='cursor:pointer;' onclick='getShipSearch_Detail("+shipList[i].mmsi+");'>";
-		if(findKey == shipList[i].mmsi && findKey != ""){
-			str += "<td id='shipList_"+shipList[i].mmsi+"' style='background:red;'>"+shipList[i].mmsi+"</td>";
-			str += "<td style='background:red;'>"+shipList[i].shipname+"</td>";
-			findkeyCheck =true;
-		}else{
-			str += "<td id='shipList_"+shipList[i].mmsi+"'>"+shipList[i].mmsi+"</td>";
-			str += "<td>"+shipList[i].shipname+"</td>";
-		}		
-		
-		str += "</tr>";
-	}
-	str += "</table>";
-	$("#shiplist_result").html(str);
-	$("#ship_num").text(shipList.length);
-	
-	if(findkeyCheck){
-		alert("해당정보는 선박리스트에 있습니다. 빨간색으로 표시됩니다.");
-	}
-}
 //선박정보 검색 리스트 (우측DIV)
 function getShipSearch() {
 	//getShipClean();
@@ -650,19 +607,44 @@ function getShipSearch() {
 		url: "getShipSearch.do",
 		asyn: false,
 		data : {
-			shipname : ""
+			shipname : $("#search_word").val()
 		},
 		success: function(data) {
 			//console.log(data);		    
 			if(data != null){
 				shipList = data;
-				makeTableForShipList(""); //우측DIV 선박리스트 표만들기
+				makeTableForShipList(); //우측DIV 선박리스트 표만들기
 				makeShipFeature(); //선박리스트 feat만들기
 			}		   
 		}
 	});
 }
 
+function makeTableForShipList(){
+	let style="";
+	let str_h = "";
+	if(shipList.length < 13) {
+		style = "style='height: "+(26*shipList.length)+"px;'";
+		str_h = "<table style='height: 26px;'><colgroup><col width='135'><col width='135'></colgroup><tr><th>MMSI</th><th>선  명</th></tr></table>";
+	} else{
+		str_h = "<table style='height: 26px;'><colgroup><col width='125'><col width='146'></colgroup><tr><th>MMSI</th><th>선  명</th></tr></table>";
+	}
+	$("#shiplist_header").html(str_h);
+	
+	let str = "<table "+style+">";
+	str += "<colgroup><col width='50%'><col width='50%'></colgroup>";
+	for(var i=0; i<shipList.length; i++) {
+		str += "<tr style='cursor:pointer;' onclick='getShipSearch_Detail("+shipList[i].mmsi+");'>";
+		str += "<td id='shipList_"+shipList[i].mmsi+"'><span>"+shipList[i].mmsi+"</span></td>";
+		str += "<td><span>"+shipList[i].shipname+"</span></td>";	
+		
+		str += "</tr>";
+	}
+	str += "</table>";
+	
+	$("#shiplist_result").html(str);
+	$("#ship_num").text(shipList.length);
+}
 
 //해당 선박정보 위치로 이동
 function moveShipFeature(mmsi){

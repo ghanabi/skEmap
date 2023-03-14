@@ -96,13 +96,21 @@ public class WebController {
 //		System.out.println(req.getParameter("lat1"));
 //		System.out.println(req.getParameter("lat2"));
 		
+		System.out.println(req.getParameter("text"));
+		System.out.println(req.getParameter("kind"));
+		
 		SkShipVO vo = new SkShipVO();
 		vo.setLon1((String)req.getParameter("lon1"));
 		vo.setLon2((String)req.getParameter("lon2"));
 		vo.setLat1((String)req.getParameter("lat1"));
 		vo.setLat2((String)req.getParameter("lat2"));
-		vo.setShipname((String)req.getParameter("text"));
-		vo.setKind((String)req.getParameter("kind"));
+		String kind = (String)req.getParameter("kind");
+		vo.setKind(kind);
+		if("MMSI".equals(kind)) {
+			vo.setMmsi((String)req.getParameter("text"));
+		} else {
+			vo.setShipname((String)req.getParameter("text"));
+		}
 		vo.setTable_nm("SPM.dbo.TB_AIS123_"+(String)req.getParameter("date1"));
 		
 		List<SkShipVO> slist = mapService.searchTbAisList(vo);		
@@ -124,8 +132,13 @@ public class WebController {
 		vo.setLon2((String)req.getParameter("lon2"));
 		vo.setLat1((String)req.getParameter("lat1"));
 		vo.setLat2((String)req.getParameter("lat2"));
-		vo.setShipname((String)req.getParameter("text"));
-		vo.setKind((String)req.getParameter("kind"));
+		String kind = (String)req.getParameter("kind");
+		vo.setKind(kind);
+		if("MMSI".equals(kind)) {
+			vo.setMmsi((String)req.getParameter("text"));
+		} else {
+			vo.setShipname((String)req.getParameter("text"));
+		}
 		vo.setTable_nm("SPM.dbo.TB_AIS123_"+(String)req.getParameter("date1"));
 		
 		List<SkShipVO> slist = mapService.getShipList(vo);		

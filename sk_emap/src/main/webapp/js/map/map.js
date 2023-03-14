@@ -52,7 +52,7 @@ function mapInit(){
     shipSelectEvent(); //맵 선박 feat 셀렉 이벤트
 
 	// 2초 간격으로 메시지를 보여줌
-	setInterval(() => scheduleShipInfo(), 5000);	
+	//setInterval(() => scheduleShipInfo(), 5000);	
 }
 
 //2초간격 스케쥴 메소드
@@ -334,7 +334,7 @@ function get_ship(){
 		return;
 	}
 	searchBox.date1 = date1.replace(/-/g, '');
-	searchBox.txt = txt;
+	searchBox.text = txt;
 	searchBox.kind = kind;
 	//if(confirm("해당 범위의 선박을 검색하시겠습니까?")){
 		$.ajax({
@@ -591,7 +591,9 @@ function findShipSearch(){
 	var chk = true;
 	for(var i=0; i<shipList.length; i++) {
 		var item = shipList[i];
-		if(item.mmsi == search || item.shipname == search){
+		var mmsi = item.mmsi;
+		var shipname = item.shipname;
+		if(mmsi.indexOf(search) > -1 || shipname.indexOf(search)>-1){
 			makeTableForShipList(item.mmsi); //우측DIV 선박리스트 표만들기
 			getShipSearch_Detail(item.mmsi); //선박상세정보
 			chk = false;
@@ -599,7 +601,7 @@ function findShipSearch(){
 		}
 	}
 	
-	if(!chk){
+	if(chk){
 		alert("해당 선박리스트에는 검색조건과 맞는 정보가 없습니다. \n mmsi 정보 및 선박명을 정확히 입력해주세요.");	
 	}
 }

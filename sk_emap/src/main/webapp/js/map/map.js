@@ -52,7 +52,7 @@ function mapInit(){
     shipSelectEvent(); //맵 선박 feat 셀렉 이벤트
 
 	// 2초 간격으로 메시지를 보여줌
-	//setInterval(() => scheduleShipInfo(), 5000);	
+	setInterval(() => scheduleShipInfo(), 5000);	
 }
 
 //2초간격 스케쥴 메소드
@@ -591,9 +591,7 @@ function findShipSearch(){
 	var chk = true;
 	for(var i=0; i<shipList.length; i++) {
 		var item = shipList[i];
-		var mmsi = item.mmsi;
-		var shipname = item.shipname;
-		if(mmsi.indexOf(search) > -1 || shipname.indexOf(search)>-1){
+		if(item.mmsi == search || item.shipname == search){
 			makeTableForShipList(item.mmsi); //우측DIV 선박리스트 표만들기
 			getShipSearch_Detail(item.mmsi); //선박상세정보
 			chk = false;

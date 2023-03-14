@@ -173,7 +173,7 @@ public class WebController {
 		System.out.println("getShipSearch_all : start!");		
 		
 		SkShipVO vo = new SkShipVO();
-		vo.setShipname((String)req.getParameter("shipname"));
+		vo.setMmsi((String)req.getParameter("mmsi"));
 		vo.setTable_nm("SPM.dbo.TB_AIS123_"+formatedNow);
 		
 		List<SkShipVO> slist = mapService.getShipSearch_all(vo);		

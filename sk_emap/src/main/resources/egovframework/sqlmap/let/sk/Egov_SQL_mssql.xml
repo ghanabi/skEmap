@@ -83,11 +83,11 @@
 	
 	<select id="map.getShipSearch_all" resultClass="SkShipVO" parameterClass="SkShipVO">
 		<![CDATA[ 			 
-			SELECT a.mmsi, b.ShipName as shipname, a.Latitude as latitude, a.Longitude as longitude
+			SELECT a.mmsi, b.ShipName as shipname, a.Latitude as latitude, a.Longitude as longitude, a.TimeStampK as timestampk
 			  FROM $table_nm$ a, SPM.dbo.TB_AIS5 b
 			 WHERE a.MMSI =b.mmsi and a.TimeStampK = b.TimeStampK
-			   AND b.ShipName LIKE '%$shipname$%'
-			 ORDER BY a.MMSI, b.ShipName
+			   AND a.MMSI like '%$mmsi$%'
+			 ORDER BY a.MMSI, b.ShipName, a.TimeStampK 
 		]]>
 	</select>
 	

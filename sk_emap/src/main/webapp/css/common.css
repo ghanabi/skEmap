@@ -383,14 +383,14 @@ table input[type='checkbox'] {
 }
 
 .scale {
-	width: 614px;
-	height: 45px;
+	width: 500px;
+	height: 25px;
 	left: 85px;
 	top: 20px;
 	position: absolute;
 	background-color: rgba(213, 213, 213, 0.5);
 	text-align: center;
-	font-size: 25px;
+	font-size: 15px;
 	font-weight:bold;
 }
 

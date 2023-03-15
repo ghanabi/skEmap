@@ -366,7 +366,7 @@ window.onload = function(){
 					<!-- <img alt="" src="images/sk/shipinfo_btn.jpg"> -->
 				</div>
 			</div>
-			<!-- <div class="scale">E 129 21.25    N 35' 44.14'   SCALE=>1:10.000[LEVEL:27]</</div> -->
+			<div class="scale"> <span id="mouseLocationStat" style="width:240px;float:left;"></span>  <span id="mapZoomLevelStat" style="width:240px;float:left;">SCALE=>1:10.000[LEVEL:27]</span></div>
 		</div>
 	</div>
 

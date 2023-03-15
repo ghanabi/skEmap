@@ -1,3 +1,16 @@
+function onMoveEnd(evt) {
+	  var map1 = evt.map;  
+	  var lev =map1.getView().getZoom();
+	  var resol = map1.getView().getResolutionForZoom(lev);	  
+	  
+	  var INCHES_PER_UNIT = 39.37;
+	  var DOTS_PER_INCH = 72;
+	  
+	  var scale = INCHES_PER_UNIT * DOTS_PER_INCH * resol;
+	  scale = Math.round(scale);
+	  $("#mapZoomLevelStat").html("SCALE=>1:"+scale+"[LEVEL:"+lev+"]");	  
+}
+
 //선박 선택 이벤트
 function shipSelectEvent(){
 	//TODO selected feature style 변경

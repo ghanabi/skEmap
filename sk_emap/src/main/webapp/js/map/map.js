@@ -37,13 +37,26 @@ function mapInit(){
 		source: new ol.source.OSM(),
 	});	
     
+    //마우스 좌표
+    var mouseControlCoordinate = new ol.control.MousePosition({        
+        coordinateFormat: function(coordinate) {
+            return ol.coordinate.format(coordinate, 'Lat: {y}, Long: {x}', 4);
+        },
+        projection: 'EPSG:4326',//좌표계 설정
+        className: 'scale1', //css 클래스 이름
+        target: document.getElementById('mouseLocationStat'),//좌표를 뿌릴 element
+    });
+
+    
 	map = new ol.Map({
 		layers: [
 			googlemap
 		],
 		target: 'dvMap',
-		view: view
+		view: view,
+		controls: new ol.control.defaults().extend([mouseControlCoordinate]),
 	});		
+    map.on('moveend', onMoveEnd);
     
     wmsInit(); //베이스 wms레이어    
     map.removeLayer(googlemap); //배경맵 삭제    

@@ -215,10 +215,11 @@ window.onload = function(){
 				<div id="div_left_mapSearch" style="display: block; width: 100%;">
 					<div id="option5">
 						<span class="option_h">항적표시</span>
-						<div style="height: 385px;">
-							<div><img id="boxsearch" style="width: 70%; margin: 5px;" alt="" src="images/sk/Areasetting.jpg"></div>						
-							<span class="option_h2">검색기간(DAY)</span>
+						<div style="height: 305px;">
+							<div></div>						
+							<!--<span class="option_h2">검색기간(DAY)</span>-->
 							<div style="text-align: center; margin: 10px;">
+								검색기간(DAY) : 
 								<input type="date" id="date1" >
 							</div>
 							<div style="text-align: center; margin: 10px;">
@@ -239,11 +240,14 @@ window.onload = function(){
 								<tr><td>위도</td><td><span id="e_lat_d"></span>도</td><td><span id="e_lat_m"></span>분</td><td><span id="e_lat_s"></span>초</td></tr>
 								<tr><td>경도</td><td><span id="e_lon_d"></span>도</td><td><span id="e_lon_m"></span>분</td><td><span id="e_lon_s"></span>초</td></tr>
 							</table>
-							<img id="shipsearch"style="float: right; width: 100px; margin-right: 10px;" alt="" src="images/sk/shipsearch.jpg">
+							<div>
+							<img id="boxsearch" style="width: 100px;margin-left: 10px;float: left;height: 36px;margin-top: 10px;" alt="" src="images/sk/Areasetting.jpg">
+							<img id="shipsearch"style="" alt="" src="images/sk/shipsearch.jpg">
+							</div>
 						</div>
 						<div>
 							<span class="option_h">결과</span>
-							<div id="ship_result" style="height: 440px;overflow: hidden;position: relative;margin: 0px 13px;padding: 0px; border:1px solid; "></div>
+							<div id="ship_result" style="height: 490px;overflow: hidden;position: relative;margin: 10px 13px;padding: 0px;border:1px solid;"></div>
 						</div>
 					</div>
 				</div>

@@ -219,6 +219,14 @@ table input[type='checkbox'] {
 	margin-top: 10px;
 } 
 
+.div_left #ship_result table tr:hover{
+	background: #D5D5D5;
+}
+
+#shiplist_result table tr:hover{
+	background: #D5D5D5;
+}
+
 .logo {
 	width: 51px;
 	height: 50px;

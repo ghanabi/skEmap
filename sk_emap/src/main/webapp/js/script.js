@@ -100,7 +100,6 @@
 			else $(this).attr("src",$(this).attr("src").replace(".jpg","_on.jpg"));
 			setSize();
 		});
-		 
 	});
 })(jQuery);
 

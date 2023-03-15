@@ -160,6 +160,7 @@ function mapEvent(){
 	////////////
 	//선박정보검색 -- 우측DIV
 	$("#shipsearch2").on('click',function(e){
+		chocieShipMmsi = "";
 		//findShipSearch(); //선박정보 검색 리스트중에 찾기 (우측DIV)
 		getShipSearch();
 	});
@@ -409,11 +410,11 @@ function get_ship2() {
 		data : searchBox,
 		success: function(data) {		    
 			if(data != null){
-				let str = "<table style='width: 265px;margin: 0;border: 0;overflow-x: hidden;'>";
+				let str = "<table style='width: 265px;margin: 0;border: 0;overflow-x: hidden; white-space:nowrap;'>";
 				str += "<colgroup><col width='40px'><col width='40px'><col width='79px'><col width='79px'></colgroup>";
 				str += "<tr><th>MMSI</th><th>선박명칭</th><th>최초수신시간</th><th>최종수신시간</th></tr>";
 				for(var i=0; i<data.length; i++) {
-					str += "<tr onclick='set_ship_to_map(\""+data[i].mmsi+"\");'>";
+					str += "<tr onclick='set_ship_to_map(\""+data[i].mmsi+"\",\""+(i+1)+"\");'>";
 					str += "<td>"+data[i].mmsi+"</td>";
 					str += "<td>"+data[i].shipname+"</td>";
 					str += "<td>"+data[i].min_timestampk+"</td>";
@@ -428,9 +429,13 @@ function get_ship2() {
 }
 
 //항적조회 - 지도위 항적그리기
-function set_ship_to_map(mmsi){
+function set_ship_to_map(mmsi, num){
 	choice_idx = mmsi;
 	get_ship_to_map();
+	for(let i=0; i<$("#ship_result table tr").length; i++) {
+		$("#ship_result table tr").eq(i).css("background","");
+	}
+	$("#ship_result table tr").eq(num).css("background","#d5d5d5");
 }
 
 //항적조회 - 지도위 항적그리기
@@ -637,17 +642,20 @@ function makeTableForShipList(){
 	let style="";
 	let str_h = "";
 	if(shipList.length < 13) {
-		style = "style='height: "+(26*shipList.length)+"px;'";
-		str_h = "<table style='height: 26px;'><colgroup><col width='135'><col width='135'></colgroup><tr><th>MMSI</th><th>선박명칭</th></tr></table>";
+		style = "style='width: 100%; height: "+(26*shipList.length)+"px; word-break: break-all;'";
+		str_h = "<table style='width: 100%; height: 26px; word-break: break-all;'><colgroup><col width='135'><col width='135'></colgroup><tr><th>MMSI</th><th>선박명칭</th></tr></table>";
 	} else{
-		str_h = "<table style='height: 26px;'><colgroup><col width='125'><col width='146'></colgroup><tr><th>MMSI</th><th>선박명칭</th></tr></table>";
+		style = "style='width: 100%; word-break: break-all;'";
+		str_h = "<table style='width: 100%; height: 26px; word-break: break-all;'><colgroup><col width='135'><col width='135'></colgroup><tr><th>MMSI</th><th>선박명칭</th></tr></table>";
 	}
 	$("#shiplist_header").html(str_h);
 	
 	let str = "<table "+style+">";
 	str += "<colgroup><col width='50%'><col width='50%'></colgroup>";
 	for(var i=0; i<shipList.length; i++) {
-		str += "<tr style='cursor:pointer;' onclick='getShipSearch_Detail("+shipList[i].mmsi+");'>";
+		if(chocieShipMmsi != "" && shipList[i].mmsi == chocieShipMmsi)
+			str += "<tr style='cursor:pointer;background: #d5d5d5;' onclick='getShipSearch_Detail("+shipList[i].mmsi+","+i+");'>";
+		else str += "<tr style='cursor:pointer;' onclick='getShipSearch_Detail("+shipList[i].mmsi+","+i+");'>";
 		str += "<td id='shipList_"+shipList[i].mmsi+"'><span>"+shipList[i].mmsi+"</span></td>";
 		str += "<td><span>"+shipList[i].shipname+"</span></td>";	
 		
@@ -656,7 +664,7 @@ function makeTableForShipList(){
 	str += "</table>";
 	
 	$("#shiplist_result").html(str);
-	$("#ship_num").text(shipList.length);
+	$("#ship_num").text(shipList.length);	 
 }
 
 //해당 선박정보 위치로 이동
@@ -677,7 +685,7 @@ function moveShipFeature(mmsi){
 }
 
 //선박정보 상세 정보
-function getShipSearch_Detail(mmsi) {
+function getShipSearch_Detail(mmsi,num) {
 	chocieShipMmsi = mmsi;
 	getShipSearch_Detail_Data();
 	
@@ -687,6 +695,11 @@ function getShipSearch_Detail(mmsi) {
 	}else{
 		moveShipFeature(mmsi);	
 	}
+	
+	for(let i=0; i<$("#shiplist_result table tr").length; i++) {
+		$("#shiplist_result table tr").eq(i).css("background","");
+	}
+	$("#shiplist_result table tr").eq(num).css("background","#d5d5d5");
 	
 }
 

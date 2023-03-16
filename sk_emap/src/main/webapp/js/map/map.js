@@ -40,7 +40,7 @@ function mapInit(){
     //마우스 좌표
     var mouseControlCoordinate = new ol.control.MousePosition({        
         coordinateFormat: function(coordinate) {
-            return ol.coordinate.format(coordinate, 'Lat: {y}, Long: {x}', 4);
+            return ol.coordinate.format(coordinate, '위도: {y}, 경도: {x}', 3);
         },
         projection: 'EPSG:4326',//좌표계 설정
         className: 'scale1', //css 클래스 이름

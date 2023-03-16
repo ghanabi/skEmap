@@ -88,8 +88,97 @@ function wmsInit(){
             },            
         })
     });
-    map.addLayer(OBSTRN);   
+    map.addLayer(OBSTRN);      
     
+   //wms gisun(기본맵처럼사용)
+    var gisun = new ol.layer.Tile({
+		id : 'gisun',
+    	title: 'gisun',
+    	opacity: 1,
+        source: new ol.source.TileWMS({
+            url: geoserverWmsUrl,
+            serverType: 'geoserver',
+            crossOrigin: 'anonymous',            
+            params: { 
+            	'VERSION': '1.1.0' , 
+                'LAYERS': 'skemap:gisun',               
+                'CRS' : 'EPSG:3857',
+            },            
+        })
+    });
+    map.addLayer(gisun);   
+    
+    //wms seaarea(기본맵처럼사용)
+    var seaarea = new ol.layer.Tile({
+		id : 'seaarea',
+    	title: 'seaarea',
+    	opacity: 1,
+        source: new ol.source.TileWMS({
+            url: geoserverWmsUrl,
+            serverType: 'geoserver',
+            crossOrigin: 'anonymous',            
+            params: { 
+            	'VERSION': '1.1.0' , 
+                'LAYERS': 'skemap:seaarea',               
+                'CRS' : 'EPSG:3857',
+            },            
+        })
+    });
+    map.addLayer(seaarea);  
+    
+    //wms lev6_LNDMARK_P(기본맵처럼사용)
+    var lev6_LNDMARK_P = new ol.layer.Tile({
+		id : 'lev6_LNDMARK_P',
+    	title: 'lev6_LNDMARK_P',
+    	opacity: 1,
+        source: new ol.source.TileWMS({
+            url: geoserverWmsUrl,
+            serverType: 'geoserver',
+            crossOrigin: 'anonymous',            
+            params: { 
+            	'VERSION': '1.1.0' , 
+                'LAYERS': 'skemap:lev6_LNDMARK_P',               
+                'CRS' : 'EPSG:3857',
+            },            
+        })
+    });
+    map.addLayer(lev6_LNDMARK_P);   
+    
+    //wms LEV6DEPCNT(기본맵처럼사용)
+    var LEV6DEPCNT = new ol.layer.Tile({
+		id : 'LEV6DEPCNT',
+    	title: 'LEV6DEPCNT',
+    	opacity: 1,
+        source: new ol.source.TileWMS({
+            url: geoserverWmsUrl,
+            serverType: 'geoserver',
+            crossOrigin: 'anonymous',            
+            params: { 
+            	'VERSION': '1.1.0' , 
+                'LAYERS': 'skemap:LEV6DEPCNT',               
+                'CRS' : 'EPSG:3857',
+            },            
+        })
+    });
+    map.addLayer(LEV6DEPCNT);       
+    
+    //wms lev6_BRIDGE_A(기본맵처럼사용)
+    var lev6_BRIDGE_A = new ol.layer.Tile({
+		id : 'lev6_BRIDGE_A',
+    	title: 'lev6_BRIDGE_A',
+    	opacity: 1,
+        source: new ol.source.TileWMS({
+            url: geoserverWmsUrl,
+            serverType: 'geoserver',
+            crossOrigin: 'anonymous',            
+            params: { 
+            	'VERSION': '1.1.0' , 
+                'LAYERS': 'skemap:lev6_BRIDGE_A',               
+                'CRS' : 'EPSG:3857',
+            },            
+        })
+    });
+    map.addLayer(lev6_BRIDGE_A);       
     lightIconlayer(); //등대,등표,부표 호출
 }
 
@@ -150,6 +239,24 @@ function lightIconlayer(){
         })
     });   
     map.addLayer(buoy);       
+    
+     //부표2
+     var bosy2 = new ol.layer.Tile({
+		id : 'bosy2',
+    	title: 'bosy2',
+    	opacity: 1,
+        source: new ol.source.TileWMS({
+            url: geoserverWmsUrl,
+            serverType: 'geoserver',
+            crossOrigin: 'anonymous',            
+            params: { 
+            	'VERSION': '1.1.0' , 
+                'LAYERS': 'skemap:bosy2',               
+                'CRS' : 'EPSG:3857',
+            },            
+        })
+    });   
+    map.addLayer(bosy2); 
     
     //wrecks
      var wrecks = new ol.layer.Tile({

@@ -8,7 +8,7 @@ function onMoveEnd(evt) {
 	  
 	  var scale = INCHES_PER_UNIT * DOTS_PER_INCH * resol;
 	  scale = Math.round(scale);
-	  $("#mapZoomLevelStat").html("SCALE=>1:"+scale+"[LEVEL:"+lev+"]");	  
+	  $("#mapZoomLevelStat").html("축척=>1:"+scale+"[LEVEL:"+lev+"]");	  
 }
 
 //선박 선택 이벤트

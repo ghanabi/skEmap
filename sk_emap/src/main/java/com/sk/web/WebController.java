@@ -158,7 +158,7 @@ public class WebController {
 		SkShipVO vo = new SkShipVO();
 		vo.setShipname((String)req.getParameter("shipname"));
 		vo.setTable_nm("SPM.dbo.TB_AIS123_"+formatedNow);
-		List<SkShipVO> slist = mapService.getShipSearchMapFor30Min(vo);		
+		List<SkShipVO> slist = mapService.getShipSearch(vo);		
 		
 		System.out.println("slist.size() : "+slist.size());
 		if(slist.size() > 0) {			
@@ -174,7 +174,7 @@ public class WebController {
 		
 		SkShipVO vo = new SkShipVO();
 		vo.setTable_nm("SPM.dbo.TB_AIS123_"+formatedNow);
-		List<SkShipVO> slist = mapService.getShipSearch(vo);		
+		List<SkShipVO> slist = mapService.getShipSearchMapFor30Min(vo);		
 		
 		System.out.println("slist.size() : "+slist.size());
 		if(slist.size() > 0) {			

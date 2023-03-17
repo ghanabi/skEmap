@@ -416,15 +416,15 @@ function get_ship2() {
 		data : searchBox,
 		success: function(data) {		    
 			if(data != null){
-				let str = "<table style='width: 265px;margin: 0;border: 0;overflow-x: hidden; white-space:nowrap;'>";
+				let str = "<table style='width: 265px;margin: 0;border: 0;overflow-x: hidden; white-space:nowrap;border:1px solid; border-collapse:collapse;'>";
 				str += "<colgroup><col width='40px'><col width='40px'><col width='79px'><col width='79px'></colgroup>";
-				str += "<tr><th>MMSI</th><th>선박명칭</th><th>최초수신시간</th><th>최종수신시간</th></tr>";
+				str += "<tr style='border:1px solid; border-collapse:collapse;'><th style='border:1px solid; border-collapse:collapse;'>MMSI</th><th style='border:1px solid; border-collapse:collapse;'>선박명칭</th><th style='border:1px solid; border-collapse:collapse;'>최초수신시간</th><th style='border:1px solid; border-collapse:collapse;'>최종수신시간</th></tr>";
 				for(var i=0; i<data.length; i++) {
 					str += "<tr onclick='set_ship_to_map(\""+data[i].mmsi+"\",\""+(i+1)+"\");'>";
-					str += "<td>"+data[i].mmsi+"</td>";
-					str += "<td>"+data[i].shipname+"</td>";
-					str += "<td>"+data[i].min_timestampk+"</td>";
-					str += "<td>"+data[i].max_timestampk+"</td>";
+					str += "<td style='border:1px solid; border-collapse:collapse;'>"+data[i].mmsi+"</td>";
+					str += "<td style='border:1px solid; border-collapse:collapse; text-align: left;'>"+data[i].shipname+"</td>";
+					str += "<td style='border:1px solid; border-collapse:collapse;'>"+data[i].min_timestampk+"</td>";
+					str += "<td style='border:1px solid; border-collapse:collapse;'>"+data[i].max_timestampk+"</td>";
 					str += "</tr>"; 
 				}
 				str += "</table>";

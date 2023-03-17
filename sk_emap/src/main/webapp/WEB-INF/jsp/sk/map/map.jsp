@@ -216,9 +216,15 @@ window.onload = function(){
 					<div id="option5">
 						<span class="option_h">항적표시</span>
 						<div style="height: 305px;">
-							<div></div>						
-							<!--<span class="option_h2">검색기간(DAY)</span>-->
-							<div style="text-align: center; margin: 10px;">
+							<div style="margin-bottom: 10px;">
+								<table>
+									<colgroup><col width:"40%"><col width:"60%"></colgroup>
+									<tr style="border: 1px solid;"><th style="text-align: right;">검색기간(DAY) : </th><td style="text-align: left;"><input type="date" id="date1" ></td></tr>
+									<tr style="border: 1px solid;"><th style="text-align: right;">선택 : </th><td style="text-align: left;"><input type="radio" name="kind" value="MMSI" checked/>MMSI<input type="radio" name="kind" value="SHIPNAME" />선박명칭</td></tr>
+									<tr style="border: 1px solid;"><th style="text-align: right;">MMSI / 선박명칭 : </th><td style="text-align: left;"><input type="text" id="txt_search"></td></tr>
+								</table>
+							</div>
+							<!--<div style="text-align: center; margin: 10px;">
 								검색기간(DAY) : 
 								<input type="date" id="date1" >
 							</div>
@@ -228,16 +234,17 @@ window.onload = function(){
 	  							<input type="radio" name="kind" value="SHIPNAME" />선박명칭
 							</div>
 							<div style="text-align: center; margin: 10px;">MMSI / 선박명칭 : <input type="text" id="txt_search"></div>
+-->
 							<table>
 								<colgroup><col width="25%"><col width="25%"><col width="25%"><col width="25%"></colgroup>
 								<tr><th colspan="4">시작점</th></tr>
-								<tr><td>위도</td><td><span id="s_lat_d"></span>도</td><td><span id="s_lat_m"></span>분</td><td><span id="s_lat_s"></span>초</td></tr>
+								<tr style="border: 1px solid;"><td>위도</td><td><span id="s_lat_d"></span>도</td><td><span id="s_lat_m"></span>분</td><td><span id="s_lat_s"></span>초</td></tr>
 								<tr><td>경도</td><td><span id="s_lon_d"></span>도</td><td><span id="s_lon_m"></span>분</td><td><span id="s_lon_s"></span>초</td></tr>
 							</table>
 							<table>
 								<colgroup><col width="25%"><col width="25%"><col width="25%"><col width="25%"></colgroup>
 								<tr><th colspan="4">끝점</th></tr>
-								<tr><td>위도</td><td><span id="e_lat_d"></span>도</td><td><span id="e_lat_m"></span>분</td><td><span id="e_lat_s"></span>초</td></tr>
+								<tr style="border: 1px solid;"><td>위도</td><td><span id="e_lat_d"></span>도</td><td><span id="e_lat_m"></span>분</td><td><span id="e_lat_s"></span>초</td></tr>
 								<tr><td>경도</td><td><span id="e_lon_d"></span>도</td><td><span id="e_lon_m"></span>분</td><td><span id="e_lon_s"></span>초</td></tr>
 							</table>
 							<div>
@@ -245,8 +252,8 @@ window.onload = function(){
 							<img id="shipsearch"style="" alt="" src="images/sk/shipsearch.jpg">
 							</div>
 						</div>
-						<div>
-							<span class="option_h">결과</span>
+						<div style="margin-top: 10px;">
+							<span class="option_h" style="text-align:left;">결과</span>
 							<div id="ship_result" style="height: 490px;overflow: hidden;position: relative;margin: 10px 13px;padding: 0px;border:1px solid;"></div>
 						</div>
 					</div>

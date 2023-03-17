@@ -162,6 +162,24 @@ function wmsInit(){
     });
     map.addLayer(LEV6DEPCNT);       
     
+    //wms lev6_LNDARE_A(기본맵처럼사용)
+    var lev6_LNDARE_A = new ol.layer.Tile({
+		id : 'lev6_LNDARE_A',
+    	title: 'lev6_LNDARE_A',
+    	opacity: 1,
+        source: new ol.source.TileWMS({
+            url: geoserverWmsUrl,
+            serverType: 'geoserver',
+            crossOrigin: 'anonymous',            
+            params: { 
+            	'VERSION': '1.1.0' , 
+                'LAYERS': 'skemap:lev6_LNDARE_A',               
+                'CRS' : 'EPSG:3857',
+            },            
+        })
+    });
+    map.addLayer(lev6_LNDARE_A);     
+    
     //wms lev6_BRIDGE_A(기본맵처럼사용)
     var lev6_BRIDGE_A = new ol.layer.Tile({
 		id : 'lev6_BRIDGE_A',

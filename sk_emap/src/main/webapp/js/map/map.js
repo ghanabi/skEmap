@@ -559,6 +559,8 @@ function get_ship_to_map(){
 							console.log("point error : "+item.mmsi);
 						}
 				  	}	//var j=0;j<item.feat_line.length;j++			  	
+				}else{
+					alert("두개이상의 위치가 수신되지 않았습니다.");
 				} //item.feat_line.length>1
 			} //item.mmsi == mmsi		
 		} //var i=0;i<shipMoveList.length;i++
@@ -991,6 +993,8 @@ function DIVget_ship_to_map(DIVshipMoveList){
 					console.log("point error : "+item.mmsi);
 				}
 		  	}	//var j=0;j<item.feat_line.length;j++			  	
-		} //item.feat_line.length>1			
+		}else{
+			alert("두개이상의 위치가 수신되지 않았습니다.");
+		}//item.feat_line.length>1			
 	}//!chkShip
 }

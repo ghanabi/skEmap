@@ -66,6 +66,11 @@ public class mapServiceImpl extends EgovAbstractServiceImpl implements mapServic
 	}
 	
 	@Override
+	public List<SkShipVO> getShipSearchMapFor30Min(SkShipVO vo) throws Exception {
+		return mapDAO.getShipSearchMapFor30Min(vo);
+	}
+	
+	@Override
 	public List<SkShipVO> getShipSearch_all(SkShipVO vo) throws Exception {
 		return mapDAO.getShipSearch_all(vo);
 	}

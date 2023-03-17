@@ -60,6 +60,9 @@ function deactiveInteractions() {
         if("shipLayer" === thisLayerId) {  //선박레이어
             //l.getSource().clear();
         }
+        if("shipDetailLayer" === thisLayerId) {  //선박상세레이어
+            l.getSource().clear();
+        }
         if("mapSearch2" === thisLayerId) {
             l.getSource().clear();
         }

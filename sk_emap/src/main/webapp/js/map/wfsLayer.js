@@ -1,7 +1,9 @@
 var wfsSource = new ol.source.Vector();
 var wfs_layer;
 var shipSource = new ol.source.Vector();
+var shipDetailSource = new ol.source.Vector();
 var ship_layer;
+var shipDetail_layer;
 function vectorInit(){
     
 	//항로범위
@@ -52,9 +54,9 @@ function vectorInit(){
         }),
         zIndex : 9999
 	});
-    map.addLayer(wfs_layer);
+    map.addLayer(wfs_layer);    
     
-     //선박 벡터레이어
+    //선박 벡터레이어
     ship_layer = new ol.layer.Vector({
     	id: "shipLayer",
 		source: shipSource,
@@ -70,4 +72,18 @@ function vectorInit(){
         zIndex : 9999
 	});
     map.addLayer(ship_layer);
+    
+    //선박상세 벡터레이어
+    shipDetail_layer = new ol.layer.Vector({
+    	id: "shipDetailLayer",
+		source: shipDetailSource,
+		style: new ol.style.Style({
+            image: new ol.style.Icon({
+		          	src: 'images/sk/shipIconSelect.png',
+		          	anchor: [0.8, 0.8],				          	
+        		})
+        }),
+        zIndex : 9999
+	});
+    map.addLayer(shipDetail_layer);
 }

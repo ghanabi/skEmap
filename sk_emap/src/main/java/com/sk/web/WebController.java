@@ -158,7 +158,7 @@ public class WebController {
 		SkShipVO vo = new SkShipVO();
 		vo.setShipname((String)req.getParameter("shipname"));
 		vo.setTable_nm("SPM.dbo.TB_AIS123_"+formatedNow);
-		List<SkShipVO> slist = mapService.getShipSearch(vo);		
+		List<SkShipVO> slist = mapService.getShipSearchMapFor30Min(vo);		
 		
 		System.out.println("slist.size() : "+slist.size());
 		if(slist.size() > 0) {			
@@ -167,6 +167,22 @@ public class WebController {
 		}				
 	}
 	
+	//선박정보 리스트  지도위 데이터 30분안
+	@RequestMapping("getShipSearchMapFor30Min.do")
+	public void getShipSearchMapFor30Min(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		System.out.println("getShipSearchMapFor30Min : start!");		
+		
+		SkShipVO vo = new SkShipVO();
+		vo.setTable_nm("SPM.dbo.TB_AIS123_"+formatedNow);
+		List<SkShipVO> slist = mapService.getShipSearch(vo);		
+		
+		System.out.println("slist.size() : "+slist.size());
+		if(slist.size() > 0) {			
+			/*json으로 정보 전달*/
+			json.Json(res, slist);
+		}				
+	}
+		
 	//선박정보 리스트
 	@RequestMapping("getShipSearch_all.do")
 	public void getShipSearch_all(HttpServletRequest req, HttpServletResponse res) throws Exception {

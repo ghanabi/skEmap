@@ -65,13 +65,19 @@ function mapInit(){
     shipSelectEvent(); //맵 선박 feat 셀렉 이벤트
 
 	// 2초 간격으로 메시지를 보여줌
-	setInterval(() => scheduleShipInfo(), 5000);	
+	setInterval(() => scheduleShipInfo(), 20000);	
+	
+	getShipSearch(); //선박리스트 조회 (지도위표출)
+	
+	//최초 선박조회
+	getShipSearch_list(); //선박리스트 조회
+	
 }
 
 //2초간격 스케쥴 메소드
 function scheduleShipInfo(){
 	getShipSearch(); //선박리스트 조회
-	getShipSearch_Detail_Data(); //선박상세조회
+	//getShipSearch_Detail_Data(); //선박상세조회
 }
 
 //맵 버튼이벤트 설정
@@ -162,12 +168,12 @@ function mapEvent(){
 	$("#shipsearch2").on('click',function(e){
 		chocieShipMmsi = "";
 		//findShipSearch(); //선박정보 검색 리스트중에 찾기 (우측DIV)
-		getShipSearch();
+		getShipSearch_list();
 	});
 	
 	//목록 갱신 -- 우측DIV
 	$("#ship_clean").on('click',function(e){
-		getShipSearch(); //선박정보 검색 리스트 (우측DIV)
+		getShipSearch_list(); //선박정보 검색 리스트 (우측DIV)
 	});
 	
 	//항적표시 -- 우측DIV
@@ -176,7 +182,7 @@ function mapEvent(){
 	 	if(chk){
 	 		getShipSearch_Detail_Data_All(); //우측DIV 항적표시
 	 	}else{
-	 		moveShipFeature(chocieShipMmsi);
+	 		getShipSearch_Detail_Data();
 	 	}
 	});
 	
@@ -439,7 +445,7 @@ function set_ship_to_map(mmsi, num){
 }
 
 //항적조회 - 지도위 항적그리기
-function get_ship_to_map(){	
+function get_ship_to_map(){	  
 	wfs_layer.getSource().clear();
 	var chkShip = $("#chkViewLayerShip").prop("checked"); //보기설정 선박 OFF 일경우 지도위에 항적표시 X
 	if(!chkShip){
@@ -615,8 +621,25 @@ function makeShipFeature(){
 	}
 }
 
+//선박정보 검색 리스트 (지도위 30분내 위치정보)
+function getShipSearch(){	
+	$.ajax({
+		type: "POST",
+		dataType: "json",
+		url: "getShipSearchMapFor30Min.do",
+		success: function(data) {
+			shipList = [];
+			//console.log(data);		    
+			if(data != null){
+				shipList = data;
+				makeShipFeature(); //선박리스트 feat만들기
+			}		   
+		}
+	});
+}
+
 //선박정보 검색 리스트 (우측DIV)
-function getShipSearch() {
+function getShipSearch_list() {
 	//getShipClean();
 	shipList = [];
 	$.ajax({
@@ -630,19 +653,18 @@ function getShipSearch() {
 		success: function(data) {
 			//console.log(data);		    
 			if(data != null){
-				shipList = data;
-				makeTableForShipList(); //우측DIV 선박리스트 표만들기
-				makeShipFeature(); //선박리스트 feat만들기
+				var list = data;
+				makeTableForShipList(list); //우측DIV 선박리스트 표만들기				
 			}		   
 		}
 	});
 }
-
-function makeTableForShipList(){
+//우측DIV 선박리스트 표만들기	
+function makeTableForShipList(list){
 	let style="";
 	let str_h = "";
-	if(shipList.length < 13) {
-		style = "style='width: 100%; height: "+(26*shipList.length)+"px; word-break: break-all;'";
+	if(list.length < 13) {
+		style = "style='width: 100%; height: "+(26*list.length)+"px; word-break: break-all;'";
 		str_h = "<table style='width: 100%; height: 26px; word-break: break-all;'><colgroup><col width='135'><col width='135'></colgroup><tr><th>MMSI</th><th>선박명칭</th></tr></table>";
 	} else{
 		style = "style='width: 100%; word-break: break-all;'";
@@ -652,19 +674,19 @@ function makeTableForShipList(){
 	
 	let str = "<table "+style+">";
 	str += "<colgroup><col width='50%'><col width='50%'></colgroup>";
-	for(var i=0; i<shipList.length; i++) {
-		if(chocieShipMmsi != "" && shipList[i].mmsi == chocieShipMmsi)
-			str += "<tr style='cursor:pointer;background: #d5d5d5;' onclick='getShipSearch_Detail("+shipList[i].mmsi+","+i+");'>";
-		else str += "<tr style='cursor:pointer;' onclick='getShipSearch_Detail("+shipList[i].mmsi+","+i+");'>";
-		str += "<td id='shipList_"+shipList[i].mmsi+"'><span>"+shipList[i].mmsi+"</span></td>";
-		str += "<td><span>"+shipList[i].shipname+"</span></td>";	
+	for(var i=0; i<list.length; i++) {
+		if(chocieShipMmsi != "" && list[i].mmsi == chocieShipMmsi)
+			str += "<tr style='cursor:pointer;background: #d5d5d5;' onclick='getShipSearch_Detail("+list[i].mmsi+","+i+");'>";
+		else str += "<tr style='cursor:pointer;' onclick='getShipSearch_Detail("+list[i].mmsi+","+i+");'>";
+		str += "<td id='shipList_"+list[i].mmsi+"'><span>"+list[i].mmsi+"</span></td>";
+		str += "<td><span>"+list[i].shipname+"</span></td>";	
 		
 		str += "</tr>";
 	}
 	str += "</table>";
 	
 	$("#shiplist_result").html(str);
-	$("#ship_num").text(shipList.length);	 
+	$("#ship_num").text(list.length);	 
 }
 
 //해당 선박정보 위치로 이동
@@ -693,7 +715,7 @@ function getShipSearch_Detail(mmsi,num) {
 	if(chk){  //상세정보시 항적표시 있으면 항적표시로, 아니면 해당위치로 이동
 		getShipSearch_Detail_Data_All(); //우측 DIV 항적표시
 	}else{
-		moveShipFeature(mmsi);	
+		//moveShipFeature(mmsi);	
 	}
 	
 	for(let i=0; i<$("#shiplist_result table tr").length; i++) {
@@ -731,10 +753,66 @@ function getShipSearch_Detail_Data() {
 					$("#txt_shipsize").text(data[0].shipsize);
 					$("#txt_desti").text(data[0].destination);
 					$("#txt_timestamp").text(data[0].timestampk);
+					
+					moveShipDetailFeature(data[0].longitude,data[0].latitude,data[0].shipname,data[0].mmsi);
 				}		   
 			}
 		});
 	}	
+}
+
+//해당 선박정보 위치로 이동
+function moveShipDetailFeature(longitude,latitude,shipname,mmsi){
+	shipDetailSource.clear();
+	var chkShip = $("#chkViewLayerShip").prop("checked"); //보기설정 선박 OFF 일경우 지도위에 항적표시 X
+	if(!chkShip){
+		if(Number(longitude)<140 && Number(longitude)>110 && Number(latitude) < 47 && Number(latitude) > 18){
+			var pointFeature = new ol.Feature({
+				geometry: new ol.geom.Point([Number(longitude),Number(latitude)])
+			});				
+			let c_geometry = pointFeature.getGeometry().transform( 'EPSG:4326',  'EPSG:3857');
+			
+			let val = $('input[name=ShipLabel]:checked').val();
+			
+			var shipNameText = "";
+			if(val=="name"){ 
+				shipNameText = mmsi+" "+shipname; //이름인경우
+			}else if(val=="id"){
+				shipNameText = mmsi; //ID인경우
+			}else{
+				shipNameText = "";
+			}
+			pointFeature.id = "ship_"+mmsi;
+			pointFeature.setStyle(
+				new ol.style.Style({		            
+		            image: new ol.style.Icon({
+			          	src: 'images/sk/shipIconSelect.png',
+			          	anchor: [0.8, 0.8],				          	
+	        		}),
+		            text: new ol.style.Text({
+		                textAlign: 'center',
+		                font:  'bold '+shipStyle.font+'px Arial',
+		                fill: new ol.style.Fill({color: shipStyle.color}),
+		                stroke: new ol.style.Stroke({color:'#ffffff', width:0}),
+		                text: shipNameText,
+		                offsetX: 0,
+		                offsetY: -25,
+		                overflow:true,
+		            })
+		      	})
+			);		
+			
+			var lyrCenter = ol.extent.getCenter(pointFeature.getGeometry().getExtent());			
+			//zoom, center 설정
+		    map.getView().setCenter(lyrCenter);
+		    map.getView().setZoom(14);
+			try{
+				shipDetail_layer.getSource().addFeature(pointFeature);
+			}catch(e){
+				console.log(e);				
+			}						
+		} //if~lon>140체크
+	}
 }
 
 function getShipClean() {

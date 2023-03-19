@@ -222,7 +222,7 @@ function lightIconlayer(){
             },            
         })
     });   
-    map.addLayer(cbndWms);    
+    //map.addLayer(cbndWms);    
     //등표
     var lightmark = new ol.layer.Tile({
 		id : 'lightmark',
@@ -239,7 +239,7 @@ function lightIconlayer(){
             },            
         })
     });   
-    map.addLayer(lightmark);    
+    //map.addLayer(lightmark);    
     //부표
      var buoy = new ol.layer.Tile({
 		id : 'buoy',
@@ -256,7 +256,7 @@ function lightIconlayer(){
             },            
         })
     });   
-    map.addLayer(buoy);       
+    //map.addLayer(buoy);       
     
      //부표2
      var bosy2 = new ol.layer.Tile({
@@ -305,7 +305,7 @@ function ViewLayerChkMark(checked){
         const l = layers[i];
         const thisLayerId = layers[i].get('id');
 
-        if("lightmark" === thisLayerId) {
+        if("bosy2" === thisLayerId) {
             lyr = l;
             break;
         }
@@ -317,45 +317,7 @@ function ViewLayerChkMark(checked){
 		}else{
 			lyr.setOpacity(1);
 		}
-    }	
-    
-    //부표 
-	for(let i in layers) {
-        const l = layers[i];
-        const thisLayerId = layers[i].get('id');
-
-        if("buoy" === thisLayerId) {
-            lyr = l;
-            break;
-        }
-    }
-    
-    if(lyr != null){
-    	if(checked){
-			lyr.setOpacity(0);
-		}else{
-			lyr.setOpacity(1);
-		}
-    }	
-    
-    //등대 
-	for(let i in layers) {
-        const l = layers[i];
-        const thisLayerId = layers[i].get('id');
-
-        if("lighthouse" === thisLayerId) {
-            lyr = l;
-            break;
-        }
-    }
-    
-    if(lyr != null){
-    	if(checked){
-			lyr.setOpacity(0);
-		}else{
-			lyr.setOpacity(1);
-		}
-    }	
+    }	   	
 }
 
 

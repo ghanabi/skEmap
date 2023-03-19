@@ -510,7 +510,7 @@ function get_ship_to_map(){
 							pointFeature.setStyle(
 								new ol.style.Style({		            
 						            image: new ol.style.Icon({
-							          	src: 'images/sk/shipIcon.png',
+							          	src: 'images/sk/shipIconMove.png',
 							          	anchor: [0.8, 0.8],				          	
 					        		}),
 						            text: new ol.style.Text({
@@ -944,7 +944,7 @@ function DIVget_ship_to_map(DIVshipMoveList){
 					pointFeature.setStyle(
 						new ol.style.Style({		            
 				            image: new ol.style.Icon({
-					          	src: 'images/sk/shipIcon.png',
+					          	src: 'images/sk/shipIconMove.png',
 					          	anchor: [0.8, 0.8],				          	
 			        		}),
 				            text: new ol.style.Text({

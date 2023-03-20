@@ -244,7 +244,7 @@ function mapEvent(){
 	//보기설정 - 레이어 기본/표준/상세
 	$('input[name=ShipView]').on('click',function(e){	
 		let val = $('input[name=ShipView]:checked').val();
-		ViewLayerChk(val);
+		ViewLayerChk(val);	
 	});		
 }
 

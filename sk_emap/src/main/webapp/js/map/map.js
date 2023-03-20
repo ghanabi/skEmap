@@ -29,8 +29,8 @@ var featTest;
 //35.5468629,129.3005359 울산
 function mapInit(){
 	var view = new ol.View({
-		center: ol.proj.fromLonLat([129.3005359,35.5468629]),
-		zoom: 9,
+		center: ol.proj.fromLonLat([129.349,35.461]),
+		zoom: 12,
 	});
 	
 	googlemap = new ol.layer.Tile({
@@ -239,6 +239,12 @@ function mapEvent(){
 		};	
 		makeShipFeature(); //오른쪽 DIV 선박리스트 보여주기	
 		get_ship_to_map();		
+	});	
+	
+	//보기설정 - 레이어 기본/표준/상세
+	$('input[name=ShipView]').on('click',function(e){	
+		let val = $('input[name=ShipView]:checked').val();
+		ViewLayerChk(val);
 	});		
 }
 

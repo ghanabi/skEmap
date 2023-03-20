@@ -18,6 +18,25 @@ function wmsInit(){
     });
     map.addLayer(DEPAREA);
     
+    //wms 바다(lev6_DEPARE_A)
+	var lev6_DEPARE_A = new ol.layer.Tile({
+		id : 'lev6_DEPARE_A',
+    	title: 'lev6_DEPARE_A',
+    	opacity: 1,
+        source: new ol.source.TileWMS({
+            url: geoserverWmsUrl,
+            serverType: 'geoserver',
+            crossOrigin: 'anonymous',            
+            params: { 
+            	'VERSION': '1.1.0' , 
+                'LAYERS': 'skemap:lev6_DEPARE_A',               
+                'CRS' : 'EPSG:3857',
+            },            
+        })
+    });
+    map.addLayer(lev6_DEPARE_A);
+    
+    
     //wms 대지(기본맵처럼사용)
     var LNDAREA_A = new ol.layer.Tile({
 		id : 'LNDAREA_A',
@@ -35,132 +54,6 @@ function wmsInit(){
         })
     });
     map.addLayer(LNDAREA_A);
-    
-    //wms 강(기본맵처럼사용)
-    var rivers = new ol.layer.Tile({
-		id : 'rivers',
-    	title: 'rivers',
-    	opacity: 1,
-        source: new ol.source.TileWMS({
-            url: geoserverWmsUrl,
-            serverType: 'geoserver',
-            crossOrigin: 'anonymous',            
-            params: { 
-            	'VERSION': '1.1.0' , 
-                'LAYERS': 'skemap:rivers',               
-                'CRS' : 'EPSG:3857',
-            },            
-        })
-    });
-    map.addLayer(rivers);
-    
-    //wms 수심텍스트(기본맵처럼사용)
-    var souding = new ol.layer.Tile({
-		id : 'souding',
-    	title: 'souding',
-    	opacity: 0,
-        source: new ol.source.TileWMS({
-            url: geoserverWmsUrl,
-            serverType: 'geoserver',
-            crossOrigin: 'anonymous',            
-            params: { 
-            	'VERSION': '1.1.0' , 
-                'LAYERS': 'skemap:SOUNDG',               
-                'CRS' : 'EPSG:3857',
-            },            
-        })
-    });
-    map.addLayer(souding);   
-    
-    //wms OBSTRN(기본맵처럼사용)
-    var OBSTRN = new ol.layer.Tile({
-		id : 'OBSTRN',
-    	title: 'OBSTRN',
-    	opacity: 0,
-        source: new ol.source.TileWMS({
-            url: geoserverWmsUrl,
-            serverType: 'geoserver',
-            crossOrigin: 'anonymous',            
-            params: { 
-            	'VERSION': '1.1.0' , 
-                'LAYERS': 'skemap:OBSTRN',               
-                'CRS' : 'EPSG:3857',
-            },            
-        })
-    });
-    map.addLayer(OBSTRN);      
-    
-   //wms gisun(기본맵처럼사용)
-    var gisun = new ol.layer.Tile({
-		id : 'gisun',
-    	title: 'gisun',
-    	opacity: 1,
-        source: new ol.source.TileWMS({
-            url: geoserverWmsUrl,
-            serverType: 'geoserver',
-            crossOrigin: 'anonymous',            
-            params: { 
-            	'VERSION': '1.1.0' , 
-                'LAYERS': 'skemap:gisun',               
-                'CRS' : 'EPSG:3857',
-            },            
-        })
-    });
-    map.addLayer(gisun);   
-    
-    //wms seaarea(기본맵처럼사용)
-    var seaarea = new ol.layer.Tile({
-		id : 'seaarea',
-    	title: 'seaarea',
-    	opacity: 1,
-        source: new ol.source.TileWMS({
-            url: geoserverWmsUrl,
-            serverType: 'geoserver',
-            crossOrigin: 'anonymous',            
-            params: { 
-            	'VERSION': '1.1.0' , 
-                'LAYERS': 'skemap:seaarea',               
-                'CRS' : 'EPSG:3857',
-            },            
-        })
-    });
-    map.addLayer(seaarea);  
-    
-    //wms lev6_LNDMARK_P(기본맵처럼사용)
-    var lev6_LNDMARK_P = new ol.layer.Tile({
-		id : 'lev6_LNDMARK_P',
-    	title: 'lev6_LNDMARK_P',
-    	opacity: 1,
-        source: new ol.source.TileWMS({
-            url: geoserverWmsUrl,
-            serverType: 'geoserver',
-            crossOrigin: 'anonymous',            
-            params: { 
-            	'VERSION': '1.1.0' , 
-                'LAYERS': 'skemap:lev6_LNDMARK_P',               
-                'CRS' : 'EPSG:3857',
-            },            
-        })
-    });
-    map.addLayer(lev6_LNDMARK_P);   
-    
-    //wms LEV6DEPCNT(기본맵처럼사용)
-    var LEV6DEPCNT = new ol.layer.Tile({
-		id : 'LEV6DEPCNT',
-    	title: 'LEV6DEPCNT',
-    	opacity: 1,
-        source: new ol.source.TileWMS({
-            url: geoserverWmsUrl,
-            serverType: 'geoserver',
-            crossOrigin: 'anonymous',            
-            params: { 
-            	'VERSION': '1.1.0' , 
-                'LAYERS': 'skemap:LEV6DEPCNT',               
-                'CRS' : 'EPSG:3857',
-            },            
-        })
-    });
-    map.addLayer(LEV6DEPCNT);       
     
     //wms lev6_LNDARE_A(기본맵처럼사용)
     var lev6_LNDARE_A = new ol.layer.Tile({
@@ -180,11 +73,101 @@ function wmsInit(){
     });
     map.addLayer(lev6_LNDARE_A);     
     
+    //wms 강(기본맵처럼사용)
+    var rivers = new ol.layer.Tile({
+		id : 'rivers',
+    	title: 'rivers',
+    	opacity: 1,
+        source: new ol.source.TileWMS({
+            url: geoserverWmsUrl,
+            serverType: 'geoserver',
+            crossOrigin: 'anonymous',            
+            params: { 
+            	'VERSION': '1.1.0' , 
+                'LAYERS': 'skemap:rivers',               
+                'CRS' : 'EPSG:3857',
+            },            
+        })
+    });
+    //map.addLayer(rivers);
+    
+    //wms 수심텍스트(기본맵처럼사용)
+    var lev6_SOUNDG_P = new ol.layer.Tile({
+		id : 'lev6_SOUNDG_P',
+    	title: 'lev6_SOUNDG_P',
+    	opacity: 0,
+        source: new ol.source.TileWMS({
+            url: geoserverWmsUrl,
+            serverType: 'geoserver',
+            crossOrigin: 'anonymous',            
+            params: { 
+            	'VERSION': '1.1.0' , 
+                'LAYERS': 'skemap:lev6_SOUNDG_P',               
+                'CRS' : 'EPSG:3857',
+            },            
+        })
+    });
+    map.addLayer(lev6_SOUNDG_P);   
+    
+    //wms lev6_OBSTRN_A(기본맵처럼사용)
+    var lev6_OBSTRN_A = new ol.layer.Tile({
+		id : 'lev6_OBSTRN_A',
+    	title: 'lev6_OBSTRN_A',
+    	opacity: 0,
+        source: new ol.source.TileWMS({
+            url: geoserverWmsUrl,
+            serverType: 'geoserver',
+            crossOrigin: 'anonymous',            
+            params: { 
+            	'VERSION': '1.1.0' , 
+                'LAYERS': 'skemap:lev6_OBSTRN_A',               
+                'CRS' : 'EPSG:3857',
+            },            
+        })
+    });
+    map.addLayer(lev6_OBSTRN_A);      
+    
+   //wms lev6_OILBAR_L(기본맵처럼사용)
+    var lev6_OILBAR_L = new ol.layer.Tile({
+		id : 'lev6_OILBAR_L',
+    	title: 'lev6_OILBAR_L',
+    	opacity: 0,
+        source: new ol.source.TileWMS({
+            url: geoserverWmsUrl,
+            serverType: 'geoserver',
+            crossOrigin: 'anonymous',            
+            params: { 
+            	'VERSION': '1.1.0' , 
+                'LAYERS': 'skemap:lev6_OILBAR_L',               
+                'CRS' : 'EPSG:3857',
+            },            
+        })
+    });
+    map.addLayer(lev6_OILBAR_L);   
+    
+    //wms lev6_ACHBRT_A(기본맵처럼사용)
+    var lev6_ACHBRT_A = new ol.layer.Tile({
+		id : 'lev6_ACHBRT_A',
+    	title: 'lev6_ACHBRT_A',
+    	opacity: 0,
+        source: new ol.source.TileWMS({
+            url: geoserverWmsUrl,
+            serverType: 'geoserver',
+            crossOrigin: 'anonymous',            
+            params: { 
+            	'VERSION': '1.1.0' , 
+                'LAYERS': 'skemap:lev6_ACHBRT_A',               
+                'CRS' : 'EPSG:3857',
+            },            
+        })
+    });
+    map.addLayer(lev6_ACHBRT_A);  
+    
     //wms lev6_BRIDGE_A(기본맵처럼사용)
     var lev6_BRIDGE_A = new ol.layer.Tile({
 		id : 'lev6_BRIDGE_A',
     	title: 'lev6_BRIDGE_A',
-    	opacity: 1,
+    	opacity: 0,
         source: new ol.source.TileWMS({
             url: geoserverWmsUrl,
             serverType: 'geoserver',
@@ -197,24 +180,82 @@ function wmsInit(){
         })
     });
     map.addLayer(lev6_BRIDGE_A);       
-    lightIconlayer(); //등대,등표,부표 호출
-}
-
-
-//등대,등표,부표 보여주기
-function lightIconlayer(){     
-	//등대
-   cbndWms = new ol.layer.Tile({
-		id : 'lighthouse',
-    	title: 'lighthouse',
-    	opacity: 1,
+    
+    //wms lev6_BUISGL_A(기본맵처럼사용)
+    var lev6_BUISGL_A = new ol.layer.Tile({
+		id : 'lev6_BUISGL_A',
+    	title: 'lev6_BUISGL_A',
+    	opacity: 0,
         source: new ol.source.TileWMS({
             url: geoserverWmsUrl,
             serverType: 'geoserver',
             crossOrigin: 'anonymous',            
             params: { 
             	'VERSION': '1.1.0' , 
-                'LAYERS': 'skemap:lighthouse',
+                'LAYERS': 'skemap:lev6_BUISGL_A',               
+                'CRS' : 'EPSG:3857',
+            },            
+        })
+    });
+    map.addLayer(lev6_BUISGL_A);   
+    
+    //wms lev6_SEAARE_A(기본맵처럼사용)
+    var lev6_SEAARE_A = new ol.layer.Tile({
+		id : 'lev6_SEAARE_A',
+    	title: 'lev6_SEAARE_A',
+    	opacity: 0,
+        source: new ol.source.TileWMS({
+            url: geoserverWmsUrl,
+            serverType: 'geoserver',
+            crossOrigin: 'anonymous',            
+            params: { 
+            	'VERSION': '1.1.0' , 
+                'LAYERS': 'skemap:lev6_SEAARE_A',               
+                'CRS' : 'EPSG:3857',
+            },            
+        })
+    });
+    map.addLayer(lev6_SEAARE_A);  
+    
+    //wms lev6_SLCONS_L(기본맵처럼사용)
+    var lev6_SLCONS_L = new ol.layer.Tile({
+		id : 'lev6_SLCONS_L',
+    	title: 'lev6_SLCONS_L',
+    	opacity: 0,
+        source: new ol.source.TileWMS({
+            url: geoserverWmsUrl,
+            serverType: 'geoserver',
+            crossOrigin: 'anonymous',            
+            params: { 
+            	'VERSION': '1.1.0' , 
+                'LAYERS': 'skemap:lev6_SLCONS_L',               
+                'CRS' : 'EPSG:3857',
+            },            
+        })
+    });
+    map.addLayer(lev6_SLCONS_L);   
+    
+    
+    
+         
+    lightIconlayer(); //등대,등표,부표 호출
+}
+
+
+//등대,등표,부표 보여주기
+function lightIconlayer(){     
+	//부표
+   var lev6_FOGSIG_P = new ol.layer.Tile({
+		id : 'lev6_FOGSIG_P',
+    	title: 'lev6_FOGSIG_P',
+    	opacity: 0,
+        source: new ol.source.TileWMS({
+            url: geoserverWmsUrl,
+            serverType: 'geoserver',
+            crossOrigin: 'anonymous',            
+            params: { 
+            	'VERSION': '1.1.0' , 
+                'LAYERS': 'skemap:lev6_FOGSIG_P',
                 //'SLD_BODY': text_SLD,
                 //'format' : 'image/png', 
                 //'transparent' : 'true',
@@ -222,46 +263,30 @@ function lightIconlayer(){
             },            
         })
     });   
-    //map.addLayer(cbndWms);    
+    map.addLayer(lev6_FOGSIG_P);    
+    
     //등표
-    var lightmark = new ol.layer.Tile({
-		id : 'lightmark',
-    	title: 'lightmark',
-    	opacity: 1,
+    var lev6_LIGHTS_P = new ol.layer.Tile({
+		id : 'lev6_LIGHTS_P',
+    	title: 'lev6_LIGHTS_P',
+    	opacity: 0,
         source: new ol.source.TileWMS({
             url: geoserverWmsUrl,
             serverType: 'geoserver',
             crossOrigin: 'anonymous',            
             params: { 
             	'VERSION': '1.1.0' , 
-                'LAYERS': 'skemap:lightmark',               
+                'LAYERS': 'skemap:lev6_LIGHTS_P',               
                 'CRS' : 'EPSG:3857',
             },            
         })
     });   
-    //map.addLayer(lightmark);    
-    //부표
-     var buoy = new ol.layer.Tile({
-		id : 'buoy',
-    	title: 'buoy',
-    	opacity: 1,
-        source: new ol.source.TileWMS({
-            url: geoserverWmsUrl,
-            serverType: 'geoserver',
-            crossOrigin: 'anonymous',            
-            params: { 
-            	'VERSION': '1.1.0' , 
-                'LAYERS': 'skemap:buoy',               
-                'CRS' : 'EPSG:3857',
-            },            
-        })
-    });   
-    //map.addLayer(buoy);       
+    map.addLayer(lev6_LIGHTS_P);    
     
-     //부표2
-     var bosy2 = new ol.layer.Tile({
-		id : 'bosy2',
-    	title: 'bosy2',
+     //등대
+     var lev6_LNDMARK_P = new ol.layer.Tile({
+		id : 'lev6_LNDMARK_P',
+    	title: 'lev6_LNDMARK_P',
     	opacity: 1,
         source: new ol.source.TileWMS({
             url: geoserverWmsUrl,
@@ -269,96 +294,153 @@ function lightIconlayer(){
             crossOrigin: 'anonymous',            
             params: { 
             	'VERSION': '1.1.0' , 
-                'LAYERS': 'skemap:bosy2',               
+                'LAYERS': 'skemap:lev6_LNDMARK_P',               
                 'CRS' : 'EPSG:3857',
             },            
         })
     });   
-    map.addLayer(bosy2); 
+    map.addLayer(lev6_LNDMARK_P);        
     
-    //wrecks
-     var wrecks = new ol.layer.Tile({
-		id : 'wrecks',
-    	title: 'wrecks',
-    	opacity: 1,
+    //lev6_WRECKS_P
+     var lev6_WRECKS_P = new ol.layer.Tile({
+		id : 'lev6_WRECKS_P',
+    	title: 'lev6_WRECKS_P',
+    	opacity: 0,
         source: new ol.source.TileWMS({
             url: geoserverWmsUrl,
             serverType: 'geoserver',
             crossOrigin: 'anonymous',            
             params: { 
             	'VERSION': '1.1.0' , 
-                'LAYERS': 'skemap:wrecks',               
+                'LAYERS': 'skemap:lev6_WRECKS_P',               
                 'CRS' : 'EPSG:3857',
             },            
         })
     });   
-    map.addLayer(wrecks);       
+    map.addLayer(lev6_WRECKS_P);       
 }  
 
 //표지 레이어 on/off  (등대,등표,부표)
-function ViewLayerChkMark(checked){
-	let lyr=null;
+function ViewLayerChkMark(checked){	
 	var layers = map.getLayers().getArray();
 	
-	//등표
-	for(let i in layers) {
-        const l = layers[i];
-        const thisLayerId = layers[i].get('id');
-
-        if("bosy2" === thisLayerId) {
-            lyr = l;
-            break;
-        }
-    }
-    
-    if(lyr != null){
-    	if(checked){
-			lyr.setOpacity(0);
-		}else{
-			lyr.setOpacity(1);
+	var layerList = ["lev6_FOGSIG_P","lev6_LIGHTS_P","lev6_LNDMARK_P"];
+	let chkLevel = $('input[name=ShipView]:checked').val();
+	
+	if(!checked){
+		if(chkLevel == "1"){  //기본    	
+	    	for(let i in layers) {
+		        const lyr = layers[i];
+		        const thisLayerId = layers[i].get('id');	
+				if(thisLayerId == "lev6_LNDMARK_P"){
+					lyr.setOpacity(1);
+				}		
+			}
+	    }else{  //표준,상세    	
+	    	for(let i in layers) {
+		        const lyr = layers[i];
+		        const thisLayerId = layers[i].get('id');	
+				
+				for(var j=0;j<layerList.length;j++){
+					if(layerList[j] === thisLayerId) {
+						lyr.setOpacity(1);
+					}
+				}	
+			}
+	    }    
+	}else{ //checked
+		for(let i in layers) {
+	        const lyr = layers[i];
+	        const thisLayerId = layers[i].get('id');	
+			
+			for(var j=0;j<layerList.length;j++){
+				if(layerList[j] === thisLayerId) {
+					lyr.setOpacity(0);
+				}
+			}	
 		}
-    }	   	
+	}
+	
 }
 
 
 //OBSTRN 레이어 on/off
-function ViewLayerChk(checked){
-	let lyr=null;
+function ViewLayerChk(chkLevel){
 	var layers = map.getLayers().getArray();
+	
+	var layerList = ["lev6_SOUNDG_P","lev6_OBSTRN_A","lev6_OILBAR_L","lev6_ACHBRT_A","lev6_BRIDGE_A","lev6_BUISGL_A","lev6_SEAARE_A"
+	,"lev6_SLCONS_L","lev6_FOGSIG_P","lev6_LIGHTS_P","lev6_LNDMARK_P","lev6_WRECKS_P"];
+	
+	
+	//레이어 off 후 필요한 레이어만 킴
 	for(let i in layers) {
-        const l = layers[i];
+        const lyr = layers[i];
         const thisLayerId = layers[i].get('id');
 
-        if("OBSTRN" === thisLayerId) {
-            lyr = l;
-            break;
-        }
+		for(var j=0;j<layerList.length;j++){
+			if(layerList[j] === thisLayerId) {
+				lyr.setOpacity(0);
+			}
+		}
     }
     
-    if(lyr != null){
-    	if(checked){
-			lyr.setOpacity(1);
-		}else{
-			lyr.setOpacity(0);
+    if(chkLevel == "1"){  //기본
+    	var lList = ["lev6_LNDMARK_P"];
+    	for(let i in layers) {
+	        const lyr = layers[i];
+	        const thisLayerId = layers[i].get('id');
+	
+			for(var j=0;j<lList.length;j++){
+				if(lList[j] === thisLayerId) {
+					var chk = $("#chkViewLayerMark").prop("checked");
+					if(!chk){
+						lyr.setOpacity(1);
+					}				
+				}
+			}
 		}
-    }	
-    
-    //수심테스트 
-	for(let i in layers) {
-        const l = layers[i];
-        const thisLayerId = layers[i].get('id');
-
-        if("souding" === thisLayerId) {
-            lyr = l;
-            break;
-        }
     }
     
-    if(lyr != null){
-    	if(checked){
-			lyr.setOpacity(1);
-		}else{
-			lyr.setOpacity(0);
+    if(chkLevel == "2"){  //표준
+    	var lList = ["lev6_ACHBRT_A","lev6_SLCONS_L","lev6_FOGSIG_P","lev6_LIGHTS_P","lev6_LNDMARK_P"];
+    	for(let i in layers) {
+	        const lyr = layers[i];
+	        const thisLayerId = layers[i].get('id');
+	
+			for(var j=0;j<lList.length;j++){
+				if(lList[j] === thisLayerId) {				
+					if(lList[j] == "lev6_LNDMARK_P" || lList[j] == "lev6_FOGSIG_P" || lList[j] == "lev6_LIGHTS_P"){
+						var chk = $("#chkViewLayerMark").prop("checked");
+						if(!chk){
+							lyr.setOpacity(1);
+						}	
+					}else{
+						lyr.setOpacity(1);
+					}			
+				}
+			}
 		}
-    }	
+    }
+    
+    if(chkLevel == "3"){  //상세
+    	var lList = ["lev6_SOUNDG_P","lev6_OBSTRN_A","lev6_OILBAR_L","lev6_ACHBRT_A","lev6_BRIDGE_A","lev6_BUISGL_A","lev6_SEAARE_A"
+	,"lev6_SLCONS_L","lev6_FOGSIG_P","lev6_LIGHTS_P","lev6_LNDMARK_P","lev6_WRECKS_P"];
+    	for(let i in layers) {
+	        const lyr = layers[i];
+	        const thisLayerId = layers[i].get('id');
+	
+			for(var j=0;j<lList.length;j++){
+				if(lList[j] === thisLayerId) {				
+					if(lList[j] == "lev6_LNDMARK_P" || lList[j] == "lev6_FOGSIG_P" || lList[j] == "lev6_LIGHTS_P"){
+						var chk = $("#chkViewLayerMark").prop("checked");
+						if(!chk){
+							lyr.setOpacity(1);
+						}	
+					}else{
+						lyr.setOpacity(1);
+					}			
+				}
+			}
+		}
+    }    
 }

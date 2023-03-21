@@ -89,7 +89,7 @@
 						   ROW_NUMBER() OVER (PARTITION BY a.mmsi, b.ShipName ORDER BY a.TimeStampK DESC) AS rank_no
 					  FROM $table_nm$ a, SPM.dbo.TB_AIS5 b
 					 WHERE a.MMSI =b.mmsi and a.TimeStampK = b.TimeStampK
-					   AND a.TimeStampK >= DATEADD(MINUTE,-30,GETDATE())
+					   AND a.TimeStampK >= DATEADD(MINUTE,-10,GETDATE())
 					) c
 			 WHERE rank_no =1
 			 ORDER BY mmsi,shipname

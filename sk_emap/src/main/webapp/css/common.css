@@ -17,7 +17,7 @@ body,div,ul,li,dl,dt,dd,ol,p,h1,h2,h3,h4,h5,h6,form {
 	margin:0; padding:0;
 }
 body {
-	font:normal 12px 'Nanum Gothic', '나눔 고딕', '맑은 고딕', '돋움', dotum; color:#666666;
+	font:normal 15px 'Nanum Gothic', '나눔 고딕', '맑은 고딕', '돋움', dotum; color:#000000;
 }
 h1 {
 	font-family:"굴림", Gulim, AppleGothic, Sans-serif; font-size:13pt;
@@ -108,6 +108,11 @@ table input[type='checkbox'] {
 	padding: 5px;
 	font-size: 11px;
 }
+
+#div_left_mapSetting table th, #div_left_mapSetting table td {
+	font-size: 15px;
+}
+
 .div_left table .t_left {
 	padding: 5px 0 5px 5px;
 }
@@ -211,7 +216,6 @@ table input[type='checkbox'] {
     margin-left: 20px;
     font-weight: bold;
 }
-
 .div_left #shipsearch {
 	float: right;
 	width: 100px;
@@ -334,13 +338,18 @@ table input[type='checkbox'] {
 	width: 100%;
 	height: 100%;
 	text-align: center;
+}
+
+#shiplist_result table {
 	border: 1px solid #444444;
 	border-collapse:collapse;
 }
 
 #div_right #right_shiplist table th, #div_right #right_shiplist table td {
 	text-align: center;
-	border: 1px solid #444444;
+	border-top: 1px solid #444444;
+	border-right: 1px solid #444444;
+	border-left: 1px solid #444444;
 	border-collapse:collapse;
 }
 
@@ -359,6 +368,15 @@ table input[type='checkbox'] {
 
 #div_right #ship_option table th:last-child {
 	cursor: default;
+}
+
+#r_title, #right_result table th {
+	font-size: 15px;
+	font-weight: bold;
+}
+
+#right_result table td {
+	font-size: 15px;
 }
 
 #right_shiplist table th {

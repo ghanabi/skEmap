@@ -135,6 +135,13 @@ function setSize() {
 		
 		//$(".slide1").css({'top': (window_h/2)+60+"px"});
 		
+		
+		$("#right_shiplist").height((window_h-590)+"px");
+		$("#shiplist_result").height((window_h-618)+"px");
+		$("#ship_result").height((window_h-447)+"px");		
+		
+		Ps.update(document.getElementById('shiplist_result'));
+		Ps.update(document.getElementById('ship_result'));
 		if(map != null){
 			map.updateSize();
 		}		

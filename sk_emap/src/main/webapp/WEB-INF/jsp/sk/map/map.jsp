@@ -119,7 +119,7 @@ window.onload = function(){
 								<td class="t_left">표준 <input type="radio" name="ShipView" value="2"></td>
 							</tr>
 							<tr>
-								<td class="t_left">상세<input type="radio" name="ShipView" value="3"></td>
+								<td class="t_left">상세 <input type="radio" name="ShipView" value="3"></td>
 							</tr>
 						</table>
 					</div>
@@ -339,7 +339,7 @@ window.onload = function(){
 							</tr>
 						</table>
 					</div>
-					<div id="shiplist_result" style="height:344px;border: 1px solid #444444; overflow: hidden;position: relative;margin: 0px auto;padding: 0px;">
+					<div id="shiplist_result" style="height:344px; overflow: hidden;position: relative;margin: 0px auto;padding: 0px;">
 						<table>
 						<colgroup><col width="125"><col width="146"></colgroup>
 						<tr>
@@ -365,7 +365,7 @@ window.onload = function(){
 					</table>
 					</div>
 				</div>
-				<div id="div_ship_search" style="height: 40px; margin: 10px;">
+				<div id="div_ship_search" style="height: 40px; margin: 5px;">
 					<span style="font-size: 1em; vertical-align: middle; cursor: default;">검색</span> 
 					<input id="search_word" type="text" style="height: 30px;">
 					<img id="shipsearch2" class="pointer" alt="" src="images/sk/ship_search.jpg">

@@ -130,7 +130,7 @@ function setActiveDrawToolSearch(type) {
 		            }),
 		            text: new ol.style.Text({
 		                textAlign: 'center',
-		                font:  'bold 12px Arial',
+		                font:  'bold 10px Arial',
 		                fill: new ol.style.Fill({color: 'rgba(255,0, 0, 0.8)'}),
 		                stroke: new ol.style.Stroke({color:'#ffffff', width:0}),
 		                text: String(dis),

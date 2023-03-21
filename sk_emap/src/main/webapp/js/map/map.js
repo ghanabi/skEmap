@@ -501,7 +501,7 @@ function get_ship_to_map(){
 						var shipNameText = "";
 						var pointLabel = "";
 						if(val=="name"){ 
-							shipNameText = item.mmsi+" "+item.shipname; //이름인경우
+							shipNameText = item.mmsi+"\n"+item.shipname; //이름인경우
 							pointLabel = item.timestampkList[j];
 						}else if(val=="id"){
 							shipNameText = item.mmsi; //ID인경우
@@ -592,7 +592,7 @@ function makeShipFeature(){
 				
 				var shipNameText = "";
 				if(val=="name"){ 
-					shipNameText = shipList[i].mmsi+" "+shipList[i].shipname; //이름인경우
+					shipNameText = shipList[i].mmsi+"\n"+shipList[i].shipname; //이름인경우
 				}else if(val=="id"){
 					shipNameText = shipList[i].mmsi; //ID인경우
 				}else{
@@ -784,7 +784,7 @@ function moveShipDetailFeature(longitude,latitude,shipname,mmsi){
 			
 			var shipNameText = "";
 			if(val=="name"){ 
-				shipNameText = mmsi+" "+shipname; //이름인경우
+				shipNameText = mmsi+"\n"+shipname; //이름인경우
 			}else if(val=="id"){
 				shipNameText = mmsi; //ID인경우
 			}else{
@@ -935,7 +935,7 @@ function DIVget_ship_to_map(DIVshipMoveList){
 				var shipNameText = "";
 				var pointLabel = "";
 				if(val=="name"){ 
-					shipNameText = item.mmsi+" "+item.shipname; //이름인경우
+					shipNameText = item.mmsi+"\n"+item.shipname; //이름인경우
 					pointLabel = item.timestampkList[j];
 				}else if(val=="id"){
 					shipNameText = item.mmsi; //ID인경우

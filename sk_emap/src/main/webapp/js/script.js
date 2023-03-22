@@ -131,7 +131,7 @@ function setSize() {
 		$(".con_right").height(window_h+"px");
 		$(".right_tab").height(window_h+"px");
 		
-		$(".scale").css({'left': 85+l_div+"px"});
+		$(".scale").css({'left': 115+l_div+"px"});
 		
 		//$(".slide1").css({'top': (window_h/2)+60+"px"});
 		

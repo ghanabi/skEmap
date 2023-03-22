@@ -13,7 +13,7 @@
 <link rel="stylesheet" type="text/css" href="<c:url value="/js/libs/colorpicker/css/layout.css"/>"/>
 <link rel="stylesheet" href="<c:url value="/js/libs/openlayers/ol-v5.30/ol.css"/>">
 <link rel="stylesheet" href="<c:url value="/js/libs/openlayers/ol-ext/ol-ext.min.css"/>"/>
-<link rel="stylesheet" href="<c:url value="/css/common.css"/>"/>
+<link rel="stylesheet" href="<c:url value="/css/common.css?version=${nowDate}"/>"/>
 <link type="text/css" href="<c:url value="/css/perfect-scrollbar.css"/>" rel="stylesheet"/>
 
 
@@ -67,7 +67,7 @@
 <script type="text/javascript" src="<c:url value="/js/libs/colorpicker/js/eye.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/js/libs/colorpicker/js/utils.js"/>"></script>
 
-<script type="text/javascript" src="<c:url value="/js/script.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/js/script.js?version=${nowDate}"/>"></script>
 
 <script>    
 let map;      

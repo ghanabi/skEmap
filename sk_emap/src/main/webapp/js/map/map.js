@@ -365,6 +365,11 @@ function get_ship(){
 		alert("날짜 설정 하세요.");
 		return;
 	}
+
+	if(searchBox.lon1 == "") {		
+		alert("해당지역 설정 하세요.");
+		return;
+	}
 	searchBox.date1 = date1.replace(/-/g, '');
 	searchBox.text = txt;
 	searchBox.kind = kind;

@@ -90,7 +90,7 @@ window.onload = function(){
 							<li class="tool4" id="mapMove"><img alt="" src="images/sk/maptool/btn4.jpg"></li>
 							<li class="tool5" id="mapSearch1"><img alt="" src="images/sk/maptool/btn5.jpg"></li>
 							<!-- <li class="tool6" id="mapSearch2"><img alt="" src="images/sk/maptool/btn6.jpg"></li>  -->
-							<li class="tool7" id="mapSearch3"><img alt="" src="images/sk/maptool/btn7_on.jpg"></li>
+							<li class="tool7" id="mapSearch3"><img alt="" src="images/sk/maptool/btn7.jpg"></li>
 						</ul>
 					</div>
 					<div class="option">
@@ -119,7 +119,7 @@ window.onload = function(){
 								<td class="t_left">표준 <input type="radio" name="ShipView" value="2"></td>
 							</tr>
 							<tr>
-								<td class="t_left">상세<input type="radio" name="ShipView" value="3"></td>
+								<td class="t_left">상세 <input type="radio" name="ShipView" value="3"></td>
 							</tr>
 						</table>
 					</div>
@@ -212,7 +212,7 @@ window.onload = function(){
 						</table>
 					</div> -->
 				</div>
-				<div id="div_left_mapSearch" style="display: block; width: 100%;">
+				<div id="div_left_mapSearch" style="display: none; width: 100%;">
 					<div id="option5">
 						<span class="option_h">항적표시</span>
 						<div style="height: 305px;">
@@ -339,7 +339,7 @@ window.onload = function(){
 							</tr>
 						</table>
 					</div>
-					<div id="shiplist_result" style="height:344px;border: 1px solid #444444; overflow: hidden;position: relative;margin: 0px auto;padding: 0px;">
+					<div id="shiplist_result" style="height:344px; overflow: hidden;position: relative;margin: 0px auto;padding: 0px;">
 						<table>
 						<colgroup><col width="125"><col width="146"></colgroup>
 						<tr>
@@ -365,7 +365,7 @@ window.onload = function(){
 					</table>
 					</div>
 				</div>
-				<div id="div_ship_search" style="height: 40px; margin: 10px;">
+				<div id="div_ship_search" style="height: 40px; margin: 5px;">
 					<span style="font-size: 1em; vertical-align: middle; cursor: default;">검색</span> 
 					<input id="search_word" type="text" style="height: 30px;">
 					<img id="shipsearch2" class="pointer" alt="" src="images/sk/ship_search.jpg">
@@ -377,7 +377,7 @@ window.onload = function(){
 					<!-- <img alt="" src="images/sk/shipinfo_btn.jpg"> -->
 				</div>
 			</div>
-			<div class="scale"> <span id="mouseLocationStat" style="width:240px;float:left;"></span>  <span id="mapZoomLevelStat" style="width:240px;float:left;">SCALE=>1:10.000[LEVEL:27]</span></div>
+			<div class="scale"> <span id="mouseLocationStat" style="width:210px;float:left;"></span>  <span id="mapZoomLevelStat" style="width:200px;float:left;">SCALE=>1:10.000[LEVEL:27]</span></div>
 		</div>
 	</div>
 

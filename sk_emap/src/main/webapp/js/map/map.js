@@ -29,7 +29,7 @@ var featTest;
 //35.5468629,129.3005359 울산
 function mapInit(){
 	var view = new ol.View({
-		center: ol.proj.fromLonLat([129.349,35.461]),
+		center: ol.proj.fromLonLat([129.567,35.448]),
 		zoom: 12,
 	});
 	
@@ -65,7 +65,7 @@ function mapInit(){
     shipSelectEvent(); //맵 선박 feat 셀렉 이벤트
 
 	// 2초 간격으로 메시지를 보여줌
-	setInterval(() => scheduleShipInfo(), 20000);	
+	setInterval(() => scheduleShipInfo(), 10000);	
 	
 	getShipSearch(); //선박리스트 조회 (지도위표출)
 	

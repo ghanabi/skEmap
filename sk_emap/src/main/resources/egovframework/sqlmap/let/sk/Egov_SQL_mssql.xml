@@ -26,83 +26,96 @@
 	
 	<select id="map.searchTbAisList" resultClass="SkShipVO" parameterClass="SkShipVO">
 		<![CDATA[ 			 
-			SELECT a.mmsi, a.TimeStampK as timestampk, a.Latitude as latitude, a.Longitude as longitude, b.ShipName as shipname
-			FROM $table_nm$ a, SPM.dbo.TB_AIS5 b
-			where a.MMSI =b.mmsi and a.TimeStampK = b.TimeStampK
+			SELECT * 
+			  FROM ( SELECT a.mmsi, a.TimeStampK as timestampk, a.Latitude as latitude, a.Longitude as longitude,
+			       		ISNULL((select top 1 ShipName from SPM.dbo.TB_AIS5 b where a.MMSI =b.mmsi order by b.TimeStampK desc), ' ')as shipname
+			  	   FROM $table_nm$ a	
+				  WHERE 1=1
 		]]>
-			<isNotEmpty prepend="AND" property="lat2">
-			a.Latitude <![CDATA[>]]> #lat2# and a.Latitude <![CDATA[<]]> #lat1#
-			and a.Longitude <![CDATA[>]]> #lon2# and a.Longitude <![CDATA[<]]> #lon1#
-			</isNotEmpty>
-			<isEqual prepend="AND" property="kind" compareValue="MMSI" >			    	
-			a.MMSI like '%$mmsi$%'
-	   		</isEqual>
+				<isNotEmpty prepend="AND" property="lat2">
+					a.Latitude <![CDATA[>]]> #lat2# and a.Latitude <![CDATA[<]]> #lat1#
+					and a.Longitude <![CDATA[>]]> #lon2# and a.Longitude <![CDATA[<]]> #lon1#
+				</isNotEmpty>
+				<isEqual prepend="AND" property="kind" compareValue="MMSI" >			    	
+					a.MMSI like '%$mmsi$%'
+	   			</isEqual>
+		<![CDATA[ 
+				) c
+			 WHERE 1=1
+		]]>
 			<isEqual prepend="AND" property="kind" compareValue="SHIPNAME" >			    	
-			b.ShipName like '%$shipname$%'
+				shipname like '%$shipname$%'
 	   		</isEqual>
-		<![CDATA[ 					   
-			order by a.MMSI, b.ShipName, a.TimeStampK 
+		<![CDATA[			   
+			order by mmsi
 		]]>
 	</select>
 	
 	<select id="map.getShipList" resultClass="SkShipVO" parameterClass="SkShipVO">
 		<![CDATA[ 			 
-			SELECT a.mmsi, min(a.TimeStampK) as min_timestampk, max(a.TimeStampK) as max_timestampk, b.ShipName as shipname
-			  FROM $table_nm$ a, SPM.dbo.TB_AIS5 b
-			 WHERE a.MMSI =b.mmsi and a.TimeStampK = b.TimeStampK
+			SELECT * 
+			  FROM ( SELECT a.mmsi, min(a.TimeStampK) as min_timestampk, max(a.TimeStampK) as max_timestampk,
+			       		ISNULL((select top 1 ShipName from SPM.dbo.TB_AIS5 b where a.MMSI =b.mmsi order by b.TimeStampK desc), ' ')as shipname
+			  	   FROM $table_nm$ a	
+				  WHERE 1=1
 		]]>
-			<isNotEmpty prepend="AND" property="lat2">
-			a.Latitude <![CDATA[>]]> #lat2# and a.Latitude <![CDATA[<]]> #lat1#
-			and a.Longitude <![CDATA[>]]> #lon2# and a.Longitude <![CDATA[<]]> #lon1#
-			</isNotEmpty>
-			<isEqual prepend="AND" property="kind" compareValue="MMSI" >			    	
-			a.MMSI like '%$mmsi$%'
-	   		</isEqual>
+				<isNotEmpty prepend="AND" property="lat2">
+					a.Latitude <![CDATA[>]]> #lat2# and a.Latitude <![CDATA[<]]> #lat1#
+					and a.Longitude <![CDATA[>]]> #lon2# and a.Longitude <![CDATA[<]]> #lon1#
+				</isNotEmpty>
+				<isEqual prepend="AND" property="kind" compareValue="MMSI" >			    	
+					a.MMSI like '%$mmsi$%'
+	   			</isEqual>
+		<![CDATA[
+			 	  GROUP BY a.MMSI) c
+			 WHERE 1=1
+		]]>
 			<isEqual prepend="AND" property="kind" compareValue="SHIPNAME" >			    	
-			b.ShipName like '%$shipname$%'
+				shipname like '%$shipname$%'
 	   		</isEqual>
-		<![CDATA[ 					   
-			 GROUP BY a.MMSI, b.ShipName
-			 ORDER by a.MMSI, b.ShipName
+		<![CDATA[
+			 ORDER BY mmsi, shipname
 		]]>
 	</select>
 	
 	<select id="map.getShipSearch" resultClass="SkShipVO" parameterClass="SkShipVO">
 		<![CDATA[
-			SELECT b.mmsi, b.ShipName as shipname
-			  FROM $table_nm$ a, SPM.dbo.TB_AIS5 b
-			 WHERE a.MMSI =b.mmsi and a.TimeStampK = b.TimeStampK
+			SELECT * 
+			  FROM (SELECT mmsi, ISNULL((select top 1 ShipName from SPM.dbo.TB_AIS5 b where a.MMSI =b.mmsi order by b.TimeStampK desc), ' ')as shipname
+			  	  FROM $table_nm$ a) c
+			 WHERE 1=1
 		]]>
 			 <isNotEmpty prepend="AND" property="shipname">
-			   (b.ShipName LIKE '%$shipname$%' OR b.mmsi LIKE '%$shipname$%')
+			   (shipname LIKE '%$shipname$%' OR mmsi LIKE '%$shipname$%')
 			 </isNotEmpty>
 		<![CDATA[
-			 GROUP BY b.mmsi,b.shipname
+			 GROUP BY mmsi,shipname
 		]]>
 	</select>
 	
 	<select id="map.getShipSearchMapFor30Min" resultClass="SkShipVO" parameterClass="SkShipVO">
 		<![CDATA[
 			SELECT mmsi,shipname,longitude,latitude 
-			  FROM (SELECT a.mmsi, b.ShipName as shipname, 
-						   a.Longitude,a.Latitude,a.TimeStampK,
-						   ROW_NUMBER() OVER (PARTITION BY a.mmsi, b.ShipName ORDER BY a.TimeStampK DESC) AS rank_no
-					  FROM $table_nm$ a, SPM.dbo.TB_AIS5 b
-					 WHERE a.MMSI =b.mmsi and a.TimeStampK = b.TimeStampK
-					   AND a.TimeStampK >= DATEADD(MINUTE,-10,GETDATE())
-					) c
+			  FROM (SELECT c.*, ROW_NUMBER() OVER (PARTITION BY c.mmsi, c.ShipName ORDER BY c.TimeStampK DESC) AS rank_no
+				  FROM (SELECT a.mmsi, a.Longitude,a.Latitude,a.TimeStampK,
+				               ISNULL((select top 1 ShipName from SPM.dbo.TB_AIS5 b where a.MMSI =b.mmsi order by b.TimeStampK desc), ' ')as shipname
+				          FROM $table_nm$ a 
+				         WHERE a.TimeStampK >= DATEADD(MINUTE,-10,GETDATE())) c
+				) d
 			 WHERE rank_no =1
 			 ORDER BY mmsi,shipname
 		]]>
 	</select>
 	
 	<select id="map.getShipSearch_all" resultClass="SkShipVO" parameterClass="SkShipVO">
-		<![CDATA[ 			 
-			SELECT a.mmsi, b.ShipName as shipname, a.Latitude as latitude, a.Longitude as longitude, a.TimeStampK as timestampk
-			  FROM $table_nm$ a, SPM.dbo.TB_AIS5 b
-			 WHERE a.MMSI =b.mmsi and a.TimeStampK = b.TimeStampK
-			   AND a.MMSI like '%$mmsi$%'
-			 ORDER BY a.MMSI, b.ShipName, a.TimeStampK 
+		<![CDATA[ 
+			SELECT * 
+			  FROM (SELECT a.mmsi, a.Latitude as latitude, a.Longitude as longitude, a.TimeStampK as timestampk,
+			       	       ISNULL((select top 1 ShipName from SPM.dbo.TB_AIS5 b where a.MMSI =b.mmsi order by b.TimeStampK desc), ' ')as shipname
+			 	  FROM $table_nm$ a
+			 	 WHERE a.MMSI like '%$mmsi$%'
+				   AND a.TimeStampK >= DATEADD(MINUTE,-10,GETDATE())) c
+			 ORDER BY MMSI, ShipName, TimeStampK 
 		]]>
 	</select>
 	
@@ -113,7 +126,7 @@
 				   a.cstate, b.shiptype, b.dimena+b.dimenb shipsize, 
 				   b.destitime, b.destination, b.timestampk
 			  FROM $table_nm$ a, SPM.dbo.TB_AIS5 b
-			 WHERE a.MMSI =b.mmsi and a.TimeStampK = b.TimeStampK
+			 WHERE a.MMSI =b.mmsi 
 			   AND a.mmsi = #mmsi#
 			 ORDER BY timestampk DESC
 		]]>

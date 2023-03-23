@@ -107,19 +107,22 @@ function setActiveDrawToolSearch(type) {
     	drawOption['source'] = source;
     	drawInteration_search = new ol.interaction.Draw(drawOption);
     	const drawendCallback = function (e) {
+    		//console.log(e);
     		lyr.getSource().clear();
         	e.feature.set('type', "circle");       
         	let feat = e.feature;
-        	let featClone = feat.clone();
-        	featTest = featClone;        	
-        	let fpoint = feat.getGeometry().getCenter();        	
-        	let lpoint = feat.getGeometry().getLastCoordinate();        	     	
-	        
+        	    	
+        	let fpoint = feat.getGeometry().getCenter();             	
+        	//let lpoint = feat.getGeometry().getLastCoordinate();         
+        	let lpoint = e.target.sketchCoords_[1];
 	        var feat_line = new ol.Feature({
 				geometry:new ol.geom.LineString([
 		            fpoint,lpoint              
 		        ])
-			});			          
+			});	
+			
+			let featClone = feat_line.clone();
+        	featTest = featClone;    		          
 			
 			var dis = calDistance(featClone);	//거리구하기			
 			feat_line.setStyle(
@@ -150,8 +153,9 @@ function setActiveDrawToolSearch(type) {
 function calDistance(featClone){
     let c_geometry = featClone.getGeometry().transform( 'EPSG:3857',  'EPSG:4326');
     
-    let fpoint = c_geometry.getCenter();	
-	let lpoint = c_geometry.getLastCoordinate();	
+    
+    let fpoint = featClone.getGeometry().getCoordinates()[0];	
+	let lpoint = featClone.getGeometry().getCoordinates()[1];	
 	
 	const lat1 = fpoint[1];
 	const lon1 = fpoint[0];

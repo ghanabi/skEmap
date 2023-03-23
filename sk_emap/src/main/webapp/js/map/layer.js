@@ -243,7 +243,26 @@ function wmsInit(){
 
 
 //등대,등표,부표 보여주기
-function lightIconlayer(){     
+function lightIconlayer(){
+
+	//부표222  :lev6_BUOY_P
+   var lev6_BUOY_P = new ol.layer.Tile({
+		id : 'lev6_BUOY_P',
+    	title: 'lev6_BUOY_P',
+    	opacity: 0,
+        source: new ol.source.TileWMS({
+            url: geoserverWmsUrl,
+            serverType: 'geoserver',
+            crossOrigin: 'anonymous',            
+            params: { 
+            	'VERSION': '1.1.0' , 
+                'LAYERS': 'skemap:lev6_BUOY_P',                
+                'CRS' : 'EPSG:3857',
+            },            
+        })
+    });   
+    map.addLayer(lev6_BUOY_P); 
+         
 	//부표
    var lev6_FOGSIG_P = new ol.layer.Tile({
 		id : 'lev6_FOGSIG_P',
@@ -324,7 +343,7 @@ function lightIconlayer(){
 function ViewLayerChkMark(checked){	
 	var layers = map.getLayers().getArray();
 	
-	var layerList = ["lev6_FOGSIG_P","lev6_LIGHTS_P","lev6_LNDMARK_P"];
+	var layerList = ["lev6_FOGSIG_P","lev6_LIGHTS_P","lev6_LNDMARK_P","lev6_BUOY_P"];
 	let chkLevel = $('input[name=ShipView]:checked').val();
 	
 	if(!checked){
@@ -369,7 +388,7 @@ function ViewLayerChk(chkLevel){
 	var layers = map.getLayers().getArray();
 	
 	var layerList = ["lev6_SOUNDG_P","lev6_OBSTRN_A","lev6_OILBAR_L","lev6_ACHBRT_A","lev6_BRIDGE_A","lev6_BUISGL_A","lev6_SEAARE_A"
-	,"lev6_SLCONS_L","lev6_FOGSIG_P","lev6_LIGHTS_P","lev6_LNDMARK_P","lev6_WRECKS_P"];
+	,"lev6_SLCONS_L","lev6_FOGSIG_P","lev6_LIGHTS_P","lev6_LNDMARK_P","lev6_WRECKS_P","lev6_BUOY_P"];
 	
 	
 	//레이어 off 후 필요한 레이어만 킴
@@ -402,14 +421,14 @@ function ViewLayerChk(chkLevel){
     }
     
     if(chkLevel == "2"){  //표준
-    	var lList = ["lev6_ACHBRT_A","lev6_SLCONS_L","lev6_FOGSIG_P","lev6_LIGHTS_P","lev6_LNDMARK_P"];
+    	var lList = ["lev6_ACHBRT_A","lev6_SLCONS_L","lev6_FOGSIG_P","lev6_LIGHTS_P","lev6_LNDMARK_P","lev6_BUOY_P"];
     	for(let i in layers) {
 	        const lyr = layers[i];
 	        const thisLayerId = layers[i].get('id');
 	
 			for(var j=0;j<lList.length;j++){
 				if(lList[j] === thisLayerId) {				
-					if(lList[j] == "lev6_LNDMARK_P" || lList[j] == "lev6_FOGSIG_P" || lList[j] == "lev6_LIGHTS_P"){
+					if(lList[j] == "lev6_LNDMARK_P" || lList[j] == "lev6_FOGSIG_P" || lList[j] == "lev6_LIGHTS_P"|| lList[j] == "lev6_BUOY_P"){
 						var chk = $("#chkViewLayerMark").prop("checked");
 						if(!chk){
 							lyr.setOpacity(1);
@@ -424,14 +443,14 @@ function ViewLayerChk(chkLevel){
     
     if(chkLevel == "3"){  //상세
     	var lList = ["lev6_SOUNDG_P","lev6_OBSTRN_A","lev6_OILBAR_L","lev6_ACHBRT_A","lev6_BRIDGE_A","lev6_BUISGL_A","lev6_SEAARE_A"
-	,"lev6_SLCONS_L","lev6_FOGSIG_P","lev6_LIGHTS_P","lev6_LNDMARK_P","lev6_WRECKS_P"];
+	,"lev6_SLCONS_L","lev6_FOGSIG_P","lev6_LIGHTS_P","lev6_LNDMARK_P","lev6_WRECKS_P","lev6_BUOY_P"];
     	for(let i in layers) {
 	        const lyr = layers[i];
 	        const thisLayerId = layers[i].get('id');
 	
 			for(var j=0;j<lList.length;j++){
 				if(lList[j] === thisLayerId) {				
-					if(lList[j] == "lev6_LNDMARK_P" || lList[j] == "lev6_FOGSIG_P" || lList[j] == "lev6_LIGHTS_P"){
+					if(lList[j] == "lev6_LNDMARK_P" || lList[j] == "lev6_FOGSIG_P" || lList[j] == "lev6_LIGHTS_P"|| lList[j] == "lev6_BUOY_P"){
 						var chk = $("#chkViewLayerMark").prop("checked");
 						if(!chk){
 							lyr.setOpacity(1);

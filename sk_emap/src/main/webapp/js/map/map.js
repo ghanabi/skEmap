@@ -65,19 +65,37 @@ function mapInit(){
     shipSelectEvent(); //맵 선박 feat 셀렉 이벤트
 
 	// 2초 간격으로 메시지를 보여줌
-	setInterval(() => scheduleShipInfo(), 10000);	
+	//setInterval(() => scheduleShipInfo(), 10000);	
 	
 	getShipSearch(); //선박리스트 조회 (지도위표출)
 	
 	//최초 선박조회
 	getShipSearch_list(); //선박리스트 조회
 	
+	scheduleShipInfo();	
 }
 
 //2초간격 스케쥴 메소드
-function scheduleShipInfo(){
+function scheduleShipInfo_old(){
 	getShipSearch(); //선박리스트 조회
 	//getShipSearch_Detail_Data(); //선박상세조회
+}
+
+var realtime_stack = 0;
+//선박위치보여주기..(주기적으로 부르게하는 펀션)
+function scheduleShipInfo(){	
+	realtime_stack ++;
+	setTimeout(function(){		
+		if(realtime_stack==1){
+			if(realtime_stack != 0){
+				realtime_stack = realtime_stack -1;
+			}
+			getShipSearch(); //선박리스트 조회		
+		}else{
+			if(realtime_stack == 0)realtime_stack = 0;
+			else realtime_stack = realtime_stack -1;
+		}
+    }, 10000);	
 }
 
 //맵 버튼이벤트 설정
@@ -652,6 +670,7 @@ function getShipSearch(){
 			if(data != null){
 				shipList = data;
 				makeShipFeature(); //선박리스트 feat만들기
+				scheduleShipInfo(); //스케쥴 다시 호출
 			}		   
 		}
 	});

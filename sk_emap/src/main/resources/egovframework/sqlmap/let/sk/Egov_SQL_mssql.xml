@@ -27,7 +27,7 @@
 	<select id="map.searchTbAisList" resultClass="SkShipVO" parameterClass="SkShipVO">
 		<![CDATA[ 			 
 			SELECT * 
-			  FROM ( SELECT a.mmsi, a.TimeStampK as timestampk, a.Latitude as latitude, a.Longitude as longitude,
+			  FROM ( SELECT a.mmsi, a.TimeStampK as timestampk, a.Latitude as latitude, a.Longitude as longitude, a.theading,
 			       		ISNULL((select top 1 ShipName from SPM.dbo.TB_AIS5 b where a.MMSI =b.mmsi order by b.TimeStampK desc), ' ')as shipname
 			  	   FROM $table_nm$ a	
 				  WHERE 1=1
@@ -54,8 +54,9 @@
 	<select id="map.getShipList" resultClass="SkShipVO" parameterClass="SkShipVO">
 		<![CDATA[ 			 
 			SELECT * 
-			  FROM ( SELECT a.mmsi, min(a.TimeStampK) as min_timestampk, max(a.TimeStampK) as max_timestampk,
-			       		ISNULL((select top 1 ShipName from SPM.dbo.TB_AIS5 b where a.MMSI =b.mmsi order by b.TimeStampK desc), ' ')as shipname
+			  FROM ( SELECT a.mmsi, min(a.TimeStampK) as min_timestampk, max(a.TimeStampK) as max_timestampk, 
+			       		ISNULL((select top 1 ShipName from SPM.dbo.TB_AIS5 b where a.MMSI =b.mmsi order by b.TimeStampK desc), ' ')as shipname,
+			       		ISNULL((select top 1 theading from SPM.dbo.TB_AIS5 b where a.MMSI =b.mmsi order by b.TimeStampK desc), ' ')as theading
 			  	   FROM $table_nm$ a	
 				  WHERE 1=1
 		]]>
@@ -97,7 +98,7 @@
 		<![CDATA[
 			SELECT mmsi,shipname,longitude,latitude 
 			  FROM (SELECT c.*, ROW_NUMBER() OVER (PARTITION BY c.mmsi, c.ShipName ORDER BY c.TimeStampK DESC) AS rank_no
-				  FROM (SELECT a.mmsi, a.Longitude,a.Latitude,a.TimeStampK,
+				  FROM (SELECT a.mmsi, a.Longitude,a.Latitude,a.TimeStampK, a.theading,
 				               ISNULL((select top 1 ShipName from SPM.dbo.TB_AIS5 b where a.MMSI =b.mmsi order by b.TimeStampK desc), ' ')as shipname
 				          FROM $table_nm$ a 
 				         WHERE a.TimeStampK >= DATEADD(MINUTE,-10,GETDATE())) c
@@ -110,7 +111,7 @@
 	<select id="map.getShipSearch_all" resultClass="SkShipVO" parameterClass="SkShipVO">
 		<![CDATA[ 
 			SELECT * 
-			  FROM (SELECT a.mmsi, a.Latitude as latitude, a.Longitude as longitude, a.TimeStampK as timestampk,
+			  FROM (SELECT a.mmsi, a.Latitude as latitude, a.Longitude as longitude, a.TimeStampK as timestampk, a.theading, 
 			       	       ISNULL((select top 1 ShipName from SPM.dbo.TB_AIS5 b where a.MMSI =b.mmsi order by b.TimeStampK desc), ' ')as shipname
 			 	  FROM $table_nm$ a
 			 	 WHERE a.MMSI like '%$mmsi$%'

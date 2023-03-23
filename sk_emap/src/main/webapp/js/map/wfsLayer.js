@@ -86,4 +86,35 @@ function vectorInit(){
         zIndex : 9999
 	});
     map.addLayer(shipDetail_layer);
+    
+    //testFeat1();
+}
+
+function testFeat1(){
+	var pointFeature = new ol.Feature({
+		geometry: new ol.geom.Point([Number(129.3005359),Number(35.5468629)])
+	});				
+	let c_geometry = pointFeature.getGeometry().transform( 'EPSG:4326',  'EPSG:3857');
+	
+	pointFeature.setStyle(
+		new ol.style.Style({		            
+            image: new ol.style.Icon({
+	          	src: 'images/sk/shipIcon.png',
+	          	anchor: [0.8, 0.8],	
+	          	rotateWithView: true,
+				rotation: 0,			          	
+    		}),
+            text: new ol.style.Text({
+                textAlign: 'center',
+                font:  'bold '+shipStyle.font+'px Arial',
+                fill: new ol.style.Fill({color: shipStyle.color}),
+                stroke: new ol.style.Stroke({color:'#ffffff', width:0}),
+                text: "111111",
+                offsetX: 0,
+                offsetY: -25,
+                overflow:true,
+            })
+      	})
+	);	
+	ship_layer.getSource().addFeature(pointFeature);	
 }

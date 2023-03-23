@@ -392,6 +392,7 @@ function get_ship(){
 								if(Number(item.longitude)<140 && Number(item.longitude)>110 && Number(item.latitude) < 47 && Number(item.latitude) > 18){
 									shipMoveList[j].feat_line.push([Number(item.longitude),Number(item.latitude)]);
 									shipMoveList[j].timestampkList.push(item.timestampk);
+									shipMoveList[j].theading.push(item.theading);
 									chk = false;
 									break;				
 								}		 
@@ -404,6 +405,7 @@ function get_ship(){
 									mmsi : item.mmsi,
 									shipname : item.shipname,
 									timestampkList : [item.timestampk],
+									theading : [item.theading],
 									feat_line : [[Number(item.longitude),Number(item.latitude)]]
 								};
 								shipMoveList.push(obj);
@@ -522,7 +524,9 @@ function get_ship_to_map(){
 								new ol.style.Style({		            
 						            image: new ol.style.Icon({
 							          	src: 'images/sk/shipIconMove.png',
-							          	anchor: [0.8, 0.8],				          	
+							          	anchor: [0.8, 0.8],			
+							          	rotateWithView: true,
+										rotation: item.theading[j]!=null?item.theading[j]:0,	          	
 					        		}),
 						            text: new ol.style.Text({
 						                textAlign: 'center',
@@ -608,7 +612,9 @@ function makeShipFeature(){
 					new ol.style.Style({		            
 			            image: new ol.style.Icon({
 				          	src: 'images/sk/shipIcon.png',
-				          	anchor: [0.8, 0.8],				          	
+				          	anchor: [0.8, 0.8],		
+				          	rotateWithView: true,
+							rotation: item.theading!=null?item.theading:0,			          	
 		        		}),
 			            text: new ol.style.Text({
 			                textAlign: 'center',
@@ -767,7 +773,7 @@ function getShipSearch_Detail_Data() {
 					$("#txt_desti").text(data[0].destination);
 					$("#txt_timestamp").text(data[0].timestampk);
 					
-					moveShipDetailFeature(data[0].longitude,data[0].latitude,data[0].shipname,data[0].mmsi);
+					moveShipDetailFeature(data[0].longitude,data[0].latitude,data[0].shipname,data[0].mmsi,data[0].theading);
 				}		   
 			}
 		});
@@ -775,7 +781,7 @@ function getShipSearch_Detail_Data() {
 }
 
 //해당 선박정보 위치로 이동
-function moveShipDetailFeature(longitude,latitude,shipname,mmsi){
+function moveShipDetailFeature(longitude,latitude,shipname,mmsi,theading){
 	shipDetailSource.clear();
 	var chkShip = $("#chkViewLayerShip").prop("checked"); //보기설정 선박 OFF 일경우 지도위에 항적표시 X
 	if(!chkShip){
@@ -800,7 +806,9 @@ function moveShipDetailFeature(longitude,latitude,shipname,mmsi){
 				new ol.style.Style({		            
 		            image: new ol.style.Icon({
 			          	src: 'images/sk/shipIconSelect.png',
-			          	anchor: [0.8, 0.8],				          	
+			          	anchor: [0.8, 0.8],	
+			          	rotateWithView: true,
+						rotation: theading!=null?theading:0,			          	
 	        		}),
 		            text: new ol.style.Text({
 		                textAlign: 'center',
@@ -871,6 +879,7 @@ function getShipSearch_Detail_Data_All() {
 									mmsi : item.mmsi,
 									shipname : item.shipname,
 									timestampkList : [item.timestampk],
+									theading: [item.theading],
 									feat_line : [[Number(item.longitude),Number(item.latitude)]]
 								};
 								DIVshipMoveList.push(obj);
@@ -878,7 +887,8 @@ function getShipSearch_Detail_Data_All() {
 						}else{
 							if(Number(item.longitude)<140 && Number(item.longitude)>110 && Number(item.latitude) < 47 && Number(item.latitude) > 18){
 									DIVshipMoveList[0].feat_line.push([Number(item.longitude),Number(item.latitude)]);
-									DIVshipMoveList[0].timestampkList.push(item.timestampk);									
+									DIVshipMoveList[0].timestampkList.push(item.timestampk);	
+									DIVshipMoveList[0].theading.push(item.theading);									
 							}		
 						}
 					}	//var i=0;i<list.length;i++		
@@ -956,7 +966,9 @@ function DIVget_ship_to_map(DIVshipMoveList){
 						new ol.style.Style({		            
 				            image: new ol.style.Icon({
 					          	src: 'images/sk/shipIconMove.png',
-					          	anchor: [0.8, 0.8],				          	
+					          	anchor: [0.8, 0.8],	
+					          	rotateWithView: true,
+								rotation: item.theading[j]!=null?item.theading[j]:0,				          	
 			        		}),
 				            text: new ol.style.Text({
 				                textAlign: 'center',

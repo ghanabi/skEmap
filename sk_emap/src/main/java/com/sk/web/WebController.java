@@ -157,7 +157,7 @@ public class WebController {
 		
 		SkShipVO vo = new SkShipVO();
 		vo.setShipname((String)req.getParameter("shipname"));
-		vo.setTable_nm("SPM.dbo.TB_AIS123_"+formatedNow);
+		vo.setTable_nm("SPM.dbo.TB_AIS123_"+(String)req.getParameter("date"));
 		List<SkShipVO> slist = mapService.getShipSearch(vo);		
 		
 		System.out.println("slist.size() : "+slist.size());
@@ -173,7 +173,7 @@ public class WebController {
 		System.out.println("getShipSearchMapFor30Min : start!");		
 		
 		SkShipVO vo = new SkShipVO();
-		vo.setTable_nm("SPM.dbo.TB_AIS123_"+formatedNow);
+		vo.setTable_nm("SPM.dbo.TB_AIS123_"+(String)req.getParameter("date"));
 		List<SkShipVO> slist = mapService.getShipSearchMapFor30Min(vo);		
 		
 		System.out.println("slist.size() : "+slist.size());
@@ -190,7 +190,7 @@ public class WebController {
 		
 		SkShipVO vo = new SkShipVO();
 		vo.setMmsi((String)req.getParameter("mmsi"));
-		vo.setTable_nm("SPM.dbo.TB_AIS123_"+formatedNow);
+		vo.setTable_nm("SPM.dbo.TB_AIS123_"+(String)req.getParameter("date"));
 		
 		List<SkShipVO> slist = mapService.getShipSearch_all(vo);		
 		
@@ -208,7 +208,7 @@ public class WebController {
 		
 		SkShipVO vo = new SkShipVO();
 		vo.setMmsi((String)req.getParameter("mmsi"));
-		vo.setTable_nm("SPM.dbo.TB_AIS123_"+formatedNow);
+		vo.setTable_nm("SPM.dbo.TB_AIS123_"+(String)req.getParameter("date"));
 		
 		List<SkShipVO> slist = mapService.getShipSearch_Detail(vo);		
 		

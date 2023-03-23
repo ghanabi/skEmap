@@ -3,6 +3,10 @@ var drawInteration;
 var drawInteration_search;
 var modStyleSelectInteraction;
 var choice_idx="";
+var date = new Date();
+var year = date.getFullYear();
+var month = ("0" + (1 + date.getMonth())).slice(-2);
+var day = ("0" + date.getDate()).slice(-2);
 
 var ColorPickerValue = "#ff0000";
 var shipStyle={
@@ -29,7 +33,8 @@ var featTest;
 //35.5468629,129.3005359 울산
 function mapInit(){
 	var view = new ol.View({
-		center: ol.proj.fromLonLat([129.567,35.448]),
+		center: ol.proj.fromLonLat([129.567,35.448
+		]),
 		zoom: 12,
 	});
 	
@@ -664,6 +669,9 @@ function getShipSearch(){
 		type: "POST",
 		dataType: "json",
 		url: "getShipSearchMapFor30Min.do",
+		data : {
+			date : year + month + day
+		},
 		success: function(data) {
 			shipList = [];
 			//console.log(data);		    
@@ -686,7 +694,8 @@ function getShipSearch_list() {
 		url: "getShipSearch.do",
 		asyn: false,
 		data : {
-			shipname : $("#search_word").val()
+			shipname : $("#search_word").val(),
+			date : year + month + day
 		},
 		success: function(data) {
 			//console.log(data);		    
@@ -773,7 +782,8 @@ function getShipSearch_Detail_Data() {
 			url: "getShipSearch_Detail.do",
 			asyn: false,			
 			data : {
-				mmsi : chocieShipMmsi
+				mmsi : chocieShipMmsi,
+				date : year + month + day
 			},
 			success: function(data) {		    
 				if(data != null){
@@ -876,7 +886,7 @@ function getShipClean() {
 
 //선박정보 상세 정보 - 항적표시용
 function getShipSearch_Detail_Data_All() {
-	getShipClean();
+	//getShipClean();
 	if(chocieShipMmsi != ""){
 		$.ajax({
 			type: "POST",
@@ -884,7 +894,8 @@ function getShipSearch_Detail_Data_All() {
 			url: "getShipSearch_all.do",
 			asyn: false,			
 			data : {
-				mmsi : chocieShipMmsi
+				mmsi : chocieShipMmsi,
+				date : year + month + day
 			},
 			success: function(data) {		    
 				if(data != null){					

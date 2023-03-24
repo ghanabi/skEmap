@@ -96,7 +96,7 @@
 	
 	<select id="map.getShipSearchMapFor30Min" resultClass="SkShipVO" parameterClass="SkShipVO">
 		<![CDATA[
-			SELECT mmsi,shipname,longitude,latitude 
+			SELECT mmsi,shipname,longitude,latitude, theading
 			  FROM (SELECT c.*, ROW_NUMBER() OVER (PARTITION BY c.mmsi, c.ShipName ORDER BY c.TimeStampK DESC) AS rank_no
 				  FROM (SELECT a.mmsi, a.Longitude,a.Latitude,a.TimeStampK, a.theading,
 				               ISNULL((select top 1 ShipName from SPM.dbo.TB_AIS5 b where a.MMSI =b.mmsi order by b.TimeStampK desc), ' ')as shipname

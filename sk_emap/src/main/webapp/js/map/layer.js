@@ -362,7 +362,14 @@ function ViewLayerChkMark(checked){
 				
 				for(var j=0;j<layerList.length;j++){
 					if(layerList[j] === thisLayerId) {
-						lyr.setOpacity(1);
+						if(chkLevel == "2" && layerList[j]=="lev6_BUOY_P"){
+						
+						}else if(chkLevel == "3" && layerList[j]=="lev6_LIGHTS_P"){
+						
+						}else{
+							lyr.setOpacity(1);
+						}
+						
 					}
 				}	
 			}
@@ -421,7 +428,7 @@ function ViewLayerChk(chkLevel){
     }
     
     if(chkLevel == "2"){  //표준
-    	var lList = ["lev6_ACHBRT_A","lev6_SLCONS_L","lev6_FOGSIG_P","lev6_LIGHTS_P","lev6_LNDMARK_P","lev6_BUOY_P"];
+    	var lList = ["lev6_ACHBRT_A","lev6_SLCONS_L","lev6_FOGSIG_P","lev6_LIGHTS_P","lev6_LNDMARK_P"];
     	for(let i in layers) {
 	        const lyr = layers[i];
 	        const thisLayerId = layers[i].get('id');
@@ -443,7 +450,7 @@ function ViewLayerChk(chkLevel){
     
     if(chkLevel == "3"){  //상세
     	var lList = ["lev6_SOUNDG_P","lev6_OBSTRN_A","lev6_OILBAR_L","lev6_ACHBRT_A","lev6_BRIDGE_A","lev6_BUISGL_A","lev6_SEAARE_A"
-	,"lev6_SLCONS_L","lev6_FOGSIG_P","lev6_LIGHTS_P","lev6_LNDMARK_P","lev6_WRECKS_P","lev6_BUOY_P"];
+	,"lev6_SLCONS_L","lev6_FOGSIG_P","lev6_LNDMARK_P","lev6_WRECKS_P","lev6_BUOY_P"];
     	for(let i in layers) {
 	        const lyr = layers[i];
 	        const thisLayerId = layers[i].get('id');

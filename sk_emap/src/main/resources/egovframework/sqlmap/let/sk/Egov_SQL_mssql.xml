@@ -56,7 +56,7 @@
 			SELECT * 
 			  FROM ( SELECT a.mmsi, min(a.TimeStampK) as min_timestampk, max(a.TimeStampK) as max_timestampk, 
 			       		ISNULL((select top 1 ShipName from SPM.dbo.TB_AIS5 b where a.MMSI =b.mmsi order by b.TimeStampK desc), ' ')as shipname,
-			       		ISNULL((select top 1 theading from SPM.dbo.TB_AIS5 b where a.MMSI =b.mmsi order by b.TimeStampK desc), ' ')as theading
+			       		(select top 1 theading from $table_nm$ b where a.MMSI =b.mmsi and b.TimeStampK = b.TimeStampK) as theading
 			  	   FROM $table_nm$ a	
 				  WHERE 1=1
 		]]>

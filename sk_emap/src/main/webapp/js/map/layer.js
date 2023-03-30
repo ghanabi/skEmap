@@ -91,6 +91,24 @@ function wmsInit(){
     });
     //map.addLayer(rivers);
     
+    //wms 	lev6_DEPCNT_L(기본맵처럼사용)
+    var lev6_DEPCNT_L = new ol.layer.Tile({
+		id : 'lev6_DEPCNT_L',
+    	title: 'lev6_DEPCNT_L',
+    	opacity: 0,
+        source: new ol.source.TileWMS({
+            url: geoserverWmsUrl,
+            serverType: 'geoserver',
+            crossOrigin: 'anonymous',            
+            params: { 
+            	'VERSION': '1.1.0' , 
+                'LAYERS': 'skemap:lev6_DEPCNT_L',               
+                'CRS' : 'EPSG:3857',
+            },            
+        })
+    });
+    map.addLayer(lev6_DEPCNT_L);       
+    
     //wms 수심텍스트(기본맵처럼사용)
     var lev6_SOUNDG_P = new ol.layer.Tile({
 		id : 'lev6_SOUNDG_P',
@@ -393,7 +411,7 @@ function ViewLayerChk(chkLevel){
 	var layers = map.getLayers().getArray();
 	
 	var layerList = ["lev6_SOUNDG_P","lev6_OBSTRN_A","lev6_OILBAR_L","lev6_ACHBRT_A","lev6_BRIDGE_A","lev6_BUISGL_A","lev6_SEAARE_A"
-	,"lev6_SLCONS_L","lev6_FOGSIG_P","lev6_LIGHTS_P","lev6_LNDMARK_P","lev6_WRECKS_P","lev6_BUOY_P"];
+	,"lev6_SLCONS_L","lev6_FOGSIG_P","lev6_LIGHTS_P","lev6_LNDMARK_P","lev6_WRECKS_P","lev6_BUOY_P","lev6_DEPCNT_L"];
 	
 	
 	//레이어 off 후 필요한 레이어만 킴
@@ -426,7 +444,7 @@ function ViewLayerChk(chkLevel){
     }
     
     if(chkLevel == "2"){  //표준
-    	var lList = ["lev6_ACHBRT_A","lev6_SLCONS_L","lev6_FOGSIG_P","lev6_LIGHTS_P","lev6_LNDMARK_P","lev6_BUOY_P"];
+    	var lList = ["lev6_ACHBRT_A","lev6_SLCONS_L","lev6_FOGSIG_P","lev6_LIGHTS_P","lev6_LNDMARK_P","lev6_BUOY_P","lev6_DEPCNT_L"];
     	for(let i in layers) {
 	        const lyr = layers[i];
 	        const thisLayerId = layers[i].get('id');

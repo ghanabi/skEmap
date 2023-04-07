@@ -141,6 +141,7 @@ function mapEvent(){
 	 
 	//항로추적
 	$("#mapSearch3").on('click',function(e){
+		deactiveInteractions();
 		wfs_layer.getSource().clear();
 		let dis = $("#div_left_mapSearch").css("display");
 		if(dis == "block") {
@@ -157,7 +158,8 @@ function mapEvent(){
 	});
 
 	//레이어 설정
-	$("#mapSetting").on('click',function(e){		
+	$("#mapSetting").on('click',function(e){
+		deactiveInteractions();		
 		wfs_layer.getSource().clear();
 		let dis = $("#div_left_mapSetting").css("display");
 		if(dis == "block") {

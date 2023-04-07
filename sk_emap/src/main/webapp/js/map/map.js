@@ -143,6 +143,7 @@ function mapEvent(){
 	$("#mapSearch3").on('click',function(e){
 		deactiveInteractions();
 		wfs_layer.getSource().clear();
+		clean_txt();
 		let dis = $("#div_left_mapSearch").css("display");
 		if(dis == "block") {
 			$("#mapSearch3 img").attr("src","images/sk/maptool/btn7.jpg");
@@ -161,6 +162,7 @@ function mapEvent(){
 	$("#mapSetting").on('click',function(e){
 		deactiveInteractions();		
 		wfs_layer.getSource().clear();
+		clean_txt();
 		let dis = $("#div_left_mapSetting").css("display");
 		if(dis == "block") {
 			$("#div_left_mapSetting").css("display","none");
@@ -1054,4 +1056,23 @@ function DIVget_ship_to_map(DIVshipMoveList){
 			alert("두개이상의 위치가 수신되지 않았습니다.");
 		}//item.feat_line.length>1			
 	}//!chkShip
+}
+
+function clean_txt(){
+	$("#s_lat_d").text("");  //시작점 위도 도
+	$("#s_lat_m").text("");  //시작점 위도 분
+	$("#s_lat_s").text("");  //시작점 위도 초
+	$("#s_lon_d").text("");  //시작점 경도 도
+	$("#s_lon_m").text("");  //시작점 경도 분
+	$("#s_lon_s").text("");  //시작점 경도 초
+	$("#e_lat_d").text("");  //끝점 위도 도
+	$("#e_lat_m").text("");  //끝점 위도 분
+	$("#e_lat_s").text("");  //끝점 위도 초
+	$("#e_lon_d").text("");  //끝점 경도 도
+	$("#e_lon_m").text("");  //끝점 경도 분
+	$("#e_lon_s").text("");  //끝점 경도 초
+	$("#date1").val("");
+	$("#ship_result").html("");
+	$("#txt_search").text("");
+	$("input:radio[name='kind']:radio[value='MMSI']").prop('checked',true);
 }

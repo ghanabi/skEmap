@@ -68,7 +68,9 @@
 				$("#div_right").css("display","block");
 				getShipSearch_list();
 			}
+			deactiveInteractions();		
 			wfs_layer.getSource().clear();
+			clean_txt();
 			setSize();
 	    	return false;
 		});
